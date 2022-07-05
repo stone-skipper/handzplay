@@ -6,9 +6,19 @@
     "start": "next start"
   },
   "dependencies": {
+    "@mediapipe/hands": "^0.4.1646424915",
+    "@tensorflow-models/hand-pose-detection": "^2.0.0",
+    "@tensorflow-models/handpose": "^0.0.7",
+    "@tensorflow/tfjs": "^3.18.0",
+    "@tensorflow/tfjs-backend-wasm": "^3.18.0",
+    "@tensorflow/tfjs-backend-webgl": "^3.18.0",
+    "fingerpose": "^0.1.0",
+    "framer-motion": "^6.3.16",
     "next": "latest",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-webcam": "^7.0.1",
+    "sass": "^1.53.0",
     "zustand": "^3.7.1"
   }
 }

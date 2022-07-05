@@ -1,0 +1,12 @@
+.content {
+  padding: 20;
+  flex-direction: column;
+  background: green;
+}
+
+.wrapper {
+  position: absolute;
+  left: 50vw;
+  top: 0;
+  z-index: 10;
+}
