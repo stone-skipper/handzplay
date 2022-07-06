@@ -11,6 +11,7 @@ export default function Controls() {
   const handIndicatorType = useControlsStore(
     (state) => state.handIndicatorType
   );
+  const thumbL = useControlsStore((state) => state.thumbL);
 
   const [controlToggle, setControlToggle] = useState(false);
   return (

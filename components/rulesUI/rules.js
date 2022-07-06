@@ -13,6 +13,7 @@ export default function Rules() {
   );
 
   const [rulesToggle, setRulesToggle] = useState(false);
+  const [type, setType] = useState("");
   return (
     <div className={styles.wrapper}>
       <div
@@ -26,7 +27,40 @@ export default function Rules() {
         className={styles.content}
         style={{ display: rulesToggle === true ? "flex" : "none" }}
       >
-        if (pose / relation / action)
+        if
+        <p>
+          type :{" "}
+          <span
+            style={{
+              opacity: type === "pose" ? 1 : 0.2,
+            }}
+            onClick={() => {
+              setType("pose");
+            }}
+          >
+            pose
+          </span>{" "}
+          <span
+            style={{
+              opacity: type === "relation" ? 1 : 0.2,
+            }}
+            onClick={() => {
+              setType("relation");
+            }}
+          >
+            relation
+          </span>{" "}
+          <span
+            style={{
+              opacity: type === "action" ? 1 : 0.2,
+            }}
+            onClick={() => {
+              setType("action");
+            }}
+          >
+            action
+          </span>
+        </p>
         <br />
         then (shapes / audios) to (move / scale) / (play)
       </div>
