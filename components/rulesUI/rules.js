@@ -61,6 +61,7 @@ export default function Rules() {
             action
           </span>
         </p>
+        {type === "relation" && <p>fingerA / fingerB / distance</p>}
         <br />
         then (shapes / audios) to (move / scale) / (play)
       </div>

@@ -1,6 +1,6 @@
 import { useControlsStore } from "../../lib/store";
 import styles from "./controls.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Controls() {
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
@@ -11,7 +11,10 @@ export default function Controls() {
   const handIndicatorType = useControlsStore(
     (state) => state.handIndicatorType
   );
-  const thumbL = useControlsStore((state) => state.thumbL);
+  const fingersL = useControlsStore((state) => state.fingersL);
+  useEffect(() => {
+    console.log(fingersL);
+  }, [fingersL]);
 
   const [controlToggle, setControlToggle] = useState(false);
   return (
@@ -39,8 +42,19 @@ export default function Controls() {
           hands:{leftHand === true ? "left" : null}
           {rightHand === true ? "right" : null}
         </p>
-        <p>hand indicator: {handIndicatorType}</p>
+        <p
+          onClick={() => {
+            if (handIndicatorType === "skeleton") {
+              useControlsStore.setState({ handIndicatorType: "points" });
+            } else if (handIndicatorType === "points") {
+              useControlsStore.setState({ handIndicatorType: "skeleton" });
+            }
+          }}
+        >
+          hand indicator: {handIndicatorType}
+        </p>
         <p>current Pose: {currentPose}</p>
+        <p>{fingersL.toString()}</p>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import Controls from "./controlUI/controls";
 import Rules from "./rulesUI/rules";
-import { useControlsStore } from "../lib/store";
-import InteractionCanvas from "./interactionCanvas";
+import { useControlsStore, useRulesStore } from "../lib/store";
+import RelationCvs from "./if/relationCvs";
 
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
@@ -10,7 +10,7 @@ import * as handpose from "@tensorflow-models/handpose";
 import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 
 import Webcam from "react-webcam";
-import { drawHand, drawInteraction } from "./utils";
+import { drawHand } from "./utils";
 
 import * as fp from "fingerpose";
 import { PointerGesture, ThumbsUpGesture, VictoryGesture } from "../gestures";
@@ -22,10 +22,17 @@ export default function Handpose() {
 
   // from store
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
-  const leftHand = useControlsStore((state) => state.leftHand);
-  const currentPose = useControlsStore((state) => state.currentPose);
+  const fingersL = useControlsStore((state) => state.fingersL);
+  const fingersR = useControlsStore((state) => state.fingersR);
+  const rules = useRulesStore((state) => state.rules);
 
+  const handIndicatorType = useControlsStore(
+    (state) => state.handIndicatorType
+  );
   var handL, handR;
+
+  const [vWidth, setvWidth] = useState(0);
+  const [vHeight, setvHeight] = useState(0);
 
   // handpose model related
   const model = handPoseDetection.SupportedModels.MediaPipeHands;
@@ -54,6 +61,35 @@ export default function Handpose() {
     }, 10);
   };
 
+  var videoWidth, videoHeight;
+  const fingerX = (hand, index) => {
+    if (hand !== undefined) {
+      return Math.round(hand.keypoints[index].x);
+    }
+  };
+  const fingerY = (hand, index) => {
+    if (hand !== undefined) {
+      return Math.round(hand.keypoints[index].y);
+    }
+  };
+
+  const handToFinger = (hand) => {
+    useControlsStore.setState({
+      fingersL: [
+        fingerX(hand, 4),
+        fingerY(hand, 4),
+        fingerX(hand, 8),
+        fingerY(hand, 8),
+        fingerX(hand, 12),
+        fingerY(hand, 12),
+        fingerX(hand, 16),
+        fingerY(hand, 16),
+        fingerX(hand, 20),
+        fingerY(hand, 20),
+      ],
+    });
+  };
+
   const detect = async (net) => {
     // Check data is available
     if (
@@ -63,8 +99,8 @@ export default function Handpose() {
     ) {
       // Get Video Properties
       const video = webcamRef.current.video;
-      const videoWidth = webcamRef.current.video.videoWidth;
-      const videoHeight = webcamRef.current.video.videoHeight;
+      videoWidth = webcamRef.current.video.videoWidth;
+      videoHeight = webcamRef.current.video.videoHeight;
 
       // Set video width
       webcamRef.current.video.width = videoWidth;
@@ -78,92 +114,41 @@ export default function Handpose() {
       const hand = await net.estimateHands(video);
 
       const ctx = canvasRef.current.getContext("2d");
-      // const reactionCtx = reactionRef.current.getContext("2d");
+      var scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+      canvasRef.current.width = Math.floor(videoWidth * scale);
+      canvasRef.current.height = Math.floor(videoHeight * scale);
+
+      ctx.scale(scale, scale);
 
       // check which hand is present & store each fingertip positions
+
       handL = hand.find((e) => e.handedness === "Right");
       handR = hand.find((e) => e.handedness === "Left");
 
-      if (handL !== undefined) {
-        console.log(
-          Math.round(handL.keypoints[4].x),
-          Math.round(handL.keypoints[4].y)
-        );
+      if (hand.length === 1 && handL !== undefined) {
         useControlsStore.setState({ leftHand: true });
-        useControlsStore.setState({
-          thumbL: [
-            Math.round(handL.keypoints[4].x),
-            Math.round(handL.keypoints[4].y),
-          ],
-        });
-        useControlsStore.setState({
-          indexL: [
-            Math.round(handL.keypoints[8].x),
-            Math.round(handL.keypoints[8].y),
-          ],
-        });
-        useControlsStore.setState({
-          middleL: [
-            Math.round(handL.keypoints[12].x),
-            Math.round(handL.keypoints[12].y),
-          ],
-        });
-        useControlsStore.setState({
-          ringL: [
-            Math.round(handL.keypoints[16].x),
-            Math.round(handL.keypoints[16].y),
-          ],
-        });
-        useControlsStore.setState({
-          pinkyL: [
-            Math.round(handL.keypoints[20].x),
-            Math.round(handL.keypoints[20].y),
-          ],
-        });
-      } else if (handR !== undefined) {
+        useControlsStore.setState({ rightHand: false });
+        handToFinger(handL);
+      } else if (hand.length === 1 && handR !== undefined) {
         useControlsStore.setState({ rightHand: true });
-        useControlsStore.setState({
-          thumbR: [
-            Math.round(handR.keypoints[4].x),
-            Math.round(handR.keypoints[4].y),
-          ],
-        });
-        useControlsStore.setState({
-          indexR: [
-            Math.round(handR.keypoints[8].x),
-            Math.round(handR.keypoints[8].y),
-          ],
-        });
-        useControlsStore.setState({
-          middleR: [
-            Math.round(handR.keypoints[12].x),
-            Math.round(handR.keypoints[12].y),
-          ],
-        });
-        useControlsStore.setState({
-          ringR: [
-            Math.round(handR.keypoints[16].x),
-            Math.round(handR.keypoints[16].y),
-          ],
-        });
-        useControlsStore.setState({
-          pinkyR: [
-            Math.round(handR.keypoints[20].x),
-            Math.round(handR.keypoints[20].y),
-          ],
-        });
+        useControlsStore.setState({ leftHand: false });
+        handToFinger(handR);
+      } else if (hand.length === 2) {
+        useControlsStore.setState({ leftHand: true });
+        useControlsStore.setState({ rightHand: true });
+        handToFinger(handL);
+        handToFinger(handR);
       } else {
         useControlsStore.setState({ leftHand: false });
         useControlsStore.setState({ rightHand: false });
       }
 
       if (hand.length > 0) {
-        // drawInteraction(hand[0].keypoints, currentPose, reactionCtx, []);
         for (let i = 0; i < hand.length; i++) {
-          //   Draw mesh
-          drawHand(hand[i].keypoints, ctx);
+          drawHand(hand[i].keypoints, ctx, handIndicatorType);
         }
 
+        // detect gesture
         const GE = new fp.GestureEstimator([
           PointerGesture,
           VictoryGesture,
@@ -247,7 +232,23 @@ export default function Handpose() {
           transform: "scaleX(-1)",
         }}
       />
-      <InteractionCanvas />
+      <div id="test">
+        {rules !== undefined &&
+          rules.map((value) => {
+            return (
+              <RelationCvs
+                videoWidth={videoWidth}
+                videoHeight={videoHeight}
+                fingerAX={fingersL[2]}
+                fingerAY={fingersL[3]}
+                fingerBX={fingersR[2]}
+                fingerBY={fingersR[3]}
+                distance={value.distance}
+              />
+              // <div>{value.toString()}</div>
+            );
+          })}
+      </div>
     </div>
   );
 }
