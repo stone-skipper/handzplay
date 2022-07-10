@@ -136,7 +136,6 @@ export default function Handpose() {
       var scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
       canvasRef.current.width = Math.floor(videoWidth * scale);
       canvasRef.current.height = Math.floor(videoHeight * scale);
-
       ctx.scale(scale, scale);
 
       // check which hand is present & store each fingertip positions
@@ -253,7 +252,6 @@ export default function Handpose() {
           opacity: cameraFeed === true ? 1 : 0,
         }}
       />
-
       <canvas
         ref={canvasRef}
         style={{
@@ -279,6 +277,8 @@ export default function Handpose() {
               videoHeight={vHeight}
               fingersSelected={[value.fingerA, value.fingerB]}
               distance={value.distance}
+              thenType={value.thenType}
+              thenDetail={value.thenDetail}
             />
           );
         })}

@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useControlsStore, useRulesStore } from "../../lib/store";
+import { line, rect, circle, star, text } from "../then/shape";
 
 export default function RelationCvs({
   videoWidth,
   videoHeight,
   fingersSelected,
   distance,
-  then,
+  thenType,
+  thenDetail,
 }) {
   const reactionRef = useRef(null);
 
@@ -28,8 +30,11 @@ export default function RelationCvs({
     const ctx = reactionRef.current.getContext("2d");
     ctx.scale(scale, scale);
 
+    //shape
     if (
       fingersSelectedCoord.length !== 0 &&
+      thenType === "shape" &&
+      thenDetail[0] === "line" &&
       getDistance(
         fingersSelectedCoord[0].x,
         fingersSelectedCoord[0].y,
@@ -37,13 +42,95 @@ export default function RelationCvs({
         fingersSelectedCoord[1].y
       ) < distance
     ) {
-      // 이부분에 대해서는 then에서 함수 가져오는 방식으로
-      ctx.beginPath();
-      ctx.moveTo(fingersSelectedCoord[0].x, fingersSelectedCoord[0].y);
-      ctx.lineTo(fingersSelectedCoord[1].x, fingersSelectedCoord[1].y);
-      ctx.strokeStyle = "green";
-      ctx.lineWidth = 1;
-      ctx.stroke();
+      line(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y,
+        thenDetail[1],
+        ctx
+      );
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "shape" &&
+      thenDetail[0] === "circle" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) < distance
+    ) {
+      circle(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y,
+        thenDetail[1],
+        thenDetail[2],
+        ctx
+      );
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "shape" &&
+      thenDetail[0] === "text" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) < distance
+    ) {
+      text(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y,
+        thenDetail[1],
+        thenDetail[2],
+        thenDetail[3],
+        ctx
+      );
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "shape" &&
+      thenDetail[0] === "star" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) < distance
+    ) {
+      star(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y,
+        thenDetail[1],
+        thenDetail[2],
+        ctx
+      );
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "shape" &&
+      thenDetail[0] === "rect" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) < distance
+    ) {
+      rect(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y,
+        thenDetail[1],
+        thenDetail[2],
+        ctx
+      );
     }
   };
 

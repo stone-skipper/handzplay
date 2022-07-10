@@ -98,15 +98,3 @@ export const drawPoints = (predictions, ctx) => {
     }
   }
 };
-
-// export const drawInteraction = (predictions, currentPose, ctx, rules) => {
-//   if (currentPose === "thumbsUp") {
-//     ctx.beginPath();
-
-//     ctx.rect(0, 0, 100, 100);
-//     ctx.fillStyle = "green";
-//     ctx.fill();
-//   } else {
-//     ctx.clearRect(0, 0, 400, 400);
-//   }
-// };
