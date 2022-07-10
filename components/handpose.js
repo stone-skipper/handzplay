@@ -10,7 +10,7 @@ import * as handpose from "@tensorflow-models/handpose";
 import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 
 import Webcam from "react-webcam";
-import { drawHand } from "./utils";
+import { drawHand, drawPoints } from "./utils";
 
 import * as fp from "fingerpose";
 import { PointerGesture, ThumbsUpGesture, VictoryGesture } from "../gestures";
@@ -73,21 +73,38 @@ export default function Handpose() {
     }
   };
 
-  const handToFinger = (hand) => {
-    useControlsStore.setState({
-      fingersL: [
-        fingerX(hand, 4),
-        fingerY(hand, 4),
-        fingerX(hand, 8),
-        fingerY(hand, 8),
-        fingerX(hand, 12),
-        fingerY(hand, 12),
-        fingerX(hand, 16),
-        fingerY(hand, 16),
-        fingerX(hand, 20),
-        fingerY(hand, 20),
-      ],
-    });
+  const handToFinger = (hand, side) => {
+    if (side === "left") {
+      useControlsStore.setState({
+        fingersL: [
+          fingerX(hand, 4),
+          fingerY(hand, 4),
+          fingerX(hand, 8),
+          fingerY(hand, 8),
+          fingerX(hand, 12),
+          fingerY(hand, 12),
+          fingerX(hand, 16),
+          fingerY(hand, 16),
+          fingerX(hand, 20),
+          fingerY(hand, 20),
+        ],
+      });
+    } else if (side === "right") {
+      useControlsStore.setState({
+        fingersR: [
+          fingerX(hand, 4),
+          fingerY(hand, 4),
+          fingerX(hand, 8),
+          fingerY(hand, 8),
+          fingerX(hand, 12),
+          fingerY(hand, 12),
+          fingerX(hand, 16),
+          fingerY(hand, 16),
+          fingerX(hand, 20),
+          fingerY(hand, 20),
+        ],
+      });
+    }
   };
 
   const detect = async (net) => {
@@ -109,6 +126,8 @@ export default function Handpose() {
       // Set canvas height and width
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
+      setvHeight(videoHeight);
+      setvWidth(videoWidth);
 
       // Make Detections
       const hand = await net.estimateHands(video);
@@ -128,16 +147,22 @@ export default function Handpose() {
       if (hand.length === 1 && handL !== undefined) {
         useControlsStore.setState({ leftHand: true });
         useControlsStore.setState({ rightHand: false });
-        handToFinger(handL);
+        handToFinger(handL, "left");
+        useControlsStore.setState({
+          fingersR: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        });
       } else if (hand.length === 1 && handR !== undefined) {
         useControlsStore.setState({ rightHand: true });
         useControlsStore.setState({ leftHand: false });
-        handToFinger(handR);
+        handToFinger(handR, "right");
+        useControlsStore.setState({
+          fingersL: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        });
       } else if (hand.length === 2) {
         useControlsStore.setState({ leftHand: true });
         useControlsStore.setState({ rightHand: true });
-        handToFinger(handL);
-        handToFinger(handR);
+        handToFinger(handL, "left");
+        handToFinger(handR, "right");
       } else {
         useControlsStore.setState({ leftHand: false });
         useControlsStore.setState({ rightHand: false });
@@ -145,7 +170,11 @@ export default function Handpose() {
 
       if (hand.length > 0) {
         for (let i = 0; i < hand.length; i++) {
-          drawHand(hand[i].keypoints, ctx, handIndicatorType);
+          if (handIndicatorType === "skeleton") {
+            drawHand(hand[i].keypoints, ctx);
+          } else if (handIndicatorType === "points") {
+            drawPoints(hand[i].keypoints, ctx);
+          }
         }
 
         // detect gesture
@@ -172,9 +201,9 @@ export default function Handpose() {
             (keypointsArray) => keypointsArray.confidence
           );
 
-          const maxConfidence = confidence.indexOf(
-            Math.max.apply(null, confidence)
-          );
+          // const maxConfidence = confidence.indexOf(
+          //   Math.max.apply(null, confidence)
+          // );
 
           let result = gesture.gestures.reduce((p, c) => {
             return p.score > c.score ? p : c;
@@ -186,6 +215,15 @@ export default function Handpose() {
             useControlsStore.setState({ currentPose: "" });
           }
         }
+      } else {
+        useControlsStore.setState({ leftHand: false });
+        useControlsStore.setState({ rightHand: false });
+        useControlsStore.setState({
+          fingersL: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        });
+        useControlsStore.setState({
+          fingersR: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        });
       }
     }
   };
@@ -232,23 +270,18 @@ export default function Handpose() {
           transform: "scaleX(-1)",
         }}
       />
-      <div id="test">
-        {rules !== undefined &&
-          rules.map((value) => {
-            return (
-              <RelationCvs
-                videoWidth={videoWidth}
-                videoHeight={videoHeight}
-                fingerAX={fingersL[2]}
-                fingerAY={fingersL[3]}
-                fingerBX={fingersR[2]}
-                fingerBY={fingersR[3]}
-                distance={value.distance}
-              />
-              // <div>{value.toString()}</div>
-            );
-          })}
-      </div>
+      {rules !== undefined &&
+        rules.map((value, index) => {
+          return (
+            <RelationCvs
+              key={index}
+              videoWidth={vWidth}
+              videoHeight={vHeight}
+              fingersSelected={[value.fingerA, value.fingerB]}
+              distance={value.distance}
+            />
+          );
+        })}
     </div>
   );
 }

@@ -12,9 +12,11 @@ export default function Controls() {
     (state) => state.handIndicatorType
   );
   const fingersL = useControlsStore((state) => state.fingersL);
-  useEffect(() => {
-    console.log(fingersL);
-  }, [fingersL]);
+  const fingersR = useControlsStore((state) => state.fingersR);
+
+  // useEffect(() => {
+  //   console.log(fingersL);
+  // }, [fingersL]);
 
   const [controlToggle, setControlToggle] = useState(false);
   return (
@@ -55,6 +57,7 @@ export default function Controls() {
         </p>
         <p>current Pose: {currentPose}</p>
         <p>{fingersL.toString()}</p>
+        <p>{fingersR.toString()}</p>
       </div>
     </div>
   );

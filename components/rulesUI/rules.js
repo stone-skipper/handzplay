@@ -64,6 +64,7 @@ export default function Rules() {
         {type === "relation" && <p>fingerA / fingerB / distance</p>}
         <br />
         then (shapes / audios) to (move / scale) / (play)
+        <p onClick={() => {}}>add a rule</p>
       </div>
     </div>
   );

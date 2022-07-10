@@ -34,71 +34,33 @@ const style = {
   20: { color: "white", size: dotSize },
 };
 
-export const drawHand = (predictions, ctx, handIndicatorType) => {
+export const drawHand = (predictions, ctx) => {
   // Check if we have predictions
   if (predictions.length > 0) {
     // Loop through each prediction
-    if (handIndicatorType === "skeleton") {
-      for (let j = 0; j < Object.keys(fingerJoints).length; j++) {
-        let finger = Object.keys(fingerJoints)[j];
-        //  Loop through pairs of joints
-        for (let k = 0; k < fingerJoints[finger].length - 1; k++) {
-          // Get pairs of joints
-          const firstJointIndex = fingerJoints[finger][k];
-          const secondJointIndex = fingerJoints[finger][k + 1];
+    for (let j = 0; j < Object.keys(fingerJoints).length; j++) {
+      let finger = Object.keys(fingerJoints)[j];
+      //  Loop through pairs of joints
+      for (let k = 0; k < fingerJoints[finger].length - 1; k++) {
+        // Get pairs of joints
+        const firstJointIndex = fingerJoints[finger][k];
+        const secondJointIndex = fingerJoints[finger][k + 1];
 
-          // Draw path
-          ctx.beginPath();
-          ctx.moveTo(
-            predictions[firstJointIndex].x,
-            predictions[firstJointIndex].y
-          );
-          ctx.lineTo(
-            predictions[secondJointIndex].x,
-            predictions[secondJointIndex].y
-          );
-          ctx.strokeStyle = "lightgrey";
-          ctx.lineWidth = 1;
-          ctx.stroke();
-        }
-      }
-      // creating dots
-      for (let i = 0; i < predictions.length; i++) {
-        // Get x point
-        const x = predictions[i].x;
-        // Get y point
-        const y = predictions[i].y;
-        // Start drawing
+        // Draw path
         ctx.beginPath();
-        ctx.arc(x, y, style[i]["size"], 0, 3 * Math.PI);
-
-        // Set line color
-        ctx.fillStyle = style[i]["color"];
-        ctx.fill();
-      }
-    } else if (handIndicatorType === "points") {
-      for (let i = 1; i < 6; i++) {
-        // Get x point
-        const x = predictions[i * 4].x;
-        // Get y point
-        const y = predictions[i * 4].y;
-        // Start drawing
-        ctx.beginPath();
-        ctx.arc(x, y, style[i * 4]["size"], 0, 3 * Math.PI);
-
-        // Set line color
-        ctx.fillStyle = style[i * 4]["color"];
-        ctx.fill();
+        ctx.moveTo(
+          predictions[firstJointIndex].x,
+          predictions[firstJointIndex].y
+        );
+        ctx.lineTo(
+          predictions[secondJointIndex].x,
+          predictions[secondJointIndex].y
+        );
+        ctx.strokeStyle = "lightgrey";
+        ctx.lineWidth = 1;
+        ctx.stroke();
       }
     }
-  }
-};
-
-export const drawPoints = (predictions, ctx) => {
-  // Check if we have predictions
-  if (predictions.length > 0) {
-    // Loop through each prediction
-
     // creating dots
     for (let i = 0; i < predictions.length; i++) {
       // Get x point
@@ -111,6 +73,27 @@ export const drawPoints = (predictions, ctx) => {
 
       // Set line color
       ctx.fillStyle = style[i]["color"];
+      ctx.fill();
+    }
+  }
+};
+
+export const drawPoints = (predictions, ctx) => {
+  // Check if we have predictions
+  if (predictions.length > 0) {
+    // Loop through each prediction
+
+    for (let i = 1; i < 6; i++) {
+      // Get x point
+      const x = predictions[i * 4].x;
+      // Get y point
+      const y = predictions[i * 4].y;
+      // Start drawing
+      ctx.beginPath();
+      ctx.arc(x, y, style[i * 4]["size"], 0, 3 * Math.PI);
+
+      // Set line color
+      ctx.fillStyle = style[i * 4]["color"];
       ctx.fill();
     }
   }
