@@ -5,7 +5,7 @@ import {
   GestureDescription,
 } from "fingerpose";
 
-// describe pointer gesture ✌️
+// describe pointer gesture
 const pointerDescription = new GestureDescription("pointer");
 
 // thumb:

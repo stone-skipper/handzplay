@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useControlsStore, useRulesStore } from "../../lib/store";
-import { line, rect, circle, star, text } from "../then/shape";
+import { line, rect, circle, star, text, clipping } from "../then/shape";
+import { audio } from "../then/audio";
+import { trace } from "../then/trace";
 
 export default function RelationCvs({
   videoWidth,
@@ -15,6 +17,7 @@ export default function RelationCvs({
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
   var fingersSelectedCoord = [];
+  const [trigger, setTrigger] = useState(false);
 
   const getDistance = (ax, ay, bx, by) => {
     let xDistance = ax - bx;
@@ -129,6 +132,76 @@ export default function RelationCvs({
         fingersSelectedCoord[1].y,
         thenDetail[1],
         thenDetail[2],
+        ctx
+      );
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "audio" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) < distance &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) !== 0
+    ) {
+      audio(thenDetail[0]);
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "trace" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) < distance
+    ) {
+      let midX = (fingersSelectedCoord[0].x + fingersSelectedCoord[1].x) / 2;
+      let midY = (fingersSelectedCoord[0].y + fingersSelectedCoord[1].y) / 2;
+      setTrigger(true);
+      trace(midX, midY, thenDetail[0], ctx);
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "trace" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) > distance
+    ) {
+      setTrigger(false);
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "shape" &&
+      thenDetail[0] === "clipping" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) < distance &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) !== 0
+    ) {
+      clipping(
+        fingersSelectedCoord[0].x, //ax
+        fingersSelectedCoord[0].y, //ay
+        fingersSelectedCoord[1].x, //bx
+        fingersSelectedCoord[1].y, //by
+        thenDetail[1], // type of clipping shape
+        thenDetail[2], // color
+        videoWidth, // canvas width
+        videoHeight, // cavans height
         ctx
       );
     }

@@ -4,7 +4,7 @@ const getDistance = (ax, ay, bx, by) => {
   return Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 };
 
-function drawStar(cx, cy, spikes, outerRadius, innerRadius, ctx) {
+const drawStar = (cx, cy, spikes, outerRadius, innerRadius, ctx) => {
   var rot = (Math.PI / 2) * 3;
   var x = cx;
   var y = cy;
@@ -23,7 +23,7 @@ function drawStar(cx, cy, spikes, outerRadius, innerRadius, ctx) {
     rot += step;
   }
   ctx.lineTo(cx, cy - outerRadius);
-}
+};
 
 export const line = (ax, ay, bx, by, color, ctx) => {
   ctx.beginPath();
@@ -87,4 +87,36 @@ export const text = (ax, ay, bx, by, color, text, size, ctx) => {
   ctx.fillStyle = color;
   ctx.textAlign = "center";
   ctx.fillText(text, midPointX, midPointY);
+};
+
+export const clipping = (ax, ay, bx, by, shape, color, w, h, ctx) => {
+  ctx.beginPath();
+  ctx.fillStyle = color;
+  //fill the whole canvas with color
+  ctx.moveTo(0, 0);
+  ctx.lineTo(0, h);
+  ctx.lineTo(w, h);
+  ctx.lineTo(w, 0);
+  ctx.closePath();
+
+  if (shape === "circle") {
+    let midPointX = (ax + bx) / 2;
+    let midPointY = (ay + by) / 2;
+    let radius = getDistance(ax, ay, midPointX, midPointY);
+    ctx.arc(midPointX, midPointY, radius, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (shape === "rect") {
+    let largeX = Math.max(ax, bx);
+    let smallX = Math.min(ax, bx);
+    let largeY = Math.max(ay, by);
+    let smallY = Math.min(ay, by);
+    ctx.rect(smallX, smallY, largeX - smallX, largeY - smallY);
+    ctx.fill();
+  } else if (shape === "star") {
+    let midPointX = (ax + bx) / 2;
+    let midPointY = (ay + by) / 2;
+    let radius = getDistance(ax, ay, midPointX, midPointY);
+    drawStar(midPointX, midPointY, 5, radius, radius * 0.5, ctx);
+    ctx.fill();
+  }
 };

@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import Controls from "./controlUI/controls";
-import Rules from "./rulesUI/rules";
+
 import { useControlsStore, useRulesStore } from "../lib/store";
 import RelationCvs from "./if/relationCvs";
 
@@ -13,7 +12,16 @@ import Webcam from "react-webcam";
 import { drawHand, drawPoints } from "./utils";
 
 import * as fp from "fingerpose";
-import { PointerGesture, ThumbsUpGesture, VictoryGesture } from "../gestures";
+import {
+  FiveGesture,
+  FourGesture,
+  ThreeGesture,
+  PointerGesture,
+  SpideyGesture,
+  ThumbsUpGesture,
+  VictoryGesture,
+} from "../gestures";
+import PoseCvs from "./if/poseCvs";
 
 export default function Handpose() {
   const webcamRef = useRef(null);
@@ -107,6 +115,59 @@ export default function Handpose() {
     }
   };
 
+  // detect gesture
+  const GE = new fp.GestureEstimator([
+    PointerGesture,
+    VictoryGesture,
+    ThumbsUpGesture,
+    FiveGesture,
+    FourGesture,
+    ThreeGesture,
+    SpideyGesture,
+  ]);
+
+  const gestureRecognition = async (hand, side) => {
+    // create x,y,x array for each point
+    if (hand !== undefined) {
+      var keypointsArray = [];
+
+      for (let i = 0; i < hand.keypoints.length; i++) {
+        keypointsArray[i] = [
+          hand.keypoints[i].x,
+          hand.keypoints[i].y,
+          hand.keypoints3D[i].z * 100,
+        ];
+      }
+      const gesture = await GE.estimate(keypointsArray, 8);
+      if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
+        //   console.log(gesture.gestures);
+
+        const confidence = gesture.gestures.map(
+          (keypointsArray) => keypointsArray.confidence
+        );
+
+        let result = gesture.gestures.reduce((p, c) => {
+          return p.score > c.score ? p : c;
+        });
+
+        if (result !== undefined && result.score > 9.8 && side === "left") {
+          console.log(result.name);
+          useControlsStore.setState({ currentPoseL: result.name });
+        } else if (
+          result !== undefined &&
+          result.score > 9.8 &&
+          side === "right"
+        ) {
+          console.log(result.name);
+          useControlsStore.setState({ currentPoseR: result.name });
+        } else {
+          useControlsStore.setState({ currentPoseL: "" });
+          useControlsStore.setState({ currentPoseR: "" });
+        }
+      }
+    }
+  };
+
   const detect = async (net) => {
     // Check data is available
     if (
@@ -147,6 +208,7 @@ export default function Handpose() {
         useControlsStore.setState({ leftHand: true });
         useControlsStore.setState({ rightHand: false });
         handToFinger(handL, "left");
+        gestureRecognition(handL, "left");
         useControlsStore.setState({
           fingersR: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         });
@@ -154,6 +216,8 @@ export default function Handpose() {
         useControlsStore.setState({ rightHand: true });
         useControlsStore.setState({ leftHand: false });
         handToFinger(handR, "right");
+        gestureRecognition(handR, "right");
+
         useControlsStore.setState({
           fingersL: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         });
@@ -162,6 +226,8 @@ export default function Handpose() {
         useControlsStore.setState({ rightHand: true });
         handToFinger(handL, "left");
         handToFinger(handR, "right");
+        gestureRecognition(handL, "left");
+        gestureRecognition(handR, "right");
       } else {
         useControlsStore.setState({ leftHand: false });
         useControlsStore.setState({ rightHand: false });
@@ -175,48 +241,12 @@ export default function Handpose() {
             drawPoints(hand[i].keypoints, ctx);
           }
         }
-
-        // detect gesture
-        const GE = new fp.GestureEstimator([
-          PointerGesture,
-          VictoryGesture,
-          ThumbsUpGesture,
-        ]);
-
-        // create x,y,x array for each point
-        var keypointsArray = [];
-        for (let i = 0; i < hand[0].keypoints.length; i++) {
-          keypointsArray[i] = [
-            hand[0].keypoints[i].x,
-            hand[0].keypoints[i].y,
-            hand[0].keypoints3D[i].z * 100,
-          ];
-        }
-        const gesture = await GE.estimate(keypointsArray, 8);
-        if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
-          //   console.log(gesture.gestures);
-
-          const confidence = gesture.gestures.map(
-            (keypointsArray) => keypointsArray.confidence
-          );
-
-          // const maxConfidence = confidence.indexOf(
-          //   Math.max.apply(null, confidence)
-          // );
-
-          let result = gesture.gestures.reduce((p, c) => {
-            return p.score > c.score ? p : c;
-          });
-          if (result !== undefined && result.score > 9.8) {
-            console.log(result.name);
-            useControlsStore.setState({ currentPose: result.name });
-          } else {
-            useControlsStore.setState({ currentPose: "" });
-          }
-        }
       } else {
+        // when there's no hand with the view, set things to 0
         useControlsStore.setState({ leftHand: false });
         useControlsStore.setState({ rightHand: false });
+        useControlsStore.setState({ currentPoseL: "" });
+        useControlsStore.setState({ currentPoseR: "" });
         useControlsStore.setState({
           fingersL: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         });
@@ -233,8 +263,6 @@ export default function Handpose() {
 
   return (
     <div className="App">
-      <Controls />
-      <Rules />
       <Webcam
         ref={webcamRef}
         mirrored={true}
@@ -270,17 +298,30 @@ export default function Handpose() {
       />
       {rules !== undefined &&
         rules.map((value, index) => {
-          return (
-            <RelationCvs
-              key={index}
-              videoWidth={vWidth}
-              videoHeight={vHeight}
-              fingersSelected={[value.fingerA, value.fingerB]}
-              distance={value.distance}
-              thenType={value.thenType}
-              thenDetail={value.thenDetail}
-            />
-          );
+          if (value.ifType === "relation") {
+            return (
+              <RelationCvs
+                key={index}
+                videoWidth={vWidth}
+                videoHeight={vHeight}
+                fingersSelected={[value.fingerA, value.fingerB]}
+                distance={value.distance}
+                thenType={value.thenType}
+                thenDetail={value.thenDetail}
+              />
+            );
+          } else if (value.ifType === "pose") {
+            return (
+              <PoseCvs
+                key={index}
+                videoWidth={vWidth}
+                videoHeight={vHeight}
+                pose={value.pose}
+                thenType={value.thenType}
+                thenDetail={value.thenDetail}
+              />
+            );
+          }
         })}
     </div>
   );

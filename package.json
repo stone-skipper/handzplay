@@ -13,7 +13,7 @@
     "@tensorflow/tfjs-backend-wasm": "^3.18.0",
     "@tensorflow/tfjs-backend-webgl": "^3.18.0",
     "fingerpose": "^0.1.0",
-    "framer-motion": "^6.3.16",
+    "framer-motion": "^6.4.3",
     "immer": "^9.0.15",
     "next": "latest",
     "react": "^17.0.2",

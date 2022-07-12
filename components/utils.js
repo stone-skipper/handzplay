@@ -1,3 +1,6 @@
+export const bg = "#f3f3f3";
+export const key = "#004dc0";
+
 // Points for fingers
 const fingerJoints = {
   thumb: [0, 1, 2, 3, 4],
@@ -11,29 +14,28 @@ const dotSize = 2;
 
 // Infinity Gauntlet Style
 const style = {
-  0: { color: "blue", size: dotSize },
-  1: { color: "blue", size: dotSize },
-  2: { color: "blue", size: dotSize },
-  3: { color: "blue", size: dotSize },
-  4: { color: "white", size: dotSize },
-  5: { color: "blue", size: dotSize },
-  6: { color: "blue", size: dotSize },
-  7: { color: "blue", size: dotSize },
-  8: { color: "white", size: dotSize },
-  9: { color: "blue", size: dotSize },
-  10: { color: "blue", size: dotSize },
-  11: { color: "blue", size: dotSize },
-  12: { color: "white", size: dotSize },
-  13: { color: "blue", size: dotSize },
-  14: { color: "blue", size: dotSize },
-  15: { color: "blue", size: dotSize },
-  16: { color: "white", size: dotSize },
-  17: { color: "blue", size: dotSize },
-  18: { color: "blue", size: dotSize },
-  19: { color: "blue", size: dotSize },
-  20: { color: "white", size: dotSize },
+  0: { color: "white", size: dotSize },
+  1: { color: "white", size: dotSize },
+  2: { color: "white", size: dotSize },
+  3: { color: "white", size: dotSize },
+  4: { color: key, size: dotSize },
+  5: { color: "white", size: dotSize },
+  6: { color: "white", size: dotSize },
+  7: { color: "white", size: dotSize },
+  8: { color: key, size: dotSize },
+  9: { color: "white", size: dotSize },
+  10: { color: "white", size: dotSize },
+  11: { color: "white", size: dotSize },
+  12: { color: key, size: dotSize },
+  13: { color: "white", size: dotSize },
+  14: { color: "white", size: dotSize },
+  15: { color: "white", size: dotSize },
+  16: { color: key, size: dotSize },
+  17: { color: "white", size: dotSize },
+  18: { color: "white", size: dotSize },
+  19: { color: "white", size: dotSize },
+  20: { color: key, size: dotSize },
 };
-
 export const drawHand = (predictions, ctx) => {
   // Check if we have predictions
   if (predictions.length > 0) {

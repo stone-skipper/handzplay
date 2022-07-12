@@ -1,58 +1,73 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useControlsStore, useRulesStore } from "../../lib/store";
+import { line, rect, circle, star, text, clipping } from "../then/shape";
+import { audio } from "../then/audio";
+import { current } from "immer";
+import { motion } from "framer-motion";
+import Element from "../then/element";
 
-export default function PoseCvs(videoWidth, videoHeight, pose, then) {
+export default function PoseCvs({
+  videoWidth,
+  videoHeight,
+  pose,
+  thenType,
+  thenDetail,
+}) {
   const reactionRef = useRef(null);
-  const handR = useControlsStore((state) => state.handR);
-  const handL = useControlsStore((state) => state.handL);
 
-  const rules = useRulesStore((state) => state.rules);
+  const fingersL = useControlsStore((state) => state.fingersL);
+  const fingersR = useControlsStore((state) => state.fingersR);
+  const currentPoseL = useControlsStore((state) => state.currentPoseL);
+  const currentPoseR = useControlsStore((state) => state.currentPoseR);
 
-  const getDistance = (ax, ay, bx, by) => {
-    let xDistance = ax - bx;
-    let yDistance = ay - by;
-    return Math.sqrt(xDistance * xDistance + yDistance * yDistance);
-  };
+  const [trigger, setTrigger] = useState(false);
 
   var scale = 2; // Change to 1 on retina screens to see blurry canvas.
 
-  const drawInteraction = () => {
-    reactionRef.current.width = Math.floor(640 * scale);
-    reactionRef.current.height = Math.floor(480 * scale);
-    const ctx = reactionRef.current.getContext("2d");
-    ctx.scale(scale, scale);
-
-    if (getDistance(fingerAX, fingerAY, fingerBX, fingerBY) < distance) {
-      // 이부분에 대해서는 then에서 함수 가져오는 방식으로
-      ctx.beginPath();
-      ctx.moveTo(fingerAX, fingerAY);
-      ctx.lineTo(fingerBX, fingerBY);
-      ctx.strokeStyle = "green";
-      ctx.lineWidth = 1;
-      ctx.stroke();
+  const pullTrigger = () => {
+    if (pose[1] === "left" && pose[0] === currentPoseL) {
+      console.log("left!" + currentPoseL);
+      setTrigger(true);
+    } else if (pose[1] === "right" && pose[0] === currentPoseR) {
+      console.log("right!" + currentPoseR);
+      setTrigger(true);
+    } else if (
+      pose[1] === "both" &&
+      pose[0] === currentPoseL &&
+      pose[0] === currentPoseR
+    ) {
+      console.log("both!" + currentPoseL);
+      setTrigger(true);
+    } else {
+      setTrigger(false);
     }
   };
 
   useEffect(() => {
-    drawInteraction();
-  }, [handL]);
+    console.log(trigger);
+  }, [trigger]);
+
+  useEffect(() => {
+    pullTrigger();
+    console.log(currentPoseL, currentPoseR);
+  }, [currentPoseL, currentPoseR]);
 
   return (
-    <canvas
-      ref={reactionRef}
+    <motion.div
       style={{
-        position: "absolute",
-        marginLeft: "auto",
-        marginRight: "auto",
-        left: 0,
-        right: 0,
-        textAlign: "center",
-        zindex: 12,
-        width: "100vw",
-        height: "100vh",
-        objectFit: "cover",
-        transform: "scaleX(-1)",
+        width: "fit-content",
+        height: "fit-content",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
-    />
+    >
+      <Element
+        trigger={trigger}
+        type={thenDetail[0]}
+        initial={thenDetail[1]}
+        onPose={thenDetail[2]}
+      />
+    </motion.div>
   );
 }

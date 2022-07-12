@@ -1,0 +1,11 @@
+@use "sass:color";
+
+$bg: #f3f3f3;
+$key: #004dc0;
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: $bg;
+}
