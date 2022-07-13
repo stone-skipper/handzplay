@@ -47,6 +47,8 @@ export default function Controls() {
             if (handIndicatorType === "skeleton") {
               useControlsStore.setState({ handIndicatorType: "points" });
             } else if (handIndicatorType === "points") {
+              useControlsStore.setState({ handIndicatorType: "blurred" });
+            } else if (handIndicatorType === "blurred") {
               useControlsStore.setState({ handIndicatorType: "skeleton" });
             }
           }}

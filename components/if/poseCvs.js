@@ -22,8 +22,6 @@ export default function PoseCvs({
 
   const [trigger, setTrigger] = useState(false);
 
-  var scale = 2; // Change to 1 on retina screens to see blurry canvas.
-
   const pullTrigger = () => {
     if (pose[1] === "left" && pose[0] === currentPoseL) {
       console.log("left!" + currentPoseL);

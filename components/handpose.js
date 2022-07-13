@@ -9,7 +9,7 @@ import * as handpose from "@tensorflow-models/handpose";
 import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 
 import Webcam from "react-webcam";
-import { drawHand, drawPoints } from "./utils";
+import { drawHand, drawPoints, drawBlurred } from "./utils";
 
 import * as fp from "fingerpose";
 import {
@@ -37,7 +37,9 @@ export default function Handpose() {
   const handIndicatorType = useControlsStore(
     (state) => state.handIndicatorType
   );
-  var handL, handR;
+  var handL, handR, hand;
+
+  const [passHand, setPassHand] = useState(null);
 
   const [vWidth, setvWidth] = useState(0);
   const [vHeight, setvHeight] = useState(0);
@@ -191,13 +193,8 @@ export default function Handpose() {
       setvWidth(videoWidth);
 
       // Make Detections
-      const hand = await net.estimateHands(video);
-
-      const ctx = canvasRef.current.getContext("2d");
-      var scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
-      canvasRef.current.width = Math.floor(videoWidth * scale);
-      canvasRef.current.height = Math.floor(videoHeight * scale);
-      ctx.scale(scale, scale);
+      hand = await net.estimateHands(video);
+      setPassHand(hand);
 
       // check which hand is present & store each fingertip positions
 
@@ -234,13 +231,6 @@ export default function Handpose() {
       }
 
       if (hand.length > 0) {
-        for (let i = 0; i < hand.length; i++) {
-          if (handIndicatorType === "skeleton") {
-            drawHand(hand[i].keypoints, ctx);
-          } else if (handIndicatorType === "points") {
-            drawPoints(hand[i].keypoints, ctx);
-          }
-        }
       } else {
         // when there's no hand with the view, set things to 0
         useControlsStore.setState({ leftHand: false });
@@ -260,6 +250,26 @@ export default function Handpose() {
   useEffect(() => {
     runHandpose();
   }, []);
+
+  useEffect(() => {
+    if (passHand !== null) {
+      console.log(passHand);
+      const ctx = canvasRef.current.getContext("2d");
+      var scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
+      canvasRef.current.width = Math.floor(vWidth * scale);
+      canvasRef.current.height = Math.floor(vHeight * scale);
+      ctx.scale(scale, scale);
+      for (let i = 0; i < passHand.length; i++) {
+        if (handIndicatorType === "skeleton") {
+          drawHand(passHand[i].keypoints, ctx);
+        } else if (handIndicatorType === "points") {
+          drawPoints(passHand[i].keypoints, ctx);
+        } else if (handIndicatorType === "blurred") {
+          drawBlurred(passHand[i].keypoints, ctx);
+        }
+      }
+    }
+  }, [passHand]);
 
   return (
     <div className="App">
@@ -281,6 +291,7 @@ export default function Handpose() {
         }}
       />
       <canvas
+        id="hand"
         ref={canvasRef}
         style={{
           position: "absolute",
@@ -294,6 +305,7 @@ export default function Handpose() {
           height: "100vh",
           objectFit: "cover",
           transform: "scaleX(-1)",
+          filter: handIndicatorType === "blurred" ? "blur(30px)" : "none",
         }}
       />
       {rules !== undefined &&

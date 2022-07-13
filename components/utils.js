@@ -40,6 +40,7 @@ export const drawHand = (predictions, ctx) => {
   // Check if we have predictions
   if (predictions.length > 0) {
     // Loop through each prediction
+
     for (let j = 0; j < Object.keys(fingerJoints).length; j++) {
       let finger = Object.keys(fingerJoints)[j];
       //  Loop through pairs of joints
@@ -98,5 +99,51 @@ export const drawPoints = (predictions, ctx) => {
       ctx.fillStyle = style[i * 4]["color"];
       ctx.fill();
     }
+  }
+};
+
+export const drawBlurred = (predictions, ctx) => {
+  // Check if we have predictions
+  if (predictions.length > 0) {
+    // Loop through each prediction
+
+    for (let j = 0; j < Object.keys(fingerJoints).length; j++) {
+      let finger = Object.keys(fingerJoints)[j];
+      //  Loop through pairs of joints
+      for (let k = 0; k < fingerJoints[finger].length - 1; k++) {
+        // Get pairs of joints
+        const firstJointIndex = fingerJoints[finger][k];
+        const secondJointIndex = fingerJoints[finger][k + 1];
+
+        // Draw path
+        ctx.beginPath();
+        ctx.moveTo(
+          predictions[firstJointIndex].x,
+          predictions[firstJointIndex].y
+        );
+        ctx.lineTo(
+          predictions[secondJointIndex].x,
+          predictions[secondJointIndex].y
+        );
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 20;
+        ctx.stroke();
+      }
+    }
+    // creating dots
+    for (let i = 0; i < predictions.length; i++) {
+      // Get x point
+      const x = predictions[i].x;
+      // Get y point
+      const y = predictions[i].y;
+      // Start drawing
+      ctx.beginPath();
+      ctx.arc(x, y, 10, 0, 3 * Math.PI);
+
+      // Set line color
+      ctx.fillStyle = "white";
+      ctx.fill();
+    }
+    ctx.filter = "blur(30px)";
   }
 };
