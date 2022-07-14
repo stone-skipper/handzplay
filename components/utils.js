@@ -138,7 +138,7 @@ export const drawBlurred = (predictions, ctx) => {
       const y = predictions[i].y;
       // Start drawing
       ctx.beginPath();
-      ctx.arc(x, y, 10, 0, 3 * Math.PI);
+      ctx.arc(x, y, 12, 0, 3 * Math.PI);
 
       // Set line color
       ctx.fillStyle = "white";

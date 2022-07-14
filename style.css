@@ -1,3 +1,10 @@
+@font-face {
+  font-family: Gainsborough;
+  src: url("https://www.mediafont.com/storage/contents/10528/font.eot"); /* IE */
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+
 body,
 html {
   margin: 0;
@@ -5,4 +12,12 @@ html {
   width: "100vw";
   height: "100vh";
   overflow: hidden;
+  font-family: "Manrope", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  padding-bottom: 2px;
+  border-bottom: 1px solid white;
 }

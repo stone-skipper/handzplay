@@ -5,6 +5,7 @@ import RelationCvs from "./if/relationCvs";
 
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
+import "@tensorflow/tfjs-backend-wasm";
 
 import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 
@@ -30,7 +31,6 @@ export default function Handpose({
 }) {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-  const reactionRef = useRef(null);
 
   // from store
   // const cameraFeed = useControlsStore((state) => state.cameraFeed);
@@ -180,6 +180,7 @@ export default function Handpose({
     ) {
       // Get Video Properties
       const video = webcamRef.current.video;
+      useControlsStore.setState({ cameraAccess: true });
       videoWidth = webcamRef.current.video.videoWidth;
       videoHeight = webcamRef.current.video.videoHeight;
 

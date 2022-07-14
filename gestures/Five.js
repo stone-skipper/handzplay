@@ -19,6 +19,12 @@ fiveDescription.addDirection(
   FingerDirection.DiagonalUpRight,
   1.0
 );
+fiveDescription.addDirection(Finger.Thumb, FingerDirection.HorizontalLeft, 1.0);
+fiveDescription.addDirection(
+  Finger.Thumb,
+  FingerDirection.HorizontalRight,
+  1.0
+);
 
 // index:
 fiveDescription.addCurl(Finger.Index, FingerCurl.NoCurl, 1.0);
@@ -63,13 +69,26 @@ fiveDescription.addDirection(
 // ring:
 fiveDescription.addCurl(Finger.Ring, FingerCurl.NoCurl, 1.0);
 
-// fiveDescription.addCurl(Finger.Ring, FingerCurl.FullCurl, 1.0);
-// fiveDescription.addCurl(Finger.Ring, FingerCurl.HalfCurl, 0.9);
+fiveDescription.addDirection(Finger.Ring, FingerDirection.VerticalUp, 1.0);
+fiveDescription.addDirection(Finger.Ring, FingerDirection.DiagonalUpLeft, 1.0);
+fiveDescription.addDirection(Finger.Ring, FingerDirection.DiagonalUpRight, 1.0);
+fiveDescription.addDirection(Finger.Ring, FingerDirection.HorizontalLeft, 1.0);
+fiveDescription.addDirection(Finger.Ring, FingerDirection.HorizontalRight, 1.0);
 
 // pinky:
 fiveDescription.addCurl(Finger.Pinky, FingerCurl.NoCurl, 1.0);
-
-// fiveDescription.addCurl(Finger.Pinky, FingerCurl.FullCurl, 1.0);
-// fiveDescription.addCurl(Finger.Pinky, FingerCurl.HalfCurl, 0.9);
+fiveDescription.addDirection(Finger.Pinky, FingerDirection.VerticalUp, 1.0);
+fiveDescription.addDirection(Finger.Pinky, FingerDirection.DiagonalUpLeft, 1.0);
+fiveDescription.addDirection(
+  Finger.Pinky,
+  FingerDirection.DiagonalUpRight,
+  1.0
+);
+fiveDescription.addDirection(Finger.Pinky, FingerDirection.HorizontalLeft, 1.0);
+fiveDescription.addDirection(
+  Finger.Pinky,
+  FingerDirection.HorizontalRight,
+  1.0
+);
 
 export default fiveDescription;

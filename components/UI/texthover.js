@@ -85,8 +85,6 @@ export function TextHover({
           initial={"initial"}
           animate={"default"}
           whileHover={"hover"}
-          // transition={{ delay: delay }}
-
           style={{ padding: "2px 5px" }}
         >
           <div style={{ textAlign: "left", fontSize: fontSize, color: color }}>

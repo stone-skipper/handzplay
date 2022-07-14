@@ -1,8 +1,5 @@
 import Handpose from "../components/handpose";
-// import Layout from "../components/layout";
-import Controls from "../components/controlUI/controls";
-import Rules from "../components/rulesUI/rules";
-import Grid from "../components/grid";
+import { useEffect } from "react";
 import Logo from "../components/UI/logo";
 import Footer from "../components/UI/footer";
 import { useControlsStore } from "../lib/store";
@@ -12,8 +9,10 @@ export default function Index() {
   const handIndicatorType = useControlsStore(
     (state) => state.handIndicatorType
   );
-  // const currentPoseL = useControlsStore((state) => state.currentPoseL);
-  // const currentPoseR = useControlsStore((state) => state.currentPoseR);
+  const currentPoseL = useControlsStore((state) => state.currentPoseL);
+  const currentPoseR = useControlsStore((state) => state.currentPoseR);
+  const handReady = useControlsStore((state) => state.handReady);
+  const cameraAccess = useControlsStore((state) => state.cameraAccess);
 
   const landingRules = [
     {
@@ -43,6 +42,11 @@ export default function Index() {
     },
   ];
   // const cameraFeed = useControlsStore((state) => state.cameraFeed);
+  useEffect(() => {
+    if (currentPoseL === "victory" && currentPoseR === "victory") {
+      window.location.href = "/playground";
+    }
+  }, [currentPoseL, currentPoseR]);
 
   return (
     <div className={styles.app}>
@@ -52,11 +56,14 @@ export default function Index() {
         rules={landingRules}
       />
       <div className={styles.titleWrapper}>
-        <Logo color="white" displayTag={true} />
+        <Logo color="white" displayTag={true} fontSize={72} />
       </div>
-      {/* <div style={{ position: "absolute", color: "white" }}>
+      <div style={{ position: "absolute", color: "white", zIndex: 50, top: 0 }}>
+        {cameraAccess === true ? "" : "please allow the webcam access"}
+        {handReady === true ? "" : "opening eyes to see your hands..."}
+        {handReady === true && cameraAccess === true && "I can see your hands!"}
         {currentPoseL} {currentPoseR}
-      </div> */}
+      </div>
       <Footer />
     </div>
   );

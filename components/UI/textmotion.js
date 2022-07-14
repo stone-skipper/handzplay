@@ -78,7 +78,6 @@ export default function TextMotion({
                 fontSize: fontSize,
                 color: color,
                 fontFamily: font,
-                letterSpacing: letterSpacing,
                 fontWeight: 400,
               }}
             >
@@ -96,6 +95,8 @@ export default function TextMotion({
                         position: "relative",
                         display: "inline-block",
                         width: "auto",
+                        letterSpacing:
+                          index === word.length - 1 ? 0 : letterSpacing,
                       }} // Position elements
                       variants={letterVariants}
                       transition={{ duration: 0.5 }}

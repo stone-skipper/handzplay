@@ -120,3 +120,6 @@ export const clipping = (ax, ay, bx, by, shape, color, w, h, ctx) => {
     ctx.fill();
   }
 };
+
+export const stamp = (ax, ay, bx, by) => {};
+export const bubble = (ax, ay, bx, by) => {};

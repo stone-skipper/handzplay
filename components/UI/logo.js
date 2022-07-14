@@ -1,6 +1,7 @@
 import TextMotion from "../UI/textmotion";
+import Link from "next/link";
 
-export default function Logo({ color, displayTag }) {
+export default function Logo({ color, displayTag, fontSize }) {
   return (
     <div
       style={{
@@ -16,9 +17,9 @@ export default function Logo({ color, displayTag }) {
       <TextMotion
         font='"Gainsborough", sans-serif'
         content="HANDZPLAY"
-        fontSize={72}
+        fontSize={fontSize}
         delay={0}
-        color="white"
+        color={color}
         letterSpacing="1.2rem"
       />
       <p
