@@ -23,20 +23,21 @@ import {
 } from "../gestures";
 import PoseCvs from "./if/poseCvs";
 
-export default function Handpose() {
+export default function Handpose({
+  handIndicatorType,
+  cameraFeed,
+  rules = [],
+}) {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const reactionRef = useRef(null);
 
   // from store
-  const cameraFeed = useControlsStore((state) => state.cameraFeed);
+  // const cameraFeed = useControlsStore((state) => state.cameraFeed);
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
-  const rules = useRulesStore((state) => state.rules);
+  // const rules = useRulesStore((state) => state.rules);
 
-  const handIndicatorType = useControlsStore(
-    (state) => state.handIndicatorType
-  );
   var handL, handR, hand;
 
   const [passHand, setPassHand] = useState(null);
@@ -305,7 +306,7 @@ export default function Handpose() {
           height: "100vh",
           objectFit: "cover",
           transform: "scaleX(-1)",
-          filter: handIndicatorType === "blurred" ? "blur(30px)" : "none",
+          filter: handIndicatorType === "blurred" ? "blur(35px)" : "none",
         }}
       />
       {rules !== undefined &&

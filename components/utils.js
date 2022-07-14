@@ -144,6 +144,5 @@ export const drawBlurred = (predictions, ctx) => {
       ctx.fillStyle = "white";
       ctx.fill();
     }
-    ctx.filter = "blur(30px)";
   }
 };

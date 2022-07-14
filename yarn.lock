@@ -698,6 +698,11 @@ react-dom@^17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-intersection-observer@^9.3.5:
+  version "9.3.5"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.3.5.tgz#df97584c1ef1549a47d4af6380db2fb4b76d7bba"
+  integrity sha512-TiJXVUapzAaIrZCAMBLjyWvwGYNGm0Xpkcwm3NY23b9PsJEBavul0hRFmrwc/LOmBUA/8TlkjCj7lCvjM0q1Hg==
+
 react-webcam@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/react-webcam/-/react-webcam-7.0.1.tgz#8249e1d621eb4bba7e3f52135f562439d0528df3"
