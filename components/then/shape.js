@@ -121,5 +121,8 @@ export const clipping = (ax, ay, bx, by, shape, color, w, h, ctx) => {
   }
 };
 
-export const stamp = (ax, ay, bx, by) => {};
+export const stamp = (ax, ay, bx, by) => {
+  let midPointX = (ax + bx) / 2;
+  let midPointY = (ay + by) / 2;
+};
 export const bubble = (ax, ay, bx, by) => {};
