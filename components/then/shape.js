@@ -121,8 +121,19 @@ export const clipping = (ax, ay, bx, by, shape, color, w, h, ctx) => {
   }
 };
 
-export const stamp = (ax, ay, bx, by) => {
+var stampsArray = [];
+
+export const stamp = (ax, ay, bx, by, color, shape, fillType, ctx) => {
   let midPointX = (ax + bx) / 2;
   let midPointY = (ay + by) / 2;
+  stampsArray.push({ x: midPointX, y: midPointY });
+
+  for (let i = 0; i < stampsArray.length; i++) {
+    ctx.beginPath();
+    ctx.arc(stampsArray[i].x, stampsArray[i].y, 5, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+  console.log(stampsArray);
 };
 export const bubble = (ax, ay, bx, by) => {};

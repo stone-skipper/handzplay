@@ -1,6 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useControlsStore, useRulesStore } from "../../lib/store";
-import { line, rect, circle, star, text, clipping } from "../then/shape";
+import {
+  line,
+  rect,
+  circle,
+  star,
+  text,
+  clipping,
+  stamp,
+  bubble,
+} from "../then/shape";
 import { audio } from "../then/audio";
 import { trace } from "../then/trace";
 
@@ -202,6 +211,32 @@ export default function RelationCvs({
         thenDetail[2], // color
         videoWidth, // canvas width
         videoHeight, // cavans height
+        ctx
+      );
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "stamp" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) < distance &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) !== 0
+    ) {
+      stamp(
+        fingersSelectedCoord[0].x, //ax
+        fingersSelectedCoord[0].y, //ay
+        fingersSelectedCoord[1].x, //bx
+        fingersSelectedCoord[1].y, //by
+        thenDetail[0], // type of stamping shape
+        thenDetail[1], // color
+        thenDetail[2], // fillType
         ctx
       );
     }

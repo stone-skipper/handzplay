@@ -2,6 +2,7 @@ import Handpose from "../components/handpose";
 import { useEffect } from "react";
 import Logo from "../components/UI/logo";
 import Footer from "../components/UI/footer";
+import Illust from "../components/UI/svg";
 import { useControlsStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
 
@@ -63,6 +64,16 @@ export default function Index() {
         {handReady === true ? "" : "opening eyes to see your hands..."}
         {handReady === true && cameraAccess === true && "I can see your hands!"}
         {currentPoseL} {currentPoseR}
+      </div>
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          position: "absolute",
+          top: 150,
+        }}
+      >
+        {/* <Illust /> */}
       </div>
       <Footer />
     </div>
