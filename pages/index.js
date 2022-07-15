@@ -60,7 +60,7 @@ export default function Index() {
         <Logo color="white" displayTag={true} fontSize={72} />
       </div>
       <div style={{ position: "absolute", color: "white", zIndex: 50, top: 0 }}>
-        {cameraAccess === true ? "" : "please allow the webcam access"}
+        {cameraAccess === true ? "" : "waiting for an access to your camera"}
         {handReady === true ? "" : "opening eyes to see your hands..."}
         {handReady === true && cameraAccess === true && "I can see your hands!"}
         {currentPoseL} {currentPoseR}

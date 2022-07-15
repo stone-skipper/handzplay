@@ -255,7 +255,7 @@ export default function Handpose({
 
   useEffect(() => {
     if (passHand !== null) {
-      console.log(passHand);
+      // console.log(passHand);
       const ctx = canvasRef.current.getContext("2d");
       var scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
       canvasRef.current.width = Math.floor(vWidth * scale);

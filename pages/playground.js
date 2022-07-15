@@ -6,7 +6,6 @@ import Rules from "../components/rulesUI/rules";
 import Grid from "../components/grid";
 import { useControlsStore, useRulesStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
-import Link from "next/link";
 
 export default function Playground() {
   const handIndicatorType = useControlsStore(
@@ -43,9 +42,7 @@ export default function Playground() {
             background: "#f3f3f3",
           }}
         >
-          <Link href="/">
-            <Logo color="#004dc0" displayTag={false} fontSize={40} />
-          </Link>
+          <Logo color="#004dc0" displayTag={false} fontSize={40} />
         </div>
       </div>
     </div>

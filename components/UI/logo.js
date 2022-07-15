@@ -1,5 +1,4 @@
 import TextMotion from "../UI/textmotion";
-import Link from "next/link";
 
 export default function Logo({ color, displayTag, fontSize }) {
   return (

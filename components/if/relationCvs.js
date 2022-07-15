@@ -11,7 +11,6 @@ import {
   bubble,
 } from "../then/shape";
 import { audio } from "../then/audio";
-import { trace } from "../then/trace";
 
 export default function RelationCvs({
   videoWidth,
@@ -35,6 +34,9 @@ export default function RelationCvs({
   };
 
   var scale = 2; // Change to 1 on retina screens to see blurry canvas.
+  const [drawArray, setDrawArray] = useState([]);
+  const [stampArray, setStampArray] = useState([]);
+  const [stampPoint, setStampPoint] = useState([]);
 
   const drawInteraction = () => {
     reactionRef.current.width = Math.floor(videoWidth * scale);
@@ -162,27 +164,42 @@ export default function RelationCvs({
       audio(thenDetail[0]);
     } else if (
       fingersSelectedCoord.length !== 0 &&
-      thenType === "trace" &&
+      thenType === "stamp" &&
       getDistance(
         fingersSelectedCoord[0].x,
         fingersSelectedCoord[0].y,
         fingersSelectedCoord[1].x,
         fingersSelectedCoord[1].y
-      ) < distance
+      ) < distance &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) !== 0
     ) {
-      let midX = (fingersSelectedCoord[0].x + fingersSelectedCoord[1].x) / 2;
-      let midY = (fingersSelectedCoord[0].y + fingersSelectedCoord[1].y) / 2;
       setTrigger(true);
-      trace(midX, midY, thenDetail[0], ctx);
+      setStampPoint([
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y,
+      ]);
     } else if (
-      fingersSelectedCoord.length !== 0 &&
-      thenType === "trace" &&
+      (fingersSelectedCoord.length !== 0 &&
+        thenType === "stamp" &&
+        getDistance(
+          fingersSelectedCoord[0].x,
+          fingersSelectedCoord[0].y,
+          fingersSelectedCoord[1].x,
+          fingersSelectedCoord[1].y
+        ) > distance) ||
       getDistance(
         fingersSelectedCoord[0].x,
         fingersSelectedCoord[0].y,
         fingersSelectedCoord[1].x,
         fingersSelectedCoord[1].y
-      ) > distance
+      ) === 0
     ) {
       setTrigger(false);
     } else if (
@@ -215,7 +232,7 @@ export default function RelationCvs({
       );
     } else if (
       fingersSelectedCoord.length !== 0 &&
-      thenType === "stamp" &&
+      thenType === "draw" &&
       getDistance(
         fingersSelectedCoord[0].x,
         fingersSelectedCoord[0].y,
@@ -229,18 +246,69 @@ export default function RelationCvs({
         fingersSelectedCoord[1].y
       ) !== 0
     ) {
-      stamp(
-        fingersSelectedCoord[0].x, //ax
-        fingersSelectedCoord[0].y, //ay
-        fingersSelectedCoord[1].x, //bx
-        fingersSelectedCoord[1].y, //by
-        thenDetail[0], // type of stamping shape
-        thenDetail[1], // color
-        thenDetail[2], // fillType
-        ctx
-      );
+      let midPointX =
+        (fingersSelectedCoord[0].x + fingersSelectedCoord[1].x) / 2;
+      let midPointY =
+        (fingersSelectedCoord[0].y + fingersSelectedCoord[1].y) / 2;
+      setDrawArray([...drawArray, { x: midPointX, y: midPointY }]);
+    }
+
+    // for drawing
+    if (drawArray.length !== 0 && thenType === "draw") {
+      ctx.beginPath(), ctx.moveTo(drawArray[0].x, drawArray[0].y);
+
+      for (let i = 1; i < drawArray.length - 2; i++) {
+        var c = (drawArray[i].x + drawArray[i + 1].x) / 2,
+          d = (drawArray[i].y + drawArray[i + 1].y) / 2;
+        ctx.quadraticCurveTo(drawArray[i].x, drawArray[i].y, c, d);
+      }
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+      ctx.strokeStyle = thenDetail[0];
+      ctx.lineWidth = thenDetail[1];
+      ctx.stroke();
+    }
+
+    // for stamping
+
+    if (stampArray.length !== 0 && thenType === "stamp") {
+      for (let i = 0; i < stampArray.length; i++) {
+        ctx.beginPath();
+
+        // what if reusing the shape functions here?
+
+        if (thenDetail[0] === "circle") {
+          ctx.arc(
+            stampArray[i].x,
+            stampArray[i].y,
+            thenDetail[3] / 2,
+            0,
+            Math.PI * 2
+          );
+        } else if (thenDetail[0] === "rect") {
+        } else if (thenDetail[0] === "text") {
+        } else if (thenDetail[0] === "star") {
+        }
+
+        if (thenDetail[2] === "fill") {
+          ctx.fillStyle = thenDetail[1];
+          ctx.fill();
+        } else if (thenDetail[2] === "stroke") {
+          ctx.strokeStyle = thenDetail[1];
+          ctx.stroke();
+        }
+      }
     }
   };
+
+  useEffect(() => {
+    // for stamping
+    if (thenType === "stamp" && trigger === true) {
+      let midX = (stampPoint[0] + stampPoint[2]) / 2;
+      let midY = (stampPoint[1] + stampPoint[3]) / 2;
+      setStampArray([...stampArray, { x: midX, y: midY }]);
+    }
+  }, [trigger]);
 
   useEffect(() => {
     if (fingersSelected !== undefined) {
