@@ -22,14 +22,18 @@ export default function Footer() {
     >
       <div style={{ textAlign: "left" }}>
         created by{" "}
-        <Link href="https://www.seungmee-lee.com" target="_blank">
+        <a
+          href="https://www.seungmee-lee.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           stone.skipper
-        </Link>
+        </a>
         <br /> get in touch via{" "}
-        <Link href="https://www.seungmee-lee.com" target="_blank">
+        <a href="https://www.seungmee-lee.com" target="_blank">
           instagram
-        </Link>{" "}
-        or <Link href="">email</Link>
+        </a>{" "}
+        or <a href="">email</a>
       </div>
       <div style={{ textAlign: "right" }}>
         no data will be saved here

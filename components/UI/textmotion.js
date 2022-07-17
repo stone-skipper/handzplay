@@ -54,7 +54,7 @@ export default function TextMotion({
 
   setTimeout(() => {
     setActivePresetInView(true);
-  }, delay);
+  }, delay * 1000);
   return (
     <AnimatePresence>
       {activePresetInView && (

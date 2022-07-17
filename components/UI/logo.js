@@ -1,8 +1,9 @@
 import TextMotion from "../UI/textmotion";
+import { motion } from "framer-motion";
 
-export default function Logo({ color, displayTag, fontSize }) {
+export default function Logo({ color, displayTag, fontSize, delay }) {
   return (
-    <div
+    <motion.div
       style={{
         position: "relative",
         width: "fit-content",
@@ -17,11 +18,11 @@ export default function Logo({ color, displayTag, fontSize }) {
         font='"Gainsborough", sans-serif'
         content="HANDZPLAY"
         fontSize={fontSize}
-        delay={0}
+        delay={delay}
         color={color}
         letterSpacing="1.2rem"
       />
-      <p
+      <motion.p
         style={{
           width: "100%",
           fontFamily: '"Manrope", sans-serif',
@@ -32,10 +33,13 @@ export default function Logo({ color, displayTag, fontSize }) {
           margin: 0,
           padding: 0,
         }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: delay + 0.5 }}
       >
         Playground for your hands, <br />
         instead of your mouse
-      </p>
-    </div>
+      </motion.p>
+    </motion.div>
   );
 }

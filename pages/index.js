@@ -61,7 +61,7 @@ export default function Index() {
         rules={landingRules}
       />
       <div className={styles.titleWrapper}>
-        <Logo color="white" displayTag={true} fontSize={64} />
+        <Logo color="white" displayTag={true} fontSize={64} delay={3} />
         <LoadingSlider />
       </div>
 
