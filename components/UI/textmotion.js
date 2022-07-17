@@ -78,8 +78,8 @@ export default function TextMotion({
                 color: color,
                 fontFamily: font,
                 fontWeight: 400,
+                fontSize: fontSize,
               }}
-              animate={{ fontSize: fontSize }}
               transition={{
                 duration: 0.5,
               }}

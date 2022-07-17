@@ -2,45 +2,49 @@ import Handpose from "../components/handpose";
 import { useEffect } from "react";
 import Logo from "../components/UI/logo";
 import Footer from "../components/UI/footer";
-import IllustLogo from "../components/UI/illustLogo";
 import { useControlsStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
+import HandIllust01 from "../components/visual/hand01";
+import HandIllust02 from "../components/visual/hand02";
+import LoadingSlider from "../components/UI/loadingSlider";
+import { motion } from "framer-motion";
+import HandIllust03 from "../components/visual/hand03";
+import HandIllust04 from "../components/visual/hand04";
 
 export default function Index() {
-  const handIndicatorType = useControlsStore(
-    (state) => state.handIndicatorType
-  );
+  const leftHand = useControlsStore((state) => state.leftHand);
+  const rightHand = useControlsStore((state) => state.rightHand);
   const currentPoseL = useControlsStore((state) => state.currentPoseL);
   const currentPoseR = useControlsStore((state) => state.currentPoseR);
   const handReady = useControlsStore((state) => state.handReady);
   const cameraAccess = useControlsStore((state) => state.cameraAccess);
 
   const landingRules = [
-    {
-      ifType: "pose",
-      pose: ["victory", "left"], //type of gesture, left right both
-      thenType: "element",
-      thenDetail: [
-        "rect",
-        {
-          color: "blue",
-          opacity: 1,
-          width: 100,
-          height: 100,
-          radius: 10,
-          rotate: 0,
-        }, // initial
-        {
-          color: "white",
-          opacity: 1,
-          width: 150,
-          height: 100,
-          radius: 10,
-          rotate: 45,
-          move: ["y", 20], // 'x' or 'y' as axis / movedistance
-        }, //onPose
-      ],
-    },
+    // {
+    //   ifType: "pose",
+    //   pose: ["victory", "left"], //type of gesture, left right both
+    //   thenType: "element",
+    //   thenDetail: [
+    //     "rect",
+    //     {
+    //       color: "blue",
+    //       opacity: 1,
+    //       width: 100,
+    //       height: 100,
+    //       radius: 10,
+    //       rotate: 0,
+    //     }, // initial
+    //     {
+    //       color: "white",
+    //       opacity: 1,
+    //       width: 150,
+    //       height: 100,
+    //       radius: 10,
+    //       rotate: 45,
+    //       move: ["y", 20], // 'x' or 'y' as axis / movedistance
+    //     }, //onPose
+    //   ],
+    // },
   ];
   // const cameraFeed = useControlsStore((state) => state.cameraFeed);
   useEffect(() => {
@@ -57,34 +61,25 @@ export default function Index() {
         rules={landingRules}
       />
       <div className={styles.titleWrapper}>
-        <Logo
-          color="white"
-          displayTag={
-            cameraAccess === true && handReady === true ? true : false
-          }
-          fontSize={cameraAccess === true && handReady === true ? 72 : 36}
-        />
+        <Logo color="white" displayTag={true} fontSize={64} />
+        <LoadingSlider />
       </div>
-      <div style={{ position: "absolute", color: "white", zIndex: 50, top: 0 }}>
-        {cameraAccess === true && handReady === true
-          ? ""
-          : "waiting for an access to your camera"}
-        {handReady === true ? "" : "opening eyes to see your hands..."}
-        {handReady === true && cameraAccess === true && "I can see your hands!"}
-      </div>
-      {cameraAccess !== true && handReady !== true && (
-        <div
-          style={{
-            width: "100vw",
-            height: "100vh",
-            position: "absolute",
-            top: 0,
-          }}
-        >
-          <IllustLogo />
-        </div>
-      )}
 
+      <motion.div
+        animate={{
+          opacity: rightHand === true || leftHand === true ? 0 : 1,
+          filter:
+            rightHand === true || leftHand === true
+              ? "blur(30px)"
+              : "blur(0px)",
+        }}
+        style={{ width: "100%", height: "100%", position: "absolute", top: 0 }}
+      >
+        <HandIllust01 initTop="20%" initLeft="20%" top="20%" left="0" />
+        <HandIllust02 initTop="33%" initLeft="50%" top="33%" left="65%" />
+        <HandIllust03 initTop="46%" initLeft="28%" top="45%" left="16%" />
+        <HandIllust04 initTop="9%" initLeft="55%" top="6%" left="60%" />
+      </motion.div>
       <Footer />
     </div>
   );

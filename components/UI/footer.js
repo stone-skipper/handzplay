@@ -12,12 +12,12 @@ export default function Footer() {
         color: "white",
         zIndex: 30,
         fontFamily: '"Manrope", sans-serif',
-        fontSize: 12,
+        fontSize: 10,
         letterSpacing: "0.2rem",
         textTransform: "uppercase",
         display: "flex",
         justifyContent: "space-between",
-        lineHeight: 1.8,
+        lineHeight: 2,
       }}
     >
       <div style={{ textAlign: "left" }}>
@@ -25,11 +25,11 @@ export default function Footer() {
         <Link href="https://www.seungmee-lee.com" target="_blank">
           stone.skipper
         </Link>
-        <br /> contact me via{" "}
+        <br /> get in touch via{" "}
         <Link href="https://www.seungmee-lee.com" target="_blank">
           instagram
         </Link>{" "}
-        or <Link href="">email</Link> for any inquiry
+        or <Link href="">email</Link>
       </div>
       <div style={{ textAlign: "right" }}>
         no data will be saved here
