@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useControlsStore } from "../../lib/store";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function LoadingSlider() {
   const handReady = useControlsStore((state) => state.handReady);
@@ -24,63 +25,72 @@ export default function LoadingSlider() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 1 }}
+      whileHover={{
+        x: 30,
+      }}
     >
       {/* line */}
-      <motion.div
-        style={{
-          width: "100%",
-          background: "rgba(255,255,255,0.5)",
-          height: 1,
-          position: "relative",
-        }}
-      >
-        <motion.div
-          style={{ height: "100%", background: "white" }}
-          initial={{ width: 0 }}
-          animate={{ width: loading + "%" }}
-          transition={{ duration: 2 }}
-        ></motion.div>
+      <Link href="/playground">
         <motion.div
           style={{
-            width: 20,
-            height: 20,
-            borderBottom: "1px solid white",
-            position: "absolute",
-            top: -10,
-            right: 0,
-            rotate: -45,
+            width: "100%",
+            background: "rgba(255,255,255,0.5)",
+            height: 1,
+            position: "relative",
           }}
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: loading === 100 ? 1 : 0,
-          }}
-          transition={{ delay: 2 }}
-        ></motion.div>
-        <motion.div
-          style={{
-            width: 20,
-            height: 20,
-            borderTop: "1px solid white",
-            position: "absolute",
-            top: -10,
-            right: 0,
-            rotate: 45,
-          }}
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: loading === 100 ? 1 : 0,
-          }}
-          transition={{ delay: 2 }}
-        ></motion.div>
-      </motion.div>
+        >
+          <motion.div
+            style={{ height: "100%", background: "white" }}
+            initial={{ width: 0 }}
+            animate={{ width: loading + "%" }}
+            transition={{ duration: 2 }}
+          ></motion.div>
+          <motion.div
+            style={{
+              width: 20,
+              height: 20,
+              borderBottom: "1px solid white",
+              position: "absolute",
+              top: -10,
+              right: 0,
+              rotate: -45,
+            }}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: loading === 100 ? 1 : 0,
+            }}
+            transition={{ delay: 2 }}
+          ></motion.div>
+          <motion.div
+            style={{
+              width: 20,
+              height: 20,
+              borderTop: "1px solid white",
+              position: "absolute",
+              top: -10,
+              right: 0,
+              rotate: 45,
+            }}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: loading === 100 ? 1 : 0,
+            }}
+            transition={{ delay: 2 }}
+          ></motion.div>
+        </motion.div>
+      </Link>
 
       {/* status message */}
       <p style={{ marginTop: 15, color: "white", fontSize: 10, width: "100%" }}>
         {cameraAccess !== true && "waiting for an access to camera"}
         {cameraAccess === true && handReady !== true && "waking up blah blah"}
-        {cameraAccess === true &&
-          handReady === true &&
-          "all set! Two thumbs up to start"}
+        {cameraAccess === true && handReady === true && (
+          <>
+            try moving your hands. <br />
+            <span style={{ fontWeight: "bold" }}>Two thumbs up</span> to start,
+            or click arrow
+          </>
+        )}
       </p>
     </motion.div>
   );

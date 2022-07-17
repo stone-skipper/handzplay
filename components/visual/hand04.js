@@ -57,7 +57,7 @@ export default function HandIllust04({ initTop, initLeft, top, left }) {
           fill="url(#paint0_radial_959_339)"
           variants={draw}
         />
-        <g filter="url(#filter0_f_959_339)">
+        <motion.g filter="url(#filter0_f_959_339)" variants={draw}>
           <motion.ellipse
             rx="24.2626"
             ry="40.5288"
@@ -66,7 +66,7 @@ export default function HandIllust04({ initTop, initLeft, top, left }) {
             fillOpacity="0.8"
             variants={draw}
           />
-        </g>
+        </motion.g>
         <motion.path
           d="M47.4768 206.927C45.7933 194.64 56.3156 193.62 60.0753 194.166C60.0753 194.166 64.2788 206.913 73.3998 212.842C82.5209 218.771 94.3988 227.402 89.094 234.395C79.2752 247.339 48.8023 216.6 47.4768 206.927Z"
           fill="url(#paint1_linear_959_339)"

@@ -48,7 +48,7 @@ export default function Index() {
   ];
   // const cameraFeed = useControlsStore((state) => state.cameraFeed);
   useEffect(() => {
-    if (currentPoseL === "victory" && currentPoseR === "victory") {
+    if (currentPoseL === "thumbs_up" && currentPoseR === "thumbs_up") {
       window.location.href = "/playground";
     }
   }, [currentPoseL, currentPoseR]);
@@ -78,7 +78,7 @@ export default function Index() {
         <HandIllust01 initTop="20%" initLeft="20%" top="20%" left="0" />
         <HandIllust02 initTop="33%" initLeft="50%" top="33%" left="65%" />
         <HandIllust03 initTop="46%" initLeft="28%" top="45%" left="16%" />
-        <HandIllust04 initTop="9%" initLeft="55%" top="6%" left="60%" />
+        <HandIllust04 initTop="9%" initLeft="52%" top="6%" left="60%" />
       </motion.div>
       <Footer />
     </div>
