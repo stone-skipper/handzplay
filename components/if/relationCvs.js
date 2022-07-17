@@ -7,8 +7,7 @@ import {
   star,
   text,
   clipping,
-  stamp,
-  bubble,
+  drawStar,
 } from "../then/shape";
 import { audio } from "../then/audio";
 
@@ -35,8 +34,12 @@ export default function RelationCvs({
 
   var scale = 2; // Change to 1 on retina screens to see blurry canvas.
   const [drawArray, setDrawArray] = useState([]);
+
   const [stampArray, setStampArray] = useState([]);
   const [stampPoint, setStampPoint] = useState([]);
+
+  const [bubbleArray, setBubbleArray] = useState([]);
+  const [bubblePoint, setBubblePoint] = useState([]);
 
   const drawInteraction = () => {
     reactionRef.current.width = Math.floor(videoWidth * scale);
@@ -253,7 +256,7 @@ export default function RelationCvs({
       setDrawArray([...drawArray, { x: midPointX, y: midPointY }]);
     }
 
-    // for drawing
+    // for drawing. Reference at http://jsfiddle.net/NWBV4/10/
     if (drawArray.length !== 0 && thenType === "draw") {
       ctx.beginPath(), ctx.moveTo(drawArray[0].x, drawArray[0].y);
 
@@ -286,8 +289,22 @@ export default function RelationCvs({
             Math.PI * 2
           );
         } else if (thenDetail[0] === "rect") {
+          ctx.rect(
+            stampArray[i].x - thenDetail[3] / 2,
+            stampArray[i].y - thenDetail[3] / 2,
+            thenDetail[3],
+            thenDetail[3]
+          );
         } else if (thenDetail[0] === "text") {
         } else if (thenDetail[0] === "star") {
+          drawStar(
+            stampArray[i].x,
+            stampArray[i].y,
+            5,
+            thenDetail[3] / 2,
+            thenDetail[3] / 4,
+            ctx
+          );
         }
 
         if (thenDetail[2] === "fill") {

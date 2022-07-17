@@ -2,7 +2,7 @@ import Handpose from "../components/handpose";
 import { useEffect } from "react";
 import Logo from "../components/UI/logo";
 import Footer from "../components/UI/footer";
-import Illust from "../components/UI/svg";
+import IllustLogo from "../components/UI/illustLogo";
 import { useControlsStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
 
@@ -57,24 +57,34 @@ export default function Index() {
         rules={landingRules}
       />
       <div className={styles.titleWrapper}>
-        <Logo color="white" displayTag={true} fontSize={72} />
+        <Logo
+          color="white"
+          displayTag={
+            cameraAccess === true && handReady === true ? true : false
+          }
+          fontSize={cameraAccess === true && handReady === true ? 72 : 36}
+        />
       </div>
       <div style={{ position: "absolute", color: "white", zIndex: 50, top: 0 }}>
-        {cameraAccess === true ? "" : "waiting for an access to your camera"}
+        {cameraAccess === true && handReady === true
+          ? ""
+          : "waiting for an access to your camera"}
         {handReady === true ? "" : "opening eyes to see your hands..."}
         {handReady === true && cameraAccess === true && "I can see your hands!"}
-        {currentPoseL} {currentPoseR}
       </div>
-      <div
-        style={{
-          width: "100vw",
-          height: "100vh",
-          position: "absolute",
-          top: 150,
-        }}
-      >
-        {/* <Illust /> */}
-      </div>
+      {cameraAccess !== true && handReady !== true && (
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
+            position: "absolute",
+            top: 0,
+          }}
+        >
+          <IllustLogo />
+        </div>
+      )}
+
       <Footer />
     </div>
   );

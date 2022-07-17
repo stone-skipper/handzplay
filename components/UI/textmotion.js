@@ -72,13 +72,16 @@ export default function TextMotion({
             animate={controls}
             style={{ margin: 0, padding: 0 }}
           >
-            <div
+            <motion.div
               style={{
                 textAlign: "left",
-                fontSize: fontSize,
                 color: color,
                 fontFamily: font,
                 fontWeight: 400,
+              }}
+              animate={{ fontSize: fontSize }}
+              transition={{
+                duration: 0.5,
               }}
             >
               {content.split(" ").map((word, wordI) => (
@@ -108,7 +111,7 @@ export default function TextMotion({
                   {wordI !== content.split(" ").length - 1 ? "\u00A0" : null}
                 </div>
               ))}
-            </div>
+            </motion.div>
           </motion.h1>
         </motion.div>
       )}
