@@ -1,5 +1,6 @@
 import TextMotion from "../UI/textmotion";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Logo({ color, displayTag, fontSize, delay }) {
   return (
@@ -14,14 +15,16 @@ export default function Logo({ color, displayTag, fontSize, delay }) {
         gap: 5,
       }}
     >
-      <TextMotion
-        font='"Gainsborough", sans-serif'
-        content="HANDZPLAY"
-        fontSize={fontSize}
-        delay={delay}
-        color={color}
-        letterSpacing="1.2rem"
-      />
+      <Link href="/">
+        <TextMotion
+          font='"Gainsborough", sans-serif'
+          content="HANDZPLAY"
+          fontSize={fontSize}
+          delay={delay}
+          color={color}
+          letterSpacing="1.2rem"
+        />
+      </Link>
       <motion.p
         style={{
           width: "100%",

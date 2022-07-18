@@ -11,13 +11,8 @@ import {
 const fourDescription = new GestureDescription("four");
 
 // thumb:
-fourDescription.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1.0);
-fourDescription.addDirection(Finger.Thumb, FingerDirection.DiagonalUpLeft, 1.0);
-fourDescription.addDirection(
-  Finger.Thumb,
-  FingerDirection.DiagonalUpRight,
-  1.0
-);
+fourDescription.addCurl(Finger.Thumb, FingerCurl.FullCurl, 1.0);
+fourDescription.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 0.9);
 
 // index:
 fourDescription.addCurl(Finger.Index, FingerCurl.NoCurl, 1.0);

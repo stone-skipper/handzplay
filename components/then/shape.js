@@ -4,7 +4,7 @@ const getDistance = (ax, ay, bx, by) => {
   return Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 };
 
-const drawStar = (cx, cy, spikes, outerRadius, innerRadius, ctx) => {
+export const drawStar = (cx, cy, spikes, outerRadius, innerRadius, ctx) => {
   var rot = (Math.PI / 2) * 3;
   var x = cx;
   var y = cy;
