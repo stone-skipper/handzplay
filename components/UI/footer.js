@@ -30,10 +30,10 @@ export default function Footer() {
           stone.skipper
         </a>
         <br /> get in touch via{" "}
-        <a href="https://www.seungmee-lee.com" target="_blank">
+        <a href="https://www.instagram.com/stone.skipper/" target="_blank">
           instagram
         </a>{" "}
-        or <a href="">email</a>
+        or <a href="mailto:iam.seungmee.lee@gmail.com">email</a>
       </div>
       <div style={{ textAlign: "right" }}>
         no data will be saved here
