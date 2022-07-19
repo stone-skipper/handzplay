@@ -164,7 +164,24 @@ export default function RelationCvs({
         fingersSelectedCoord[1].y
       ) !== 0
     ) {
-      audio(thenDetail[0]);
+      setTrigger(true);
+    } else if (
+      (fingersSelectedCoord.length !== 0 &&
+        thenType === "audio" &&
+        getDistance(
+          fingersSelectedCoord[0].x,
+          fingersSelectedCoord[0].y,
+          fingersSelectedCoord[1].x,
+          fingersSelectedCoord[1].y
+        ) > distance) ||
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) === 0
+    ) {
+      setTrigger(false);
     } else if (
       fingersSelectedCoord.length !== 0 &&
       thenType === "stamp" &&
@@ -324,6 +341,9 @@ export default function RelationCvs({
       let midX = (stampPoint[0] + stampPoint[2]) / 2;
       let midY = (stampPoint[1] + stampPoint[3]) / 2;
       setStampArray([...stampArray, { x: midX, y: midY }]);
+    } else if (thenType === "audio" && trigger === true) {
+      var audio = new Audio(thenDetail[0]);
+      audio.play();
     }
   }, [trigger]);
 

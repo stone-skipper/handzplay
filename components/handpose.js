@@ -28,6 +28,7 @@ export default function Handpose({
   handIndicatorType,
   cameraFeed,
   rules = [],
+  handColor,
 }) {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -37,6 +38,7 @@ export default function Handpose({
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
   // const rules = useRulesStore((state) => state.rules);
+  // const handColor = useControlsStore((state) => state.handColor);
 
   var handL, handR, hand;
 
@@ -263,11 +265,11 @@ export default function Handpose({
       ctx.scale(scale, scale);
       for (let i = 0; i < passHand.length; i++) {
         if (handIndicatorType === "skeleton") {
-          drawHand(passHand[i].keypoints, ctx);
+          drawHand(passHand[i].keypoints, handColor, ctx);
         } else if (handIndicatorType === "points") {
-          drawPoints(passHand[i].keypoints, ctx);
+          drawPoints(passHand[i].keypoints, handColor, ctx);
         } else if (handIndicatorType === "blurred") {
-          drawBlurred(passHand[i].keypoints, ctx);
+          drawBlurred(passHand[i].keypoints, handColor, ctx);
         }
       }
     }

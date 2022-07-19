@@ -2,13 +2,13 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import styles from "../handsplay.module.scss";
 import { key } from "../components/utils";
 
-const Grid = () => {
+const Grid = ({ color }) => {
   const [windowWidth, setWindowWidth] = useState(0);
   const [windowHeight, setWindowHeight] = useState(0);
   const [col, setCol] = useState(0);
   const [row, setRow] = useState(0);
 
-  const gap = 36;
+  const gap = 32;
 
   var rowArray = [];
   var colArray = [];
@@ -41,7 +41,13 @@ const Grid = () => {
           patternUnits="userSpaceOnUse"
           patternContentUnits="userSpaceOnUse"
         >
-          <circle id="pattern-circle" cx="14" cy="14" r="1" fill={key}></circle>
+          <circle
+            id="pattern-circle"
+            cx="14"
+            cy="14"
+            r="1"
+            fill={color}
+          ></circle>
         </pattern>
 
         <rect

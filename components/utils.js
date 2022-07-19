@@ -36,7 +36,7 @@ const style = {
   19: { color: "white", size: dotSize },
   20: { color: key, size: dotSize },
 };
-export const drawHand = (predictions, ctx) => {
+export const drawHand = (predictions, color, ctx) => {
   // Check if we have predictions
   if (predictions.length > 0) {
     // Loop through each prediction
@@ -75,13 +75,14 @@ export const drawHand = (predictions, ctx) => {
       ctx.arc(x, y, style[i]["size"], 0, 3 * Math.PI);
 
       // Set line color
-      ctx.fillStyle = style[i]["color"];
+      // ctx.fillStyle = style[i]["color"];
+      ctx.fillStyle = color;
       ctx.fill();
     }
   }
 };
 
-export const drawPoints = (predictions, ctx) => {
+export const drawPoints = (predictions, color, ctx) => {
   // Check if we have predictions
   if (predictions.length > 0) {
     // Loop through each prediction
@@ -96,13 +97,14 @@ export const drawPoints = (predictions, ctx) => {
       ctx.arc(x, y, style[i * 4]["size"], 0, 3 * Math.PI);
 
       // Set line color
-      ctx.fillStyle = style[i * 4]["color"];
+      // ctx.fillStyle = style[i * 4]["color"];
+      ctx.fillStyle = color;
       ctx.fill();
     }
   }
 };
 
-export const drawBlurred = (predictions, ctx) => {
+export const drawBlurred = (predictions, color, ctx) => {
   // Check if we have predictions
   if (predictions.length > 0) {
     // Loop through each prediction
@@ -125,7 +127,8 @@ export const drawBlurred = (predictions, ctx) => {
           predictions[secondJointIndex].x,
           predictions[secondJointIndex].y
         );
-        ctx.strokeStyle = "white";
+        // ctx.strokeStyle = "white";
+        ctx.strokeStyle = color;
         ctx.lineWidth = 20;
         ctx.stroke();
       }
@@ -141,7 +144,8 @@ export const drawBlurred = (predictions, ctx) => {
       ctx.arc(x, y, 12, 0, 3 * Math.PI);
 
       // Set line color
-      ctx.fillStyle = "white";
+      // ctx.fillStyle = "white";
+      ctx.fillStyle = color;
       ctx.fill();
     }
   }

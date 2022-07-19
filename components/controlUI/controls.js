@@ -1,6 +1,8 @@
 import { useControlsStore } from "../../lib/store";
 import styles from "./controls.module.scss";
 import { useEffect, useState } from "react";
+import ColorSelect from "../UI/controls/color";
+import Divider from "../UI/controls/divider";
 
 export default function Controls() {
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
@@ -9,18 +11,15 @@ export default function Controls() {
   const rightHand = useControlsStore((state) => state.rightHand);
   const currentPoseL = useControlsStore((state) => state.currentPoseL);
   const currentPoseR = useControlsStore((state) => state.currentPoseR);
-
+  const handColor = useControlsStore((state) => state.handColor);
   const handIndicatorType = useControlsStore(
     (state) => state.handIndicatorType
   );
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
 
-  // useEffect(() => {
-  //   console.log(fingersL);
-  // }, [fingersL]);
+  const [controlToggle, setControlToggle] = useState(true);
 
-  const [controlToggle, setControlToggle] = useState(false);
   return (
     <div className={styles.wrapper}>
       <div
@@ -28,20 +27,32 @@ export default function Controls() {
           setControlToggle(!controlToggle);
         }}
       >
-        Controls
+        <p> Status {"&"} settings</p>
       </div>
       <div
         className={styles.content}
         style={{ display: controlToggle === true ? "flex" : "none" }}
       >
+        <p>
+          {handReady === true ? "recognizing your hand" : "loading hand..."}
+        </p>
+        <div style={{ display: "flex" }}>
+          <p style={{ width: "50%", opacity: leftHand === true ? 1 : 0.4 }}>
+            left: {currentPoseL}
+          </p>
+          <p style={{ width: "50%", opacity: leftHand === true ? 1 : 0.4 }}>
+            right: {currentPoseR}
+          </p>
+        </div>
+
+        <Divider color="lightgrey" />
         <p
           onClick={() => {
             useControlsStore.setState({ cameraFeed: !cameraFeed });
           }}
         >
-          camera: {cameraFeed.toString()}
+          camera Feed: {cameraFeed.toString()}
         </p>
-        <p>handModel: {handReady.toString()}</p>
         <p
           onClick={() => {
             if (handIndicatorType === "skeleton") {
@@ -53,18 +64,14 @@ export default function Controls() {
             }
           }}
         >
-          hand indicator: {handIndicatorType}
-        </p>
-        <p>
-          hands:{leftHand === true ? "left" : null}
-          {rightHand === true ? "right" : null}
+          hand type: {handIndicatorType}
         </p>
 
-        <p>
-          current Pose: {currentPoseL},{currentPoseR}
+        <p style={{ display: "flex", alignItems: "center" }}>
+          hand color <ColorSelect />
         </p>
-        <p>{fingersL.toString()}</p>
-        <p>{fingersR.toString()}</p>
+        {/* <p>{fingersL.toString()}</p>
+        <p>{fingersR.toString()}</p> */}
       </div>
     </div>
   );

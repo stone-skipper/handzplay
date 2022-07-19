@@ -1,12 +1,20 @@
-.content {
-  padding: 20;
-  flex-direction: column;
-  background: blue;
-}
-
 .wrapper {
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 10;
+  z-index: 1000000; // should be on the very top
+  font-size: 0.8em;
+
+  input {
+    font-family: "Manrope", sans-serif; // for color picker
+  }
+  label {
+    font-family: "Manrope", sans-serif; // for color picker
+  }
+}
+
+.content {
+  padding: 20;
+  flex-direction: column;
+  background: white;
 }

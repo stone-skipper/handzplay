@@ -12,15 +12,16 @@ export default function Playground() {
     (state) => state.handIndicatorType
   );
   const rules = useRulesStore((state) => state.rules);
-  // const cameraFeed = useControlsStore((state) => state.cameraFeed);
+  const handColor = useControlsStore((state) => state.handColor);
 
   return (
     <div className={styles.playground}>
-      <Grid />
+      <Grid color={handColor} />
       <Handpose
         handIndicatorType={handIndicatorType}
         cameraFeed={false}
         rules={rules}
+        handColor={handColor}
       />
       <Controls />
       <Rules />
@@ -42,7 +43,7 @@ export default function Playground() {
             background: "#f3f3f3",
           }}
         >
-          <Logo color="#004dc0" displayTag={false} fontSize={40} />
+          <Logo color={handColor} displayTag={false} fontSize={40} />
         </div>
       </div>
     </div>

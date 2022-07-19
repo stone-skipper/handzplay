@@ -59,6 +59,7 @@ export default function Index() {
         handIndicatorType={"blurred"}
         cameraFeed={false}
         rules={landingRules}
+        handColor="white"
       />
 
       <motion.div
