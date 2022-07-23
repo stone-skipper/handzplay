@@ -12,7 +12,7 @@ export default function Footer() {
         color: "white",
         zIndex: 30,
         fontFamily: '"Manrope", sans-serif',
-        fontSize: 10,
+        fontSize: 9,
         letterSpacing: "0.2rem",
         textTransform: "uppercase",
         display: "flex",

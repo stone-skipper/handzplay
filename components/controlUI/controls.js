@@ -23,26 +23,23 @@ export default function Controls() {
   return (
     <div className={styles.wrapper}>
       <div
-        onClick={() => {
-          setControlToggle(!controlToggle);
-        }}
-      >
-        <p> Status {"&"} settings</p>
-      </div>
-      <div
         className={styles.content}
         style={{ display: controlToggle === true ? "flex" : "none" }}
       >
-        <p>
-          {handReady === true ? "recognizing your hand" : "loading hand..."}
-        </p>
-        <div style={{ display: "flex" }}>
-          <p style={{ width: "50%", opacity: leftHand === true ? 1 : 0.4 }}>
-            left: {currentPoseL}
-          </p>
-          <p style={{ width: "50%", opacity: leftHand === true ? 1 : 0.4 }}>
-            right: {currentPoseR}
-          </p>
+        <div className={styles.statusBox}>
+          <div>
+            illustrations
+            <p>{handReady === true ? "active" : "loading..."}</p>
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <p style={{ width: "50%", opacity: leftHand === true ? 1 : 0.4 }}>
+              left: {currentPoseL}
+            </p>
+            <p style={{ width: "50%", opacity: leftHand === true ? 1 : 0.4 }}>
+              right: {currentPoseR}
+            </p>
+          </div>
         </div>
 
         <Divider color="lightgrey" />
@@ -70,8 +67,17 @@ export default function Controls() {
         <p style={{ display: "flex", alignItems: "center" }}>
           hand color <ColorSelect />
         </p>
-        {/* <p>{fingersL.toString()}</p>
-        <p>{fingersR.toString()}</p> */}
+        <p style={{ display: "flex", alignItems: "center" }}>
+          playground color <ColorSelect />
+        </p>
+      </div>
+      <div
+        className={styles.header}
+        onClick={() => {
+          setControlToggle(!controlToggle);
+        }}
+      >
+        <p> Status {"&"} settings</p>
       </div>
     </div>
   );

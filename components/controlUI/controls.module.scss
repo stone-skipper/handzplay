@@ -1,10 +1,10 @@
 .wrapper {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 50vw;
+  bottom: 0;
   z-index: 1000000; // should be on the very top
   font-size: 0.8em;
-
+  width: 23vw;
   input {
     font-family: "Manrope", sans-serif; // for color picker
   }
@@ -12,9 +12,30 @@
     font-family: "Manrope", sans-serif; // for color picker
   }
 }
-
+.header {
+  width: 100%;
+  height: fit-content;
+  background: rgba(0, 77, 192, 0.5);
+  color: white;
+  p {
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+  }
+}
 .content {
-  padding: 20;
+  padding: 10;
+  display: flex;
   flex-direction: column;
   background: white;
+  border-radius: 10px 10px 0 0;
+  justify-content: center;
+}
+
+.statusBox {
+  width: calc(100% - 20px);
+  margin: 10px;
+  height: fit-content;
+  background: rgba(0, 77, 192, 1);
+  border-radius: 5px;
 }
