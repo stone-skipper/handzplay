@@ -5,6 +5,8 @@
   z-index: 1000000; // should be on the very top
   font-size: 0.8em;
   width: 23vw;
+  box-shadow: 0px -10px 54px 0px rgba(0, 77, 192, 0.06);
+
   input {
     font-family: "Manrope", sans-serif; // for color picker
   }
@@ -17,6 +19,7 @@
   height: fit-content;
   background: rgba(0, 77, 192, 0.5);
   color: white;
+  cursor: pointer;
   p {
     padding: 10px;
     margin: 0;
@@ -30,6 +33,8 @@
   background: white;
   border-radius: 10px 10px 0 0;
   justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
 
 .statusBox {
@@ -38,4 +43,49 @@
   height: fit-content;
   background: rgba(0, 77, 192, 1);
   border-radius: 5px;
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.status {
+  font-size: 16px;
+  font-family: "Manrope", sans-serif;
+  text-transform: capitalize;
+}
+.title {
+  font-size: 10px;
+}
+
+.controlWrapper {
+  width: 90%;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
+}
+.controlTitle {
+  font-size: 0.9em;
+}
+.dividerPosition {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.options {
+  width: fit-content;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 1.1em;
 }
