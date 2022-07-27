@@ -42,6 +42,8 @@
   height: fit-content;
   background: rgba(0, 77, 192, 1);
   border-radius: 5px;
+  color: white;
+  text-align: center;
 }
 
 .rulesWrapper {
@@ -51,6 +53,25 @@
   align-items: center;
   gap: 16px;
   margin: 12px 0;
+}
+
+.controlWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid grey;
+  margin: 12px 0;
+  .options {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: flex-end;
+    text-transform: uppercase;
+    > div {
+      cursor: pointer;
+    }
+  }
 }
 
 .rule {

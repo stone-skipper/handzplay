@@ -9,7 +9,7 @@ export default function Divider({ color, direction, customSize = null }) {
         }}
       />
     );
-  else if (direction === "vertical")
+  else
     return (
       <div
         style={{

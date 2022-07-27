@@ -47,7 +47,7 @@ export default function Rules() {
           <p>result</p>
         </div>
 
-        <Divider color="black" />
+        <Divider color="black" direction="horizontal" />
         <div className={styles.rulesWrapper}>
           {rules.map((rule, index) => {
             return (
@@ -75,7 +75,7 @@ export default function Rules() {
           })}
         </div>
 
-        <Divider color="lightgrey" />
+        <Divider color="lightgrey" direction="horizontal" />
         <div
           onClick={() => {
             useRulesStore.setState({
