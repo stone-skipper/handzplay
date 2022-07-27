@@ -1,5 +1,5 @@
 import { useControlsStore } from "../../lib/store";
-import styles from "./controls.module.scss";
+import styles from "./panels.module.scss";
 import { useEffect, useState } from "react";
 import ColorSelect from "../UI/controls/color";
 import Divider from "../UI/controls/divider";
@@ -18,10 +18,10 @@ export default function Controls() {
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
 
-  const [controlToggle, setControlToggle] = useState(true);
+  const [controlToggle, setControlToggle] = useState(false);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} style={{ width: "23vw" }}>
       <div
         className={styles.content}
         style={{ display: controlToggle === true ? "flex" : "none" }}
@@ -36,7 +36,7 @@ export default function Controls() {
             <p style={{ width: "50%", opacity: leftHand === true ? 1 : 0.4 }}>
               left: {currentPoseL}
             </p>
-            <p style={{ width: "50%", opacity: leftHand === true ? 1 : 0.4 }}>
+            <p style={{ width: "50%", opacity: rightHand === true ? 1 : 0.4 }}>
               right: {currentPoseR}
             </p>
           </div>
@@ -73,6 +73,9 @@ export default function Controls() {
       </div>
       <div
         className={styles.header}
+        style={{
+          background: "rgba(0, 77, 192, 0.5)",
+        }}
         onClick={() => {
           setControlToggle(!controlToggle);
         }}

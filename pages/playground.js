@@ -1,8 +1,7 @@
 import Handpose from "../components/handpose";
-// import Layout from "../components/layout";
 import Logo from "../components/UI/logo";
 import Controls from "../components/controlUI/controls";
-import Rules from "../components/rulesUI/rules";
+import Rules from "../components/controlUI/rules";
 import Grid from "../components/grid";
 import { useControlsStore, useRulesStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
@@ -23,8 +22,21 @@ export default function Playground() {
         rules={rules}
         handColor={handColor}
       />
-      <Controls />
-      <Rules />
+      <div
+        style={{
+          display: "flex",
+          width: "94vw",
+          position: "absolute",
+          bottom: 0,
+          left: "3vw",
+          justifyContent: "center",
+          gap: 0,
+        }}
+      >
+        <Rules />
+        <Controls />
+      </div>
+
       <div
         style={{
           width: "100vw",

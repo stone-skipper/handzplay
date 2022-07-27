@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+
+.wrapper {
+  font-size: 0.8em;
+  width: 23vw;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  font-family: "Manrope", sans-serif;
+  font-weight: 600;
+  input {
+    font-family: "Manrope", sans-serif; // for color picker
+  }
+  label {
+    font-family: "Manrope", sans-serif; // for color picker
+  }
+}
+.header {
+  width: 100%;
+  height: fit-content;
+  color: white;
+  cursor: pointer;
+  p {
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+    font-size: 0.8em;
+  }
+}
+.content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 10px 10px 0 0;
+  justify-content: center;
+  box-shadow: 0px -10px 54px rgba(0, 77, 192, 0.06);
+}
+
+.statusBox {
+  width: 100%;
+  height: fit-content;
+  background: rgba(0, 77, 192, 1);
+  border-radius: 5px;
+}
+
+.rulesWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.rule {
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .number {
+    font-size: 0.8em;
+  }
+  .trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-start;
+    width: 40%;
+  }
+  .if {
+    width: fit-content;
+    height: fit-content;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: rgba(244, 244, 244, 1);
+    border: 1px solid rgba(48, 131, 255, 0.1);
+    text-transform: capitalize;
+    color: rgba(48, 131, 255, 1);
+  }
+  .distanceWrapper {
+    display: flex;
+    gap: 0;
+    align-items: center;
+  }
+  .distance {
+    background-color: rgba(48, 131, 255, 1);
+    width: fit-content;
+    height: fit-content;
+    padding: 3px 6px;
+    border-radius: 5px;
+    color: white;
+    font-size: 0.7em;
+  }
+  .line {
+    width: 15px;
+    display: flex;
+    align-items: center;
+  }
+  .thenWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 40%;
+    justify-content: flex-start;
+  }
+  .then {
+    width: fit-content;
+    height: fit-content;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: rgba(244, 244, 244, 1);
+    border: 1px solid rgba(255, 67, 10, 0.1);
+    text-transform: capitalize;
+    color: rgba(255, 67, 10, 1);
+  }
+  .thenDetail {
+    color: rgba(255, 67, 10, 1);
+  }
+  .delete {
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    background: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7em;
+    cursor: pointer;
+  }
+}
