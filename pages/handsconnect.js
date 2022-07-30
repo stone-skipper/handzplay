@@ -10,13 +10,11 @@ import io from "socket.io-client";
 import FriendsPose from "../components/friendspose";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default function Handsconnect() {
   const handIndicatorType = useControlsStore(
     (state) => state.handIndicatorType
   );
-  const socket = io.connect("localhost:5000");
   const router = useRouter();
   const [me, setMe] = useState("");
   const [stream, setStream] = useState();
@@ -24,7 +22,7 @@ export default function Handsconnect() {
   const [caller, setCaller] = useState("");
   const [callerSignal, setCallerSignal] = useState();
   const [callAccepted, setCallAccepted] = useState(false);
-  const [idToCall, setIdToCall] = useState("");
+  const [idToCall, setIdToCall] = useState(null);
   const [callEnded, setCallEnded] = useState(false);
   const [name, setName] = useState("seungmee");
   const myVideo = useRef();
@@ -32,7 +30,7 @@ export default function Handsconnect() {
   const connectionRef = useRef();
 
   const [pairId, setPairId] = useState("");
-  const [pairName, setPairName] = useState("");
+  const [pairName, setPairName] = useState(null);
 
   const rules = useRulesStore((state) => state.rules);
   const handColor = useControlsStore((state) => state.handColor);
@@ -91,12 +89,13 @@ export default function Handsconnect() {
   };
 
   useEffect(() => {
+    const socket = io.connect("localhost:5000");
+
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then((stream) => {
         setStream(stream);
         myVideo.current.srcObject = stream;
-        console.log(myVideo.current);
       });
 
     socket.on("me", (id) => {
@@ -108,13 +107,17 @@ export default function Handsconnect() {
       setCaller(data.from);
       setName(data.name);
       setCallerSignal(data.signal);
+      answerCall();
     });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   useEffect(() => {
     if (!router.isReady) return;
     const query = router.query;
-    setPairId(query.socketid);
     setIdToCall(query.socketid);
     setPairName(query.name);
   }, [router.isReady, router.query]);
@@ -135,15 +138,17 @@ export default function Handsconnect() {
           textAlign: "center",
         }}
         onClick={() => {
-          //   window.open(baseURL + me, "_blank");
-          router.push({
-            pathname: "/handsconnect",
-            query: { socketid: me, name: name },
-          });
+          navigator.clipboard.writeText(
+            baseURL + "?socketid=" + me + "&name=" + name
+          );
+          // window.open(baseURL + "?socketid=" + me + "&name=" + name, "_blank");
+          // router.push({
+          //   pathname: "/handsconnect",
+          //   query: { socketid: me, name: name },
+          // });
         }}
       >
         invite a friend
-        {/* {baseURL + me} */}
       </div>
       <Grid color={handColor} />
       {/* <Handpose
@@ -154,7 +159,7 @@ export default function Handsconnect() {
       /> */}
       <FriendsPose
         handIndicatorType={handIndicatorType}
-        cameraFeed={cameraFeed}
+        cameraFeed={false}
         rules={rules}
         handColor={handColor}
         videoRef={myVideo}
@@ -162,9 +167,9 @@ export default function Handsconnect() {
       {callAccepted && !callEnded && (
         <FriendsPose
           handIndicatorType={handIndicatorType}
-          cameraFeed={cameraFeed}
+          cameraFeed={true}
           rules={rules}
-          handColor={handColor}
+          handColor={"red"}
           videoRef={userVideo}
         />
       )}
@@ -180,16 +185,13 @@ export default function Handsconnect() {
           left: 0,
           cursor: "pointer",
           textAlign: "center",
-          display: idToCall !== "" && pairName !== "" ? "block" : "none",
+          display: pairName === undefined ? "none" : "block",
         }}
         onClick={() => {
-          callUser(pairId);
+          callUser(idToCall);
         }}
       >
-        {/* {idToCall !== "" && pairName !== ""
-          ? "accept invitation from " + pairName
-          : null} */}
-        {(idToCall, pairName)}
+        {pairName} is inviting you to play
       </div>
       <div
         style={{

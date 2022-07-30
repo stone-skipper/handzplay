@@ -20,10 +20,6 @@ import { useControlsStore, useRulesStore } from "../lib/store";
 import RelationCvs from "./if/relationCvs";
 import PoseCvs from "./if/poseCvs";
 
-import Peer from "simple-peer";
-import io from "socket.io-client";
-import { useRouter } from "next/router";
-
 export default function FriendsPose({
   handIndicatorType,
   cameraFeed,
@@ -37,18 +33,12 @@ export default function FriendsPose({
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
 
-  const socket = io.connect("localhost:5000");
-
   var handL, handR, hand;
 
   const [passHand, setPassHand] = useState(null);
 
   const [vWidth, setvWidth] = useState(0);
   const [vHeight, setvHeight] = useState(0);
-
-  const router = useRouter();
-  const [pairId, setPairId] = useState("");
-  const [pairName, setPairName] = useState("");
 
   // handpose model related
   const model = handPoseDetection.SupportedModels.MediaPipeHands;
@@ -177,8 +167,6 @@ export default function FriendsPose({
   };
 
   const detect = async (net) => {
-    console.log(videoRef.current.videoWidth);
-
     // Check data is available
     if (
       typeof videoRef.current !== undefined &&
@@ -189,10 +177,6 @@ export default function FriendsPose({
       const video = videoRef.current;
       videoWidth = videoRef.current.videoWidth;
       videoHeight = videoRef.current.videoHeight;
-
-      // Set video width
-      // videoRef.current.video.width = videoWidth;
-      // videoRef.current.video.height = videoHeight;
 
       // Set canvas height and width
       canvasRef.current.width = videoWidth;
@@ -259,16 +243,8 @@ export default function FriendsPose({
     runHandpose();
   }, []);
 
-  // useEffect(() => {
-  //   if (!router.isReady) return;
-  //   const query = router.query;
-  //   setPairId(query.socketid);
-  //   setPairName(query.name);
-  // }, [router.isReady, router.query]);
-
   useEffect(() => {
     if (passHand !== null) {
-      console.log("!" + passHand);
       const ctx = canvasRef.current.getContext("2d");
       var scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
       canvasRef.current.width = Math.floor(vWidth * scale);
@@ -276,11 +252,11 @@ export default function FriendsPose({
       ctx.scale(scale, scale);
       for (let i = 0; i < passHand.length; i++) {
         if (handIndicatorType === "skeleton") {
-          drawHand(passHand[i].keypoints, "red", ctx);
+          drawHand(passHand[i].keypoints, handColor, ctx);
         } else if (handIndicatorType === "points") {
-          drawPoints(passHand[i].keypoints, "red", ctx);
+          drawPoints(passHand[i].keypoints, handColor, ctx);
         } else if (handIndicatorType === "blurred") {
-          drawBlurred(passHand[i].keypoints, "red", ctx);
+          drawBlurred(passHand[i].keypoints, handColor, ctx);
         }
       }
     }
