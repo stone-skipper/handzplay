@@ -5,7 +5,7 @@ import Divider from "../UI/controls/divider";
 
 export default function Rules() {
   const rules = useRulesStore((state) => state.rules);
-
+  const addRule = useRulesStore((state) => state.addRule);
   const [controlToggle, setControlToggle] = useState(true);
   useEffect(() => {}, [rules]);
 
@@ -43,8 +43,8 @@ export default function Rules() {
         style={{ display: controlToggle === true ? "flex" : "none" }}
       >
         <div style={{ display: "flex" }}>
-          <p>trigger</p>
-          <p>result</p>
+          <p style={{ width: "50%" }}>trigger</p>
+          <p style={{ width: "50%" }}>result</p>
         </div>
 
         <Divider color="black" direction="horizontal" />
@@ -78,17 +78,7 @@ export default function Rules() {
         <Divider color="lightgrey" direction="horizontal" />
         <div
           onClick={() => {
-            useRulesStore.setState({
-              rules: [
-                ...rules,
-                {
-                  ifType: "pose",
-                  pose: ["", ""],
-                  thenType: "",
-                  thenDetail: [""],
-                },
-              ],
-            });
+            addRule({});
           }}
         >
           create a new rule

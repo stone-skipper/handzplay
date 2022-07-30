@@ -18,6 +18,7 @@ export default function Controls() {
   const handIndicatorType = useControlsStore(
     (state) => state.handIndicatorType
   );
+  const backgroundType = useControlsStore((state) => state.backgroundType);
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
 
@@ -97,7 +98,6 @@ export default function Controls() {
             </div>
           </div>
         </div>
-
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>Camera Feed</div>
           <div className={styles.options}>
@@ -166,8 +166,48 @@ export default function Controls() {
               shadow
             </div>
           </div>
+        </div>{" "}
+        <div className={styles.controlWrapper}>
+          <div className={styles.controlTitle}>Background Pattern</div>
+          <div className={styles.options}>
+            <div
+              onClick={() => {
+                useControlsStore.setState({ backgroundType: "dots" });
+              }}
+              style={{
+                color: backgroundType === "dots" ? "#004DC0" : "grey",
+              }}
+            >
+              dots
+            </div>
+            <div className={styles.dividerPosition}>
+              <Divider direction="vertical" customSize={7} color="grey" />
+            </div>
+            <div
+              onClick={() => {
+                useControlsStore.setState({ backgroundType: "grid" });
+              }}
+              style={{
+                color: backgroundType === "grid" ? "#004DC0" : "grey",
+              }}
+            >
+              grid
+            </div>
+            <div className={styles.dividerPosition}>
+              <Divider direction="vertical" customSize={7} color="grey" />
+            </div>
+            <div
+              onClick={() => {
+                useControlsStore.setState({ backgroundType: "none" });
+              }}
+              style={{
+                color: backgroundType === "none" ? "#004DC0" : "grey",
+              }}
+            >
+              none
+            </div>
+          </div>
         </div>
-
         <p style={{ display: "flex", alignItems: "center" }}>
           hand color <ColorSelect />
         </p>
