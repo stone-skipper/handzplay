@@ -6,7 +6,7 @@ import Divider from "../UI/controls/divider";
 export default function Rules() {
   const rules = useRulesStore((state) => state.rules);
   const addRule = useRulesStore((state) => state.addRule);
-  const [controlToggle, setControlToggle] = useState(true);
+  const [controlToggle, setControlToggle] = useState(false);
   useEffect(() => {}, [rules]);
 
   const PoseWrapper = ({ hand, pose }) => {

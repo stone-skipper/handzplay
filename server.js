@@ -29,7 +29,7 @@ io.on("connection", (socket) => {
       from: data.from,
       name: data.name,
     });
-    console.log("callUser", data);
+    console.log("callUser", data.from);
   });
 
   //   socket.on("switchMode", (data) => {
@@ -42,6 +42,7 @@ io.on("connection", (socket) => {
 
   socket.on("answerCall", (data) => {
     io.to(data.to).emit("callAccepted", data.signal);
+    console.log("answerCall", data.to, data.signal);
   });
 });
 
