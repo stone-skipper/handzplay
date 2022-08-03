@@ -73,6 +73,25 @@
       cursor: pointer;
     }
   }
+
+  input {
+    text-align: right;
+    border: none;
+  }
+  input:focus::placeholder {
+    color: transparent;
+  }
+  input:focus {
+    outline: none;
+  }
+}
+.btn {
+  width: 100%;
+  height: fit-content;
+  padding: 10px 0;
+  text-align: center;
+  background-color: red;
+  cursor: pointer;
 }
 
 .rule {

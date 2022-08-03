@@ -2,8 +2,9 @@ import Handpose from "../components/handpose";
 import Logo from "../components/UI/logo";
 import Controls from "../components/controlUI/controls";
 import Rules from "../components/controlUI/rules";
+import Invite from "../components/controlUI/invite";
 import Grid from "../components/grid";
-import { useControlsStore, useRulesStore } from "../lib/store";
+import { useControlsStore, useRulesStore, useInviteStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
 import Peer from "simple-peer";
 import { io } from "socket.io-client";
@@ -11,7 +12,7 @@ import FriendsPose from "../components/friendspose";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 
-export default function Handsconnect() {
+function Handsconnect() {
   const handIndicatorType = useControlsStore(
     (state) => state.handIndicatorType
   );
@@ -24,10 +25,14 @@ export default function Handsconnect() {
   const [callAccepted, setCallAccepted] = useState(false);
   const [idToCall, setIdToCall] = useState(null);
   const [callEnded, setCallEnded] = useState(false);
-  const [name, setName] = useState("seungmee");
+  const myName = useInviteStore((state) => state.myName);
+  const myId = useInviteStore((state) => state.myId);
+
+  // const [name, setName] = useState("seungmee");
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
+  const socket = useRef();
 
   const [pairName, setPairName] = useState(null);
 
@@ -40,17 +45,9 @@ export default function Handsconnect() {
     baseURL = window.location + "?socketid=";
   }
 
-  const socket = io("localhost:5000");
-
-  var wrtc = require("wrtc");
-  const peer = new Peer({
-    initiator: true,
-    trickle: false,
-    stream: stream,
-    wrtc: wrtc,
-  });
-
   useEffect(() => {
+    socket.current = io.connect("localhost:5000");
+
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
       .then((stream) => {
@@ -58,19 +55,36 @@ export default function Handsconnect() {
         myVideo.current.srcObject = stream;
       });
 
-    socket.on("me", (id) => {
-      setMe(id);
+    socket.current.on("me", (id) => {
+      // setMe(id);
+      useInviteStore.setState({ myId: id });
     });
 
-    socket.on("callUser", (data) => {
+    socket.current.on("callUser", (data) => {
       setReceivingCall(true);
       setCaller(data.from);
-      setName(data.name);
+      useInviteStore.setState({ myName: data.name });
+      // setName(data.name);
       setCallerSignal(data.signal);
-      console.log(data.signal);
+    });
+  }, []);
+
+  const callUser = (id) => {
+    const peer = new Peer({
+      initiator: true,
+      trickle: false,
+      stream: stream,
     });
 
-    socket.on("callAccepted", (signal) => {
+    peer.on("signal", (data) => {
+      socket.current.emit("callUser", {
+        userToCall: id,
+        signalData: data,
+        from: me,
+        name: myName,
+      });
+    });
+    socket.current.on("callAccepted", (signal) => {
       setCallAccepted(true);
       peer.signal(signal);
     });
@@ -79,19 +93,7 @@ export default function Handsconnect() {
       userVideo.current.srcObject = stream;
       console.log(stream);
     });
-
     connectionRef.current = peer;
-  }, []);
-
-  const callUser = (id) => {
-    peer.on("signal", (data) => {
-      socket.emit("callUser", {
-        userToCall: id,
-        signalData: data,
-        from: me,
-        name: name,
-      });
-    });
   };
 
   const answerCall = () => {
@@ -100,10 +102,9 @@ export default function Handsconnect() {
       initiator: false,
       trickle: false,
       stream: stream,
-      // wrtc: wrtc,
     });
     peer2.on("signal", (data) => {
-      socket.emit("answerCall", { signal: data, to: caller });
+      socket.current.emit("answerCall", { signal: data, to: caller });
     });
 
     peer2.on("stream", (stream) => {
@@ -125,11 +126,12 @@ export default function Handsconnect() {
     const query = router.query;
     setIdToCall(query.socketid);
     setPairName(query.name);
-  }, [router.isReady, router.query]);
+    useInviteStore.setState({ inviteLink: baseURL + myId + "&name=" });
+  }, [router.isReady, router.query, myId]);
 
   return (
     <div className={styles.playground}>
-      <div
+      {/* <div
         style={{
           width: "100%",
           height: "fit-content",
@@ -147,28 +149,22 @@ export default function Handsconnect() {
           // window.open(baseURL + me + "&name=" + name, "_blank");
           // router.push({
           //   pathname: "/handsconnect",
-          //   query: { socketid: me, name: name },
+          //   query: { socket.currentid: me, name: name },
           // });
         }}
       >
-        invite a friend <br />
-        receivingCall: {receivingCall.toString()}
-        <br />
-        callAccepted: {callAccepted.toString()}
-        <br />
-        {me}
         {receivingCall === true && (
           <div
             onClick={() => {
               answerCall();
             }}
           >
+            {caller}
             your friend accepted. Ready?
           </div>
         )}
-      </div>
+      </div> */}
       <Grid color={handColor} />
-
       <FriendsPose
         handIndicatorType={handIndicatorType}
         cameraFeed={cameraFeed}
@@ -177,26 +173,14 @@ export default function Handsconnect() {
         videoRef={myVideo}
       />
       {callAccepted && !callEnded && (
-        <>
-          <div
-            style={{
-              width: "50vw",
-              height: "50vh",
-              background: "yellow",
-              position: "fixed",
-              bottom: 0,
-              left: 0,
-            }}
-          >
-            <FriendsPose
-              handIndicatorType={handIndicatorType}
-              cameraFeed={true}
-              rules={rules}
-              handColor={"red"}
-              videoRef={userVideo}
-            />
-          </div>
-        </>
+        <FriendsPose
+          handIndicatorType={handIndicatorType}
+          cameraFeed={false}
+          rules={rules}
+          handColor={"red"}
+          videoRef={userVideo}
+          mirror={false}
+        />
       )}
       <div
         style={{
@@ -232,7 +216,7 @@ export default function Handsconnect() {
         }}
       >
         <Rules />
-        <Controls />
+        <Controls /> <Invite />
       </div>
       <div
         style={{
@@ -252,9 +236,15 @@ export default function Handsconnect() {
             background: "#f3f3f3",
           }}
         >
-          <Logo color={handColor} displayTag={false} fontSize={40} />
+          <Logo
+            text={"HANDZCONNECT"}
+            color={handColor}
+            displayTag={false}
+            fontSize={40}
+          />
         </div>
       </div>
     </div>
   );
 }
+export default Handsconnect;

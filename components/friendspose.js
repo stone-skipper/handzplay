@@ -26,6 +26,7 @@ export default function FriendsPose({
   rules = [],
   handColor,
   videoRef,
+  mirror = true,
 }) {
   const canvasRef = useRef(null);
 
@@ -269,7 +270,7 @@ export default function FriendsPose({
         ref={videoRef}
         autoPlay
         style={{
-          transform: "scaleX(-100%)",
+          transform: mirror === true ? "scaleX(-100%)" : "scaleX(100%)",
           position: "absolute",
           marginLeft: "auto",
           marginRight: "auto",
@@ -297,7 +298,7 @@ export default function FriendsPose({
           width: "100vw",
           height: "100vh",
           objectFit: "cover",
-          transform: "scaleX(-1)",
+          transform: mirror === true ? "scaleX(-100%)" : "scaleX(100%)",
           filter: handIndicatorType === "blurred" ? "blur(35px)" : "none",
         }}
       />

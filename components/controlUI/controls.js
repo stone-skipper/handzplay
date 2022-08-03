@@ -224,7 +224,7 @@ export default function Controls() {
           setControlToggle(!controlToggle);
         }}
       >
-        <p> Status {"&"} settings</p>
+        <p>Status {"&"} settings</p>
       </div>
     </div>
   );

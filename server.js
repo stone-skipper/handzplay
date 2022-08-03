@@ -11,13 +11,14 @@ const io = require("socket.io")(server, {
   },
   perMessageDeflate: false,
 });
+
 const PORT = process.env.PORT || 5000;
 // const PORT = 5000;
 // const INDEX = "/index.html";
 
 io.on("connection", (socket) => {
   socket.emit("me", socket.id);
-  // console.log("new connection ", socket.id);
+  console.log("new connection ", socket.id);
 
   socket.on("disconnect", () => {
     socket.broadcast.emit("callEnded");
@@ -42,7 +43,7 @@ io.on("connection", (socket) => {
 
   socket.on("answerCall", (data) => {
     io.to(data.to).emit("callAccepted", data.signal);
-    console.log("answerCall", data.to, data.signal);
+    // console.log("answerCall", data.to, data.signal);
   });
 });
 
