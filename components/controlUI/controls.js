@@ -31,7 +31,14 @@ export default function Controls() {
         style={{ display: controlToggle === true ? "flex" : "none" }}
       >
         <div className={styles.statusBox}>
-          <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
             <motion.div
               style={{
                 position: "relative",

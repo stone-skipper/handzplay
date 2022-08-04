@@ -27,8 +27,8 @@ function Handsconnect() {
   const [callEnded, setCallEnded] = useState(false);
   const myName = useInviteStore((state) => state.myName);
   const myId = useInviteStore((state) => state.myId);
+  const inviteStatus = useInviteStore((state) => state.inviteStatus);
 
-  // const [name, setName] = useState("seungmee");
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
@@ -56,7 +56,6 @@ function Handsconnect() {
       });
 
     socket.current.on("me", (id) => {
-      // setMe(id);
       useInviteStore.setState({ myId: id });
     });
 
@@ -64,8 +63,11 @@ function Handsconnect() {
       setReceivingCall(true);
       setCaller(data.from);
       useInviteStore.setState({ myName: data.name });
-      // setName(data.name);
       setCallerSignal(data.signal);
+
+      setTimeout(() => {
+        answerCall();
+      }, 5000);
     });
   }, []);
 
@@ -91,13 +93,14 @@ function Handsconnect() {
 
     peer.on("stream", (stream) => {
       userVideo.current.srcObject = stream;
-      console.log(stream);
     });
     connectionRef.current = peer;
   };
 
   const answerCall = () => {
     setCallAccepted(true);
+    useInviteStore.setState({ inviteStatus: true });
+
     const peer2 = new Peer({
       initiator: false,
       trickle: false,
@@ -109,7 +112,6 @@ function Handsconnect() {
 
     peer2.on("stream", (stream) => {
       userVideo.current.srcObject = stream;
-      console.log(stream);
     });
 
     peer2.signal(callerSignal);

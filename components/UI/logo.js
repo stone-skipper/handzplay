@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function Logo({
-  text = "handzplay",
+  text = "HANDZPLAY",
   color,
   displayTag,
   fontSize,

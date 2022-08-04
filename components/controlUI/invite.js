@@ -8,21 +8,10 @@ import HandIllust02 from "../visual/hand02";
 import { motion } from "framer-motion";
 
 export default function Invite() {
-  const cameraFeed = useControlsStore((state) => state.cameraFeed);
-  const handReady = useControlsStore((state) => state.handReady);
-  const leftHand = useControlsStore((state) => state.leftHand);
-  const rightHand = useControlsStore((state) => state.rightHand);
-  const currentPoseL = useControlsStore((state) => state.currentPoseL);
-  const currentPoseR = useControlsStore((state) => state.currentPoseR);
-  const handColor = useControlsStore((state) => state.handColor);
-  const handIndicatorType = useControlsStore(
-    (state) => state.handIndicatorType
-  );
-  const backgroundType = useControlsStore((state) => state.backgroundType);
-  const fingersL = useControlsStore((state) => state.fingersL);
-  const fingersR = useControlsStore((state) => state.fingersR);
   const nameRef = useRef();
+  const handColor = useControlsStore((state) => state.handColor);
   const myId = useInviteStore((state) => state.myId);
+  const inviteStatus = useInviteStore((state) => state.inviteStatus);
   const inviteLink = useInviteStore((state) => state.inviteLink);
   const [controlToggle, setControlToggle] = useState(false);
   const [btnText, setBtnText] = useState("invite a friend");
@@ -43,7 +32,22 @@ export default function Invite() {
           <div className={styles.options}>{myId} </div>
         </div>
         <div
+          style={{
+            width: "100%",
+            height: "fit-content",
+            textAlign: "center",
+            padding: "20px 0",
+            fontSize: "0.85em",
+            opacity: 0.4,
+          }}
+        >
+          Share the invite link to your friend.
+          <br /> You'll be able to see friend's hand <br />
+          as the invitation is accepted
+        </div>
+        <div
           className={styles.btn}
+          style={{ background: handColor, color: "white" }}
           onClick={() => {
             if (nameRef.current.value !== "") {
               navigator.clipboard.writeText(inviteLink + nameRef.current.value);
@@ -65,14 +69,15 @@ export default function Invite() {
       <div
         className={styles.header}
         style={{
-          background: "rgba(0, 77, 192, 0.2)",
-          color: "rgba(0, 77, 192, 1)",
+          background:
+            inviteStatus === true ? "orange" : "rgba(0, 77, 192, 0.2)",
+          color: inviteStatus === true ? "white" : "rgba(0, 77, 192, 1)",
         }}
         onClick={() => {
           setControlToggle(!controlToggle);
         }}
       >
-        <p>Invite</p>
+        <p>{inviteStatus === true ? "Connected" : "Invite"}</p>
       </div>
     </div>
   );
