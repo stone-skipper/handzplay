@@ -12,13 +12,13 @@ export default function Playground() {
   );
   const rules = useRulesStore((state) => state.rules);
   const handColor = useControlsStore((state) => state.handColor);
-
+  const cameraFeed = useControlsStore((state) => state.cameraFeed);
   return (
     <div className={styles.playground}>
       <Grid color={handColor} />
       <Handpose
         handIndicatorType={handIndicatorType}
-        cameraFeed={false}
+        cameraFeed={cameraFeed}
         rules={rules}
         handColor={handColor}
       />

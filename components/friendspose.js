@@ -1,18 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import { useControlsStore, useRulesStore } from "../lib/store";
-import RelationCvs from "./if/relationCvs";
-
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import "@tensorflow/tfjs-backend-wasm";
-
 import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
-
-import Webcam from "react-webcam";
 import { drawHand, drawPoints, drawBlurred } from "./utils";
-
 import * as fp from "fingerpose";
+
 import {
   FiveGesture,
   FourGesture,
@@ -22,23 +16,23 @@ import {
   ThumbsUpGesture,
   VictoryGesture,
 } from "../gestures";
+import { useControlsStore, useRulesStore } from "../lib/store";
+import RelationCvs from "./if/relationCvs";
 import PoseCvs from "./if/poseCvs";
 
-export default function Handpose({
+export default function FriendsPose({
   handIndicatorType,
   cameraFeed,
   rules = [],
   handColor,
+  videoRef,
+  mirror = true,
 }) {
-  const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
   // from store
-  // const cameraFeed = useControlsStore((state) => state.cameraFeed);
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
-  // const rules = useRulesStore((state) => state.rules);
-  // const handColor = useControlsStore((state) => state.handColor);
 
   var handL, handR, hand;
 
@@ -176,21 +170,14 @@ export default function Handpose({
   const detect = async (net) => {
     // Check data is available
     if (
-      typeof webcamRef.current !== "undefined" &&
-      webcamRef.current !== null &&
-      webcamRef.current.video.readyState === 4
+      typeof videoRef.current !== undefined &&
+      typeof videoRef.current !== null &&
+      videoRef.current.readyState === 4
     ) {
       // Get Video Properties
-      const video = webcamRef.current.video;
-      console.log(video);
-
-      useControlsStore.setState({ cameraAccess: true });
-      videoWidth = webcamRef.current.video.videoWidth;
-      videoHeight = webcamRef.current.video.videoHeight;
-
-      // Set video width
-      webcamRef.current.video.width = videoWidth;
-      webcamRef.current.video.height = videoHeight;
+      const video = videoRef.current;
+      videoWidth = videoRef.current.videoWidth;
+      videoHeight = videoRef.current.videoHeight;
 
       // Set canvas height and width
       canvasRef.current.width = videoWidth;
@@ -259,7 +246,6 @@ export default function Handpose({
 
   useEffect(() => {
     if (passHand !== null) {
-      // console.log(passHand);
       const ctx = canvasRef.current.getContext("2d");
       var scale = window.devicePixelRatio; // Change to 1 on retina screens to see blurry canvas.
       canvasRef.current.width = Math.floor(vWidth * scale);
@@ -279,17 +265,19 @@ export default function Handpose({
 
   return (
     <div className="App">
-      <Webcam
-        ref={webcamRef}
-        mirrored={true}
+      <video
+        playsInline
+        ref={videoRef}
+        autoPlay
         style={{
+          transform: mirror === true ? "scaleX(-100%)" : "scaleX(100%)",
           position: "absolute",
           marginLeft: "auto",
           marginRight: "auto",
           left: 0,
           right: 0,
           textAlign: "center",
-          zindex: 15,
+          zindex: 9,
           width: "100vw",
           height: "100vh",
           objectFit: "cover",
@@ -310,11 +298,11 @@ export default function Handpose({
           width: "100vw",
           height: "100vh",
           objectFit: "cover",
-          transform: "scaleX(-1)",
+          transform: mirror === true ? "scaleX(-100%)" : "scaleX(100%)",
           filter: handIndicatorType === "blurred" ? "blur(35px)" : "none",
         }}
       />
-      {rules !== undefined &&
+      {/* {rules !== undefined &&
         rules.map((value, index) => {
           if (value.ifType === "relation") {
             return (
@@ -340,7 +328,7 @@ export default function Handpose({
               />
             );
           }
-        })}
+        })} */}
     </div>
   );
 }

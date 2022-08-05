@@ -2,7 +2,13 @@ import TextMotion from "../UI/textmotion";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-export default function Logo({ color, displayTag, fontSize, delay }) {
+export default function Logo({
+  text = "HANDZPLAY",
+  color,
+  displayTag,
+  fontSize,
+  delay,
+}) {
   return (
     <motion.div
       style={{
@@ -18,7 +24,7 @@ export default function Logo({ color, displayTag, fontSize, delay }) {
       <Link href="/">
         <TextMotion
           font='"Gainsborough", sans-serif'
-          content="HANDZPLAY"
+          content={text}
           fontSize={fontSize}
           delay={delay}
           color={color}
