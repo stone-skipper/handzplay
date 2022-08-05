@@ -44,9 +44,13 @@ function Handsconnect() {
   if (typeof window !== "undefined") {
     baseURL = window.location + "?socketid=";
   }
+  const IS_PROD = process.env.NODE_ENV === "production";
+  const URL = IS_PROD
+    ? "https://safe-oasis-65744.herokuapp.com"
+    : "localhost:5000";
 
   useEffect(() => {
-    socket.current = io.connect("localhost:5000");
+    socket.current = io.connect(URL);
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })

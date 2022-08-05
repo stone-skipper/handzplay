@@ -5,6 +5,7 @@ const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
+    // origin: ["localhost:5000", "https://safe-oasis-65744.herokuapp.com"],
     methods: ["GET", "POST"],
     transports: ["websocket", "polling"],
     credentials: true,
