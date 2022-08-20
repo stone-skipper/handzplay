@@ -170,3 +170,35 @@
     cursor: pointer;
   }
 }
+
+// swiper
+.slideWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  padding: 20px;
+  overflow: hidden;
+
+  button {
+    display: none !important;
+    // remove the native btn
+  }
+}
+
+.swiperSlide {
+  text-align: center;
+  font-size: 10px;
+  width: fit-content;
+  height: fit-content;
+  /* Center slide text vertically */
+
+  display: flex;
+  align-items: center;
+}
+
+.enumWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
