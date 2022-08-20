@@ -170,3 +170,22 @@
     cursor: pointer;
   }
 }
+
+.picker {
+  span {
+    display: none;
+  }
+  ul::-webkit-scrollbar {
+    display: none;
+  }
+  ul {
+    border-left: 1px solid black;
+  }
+
+  li p {
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+    font-family: "Manrope", sans-serif;
+  }
+}

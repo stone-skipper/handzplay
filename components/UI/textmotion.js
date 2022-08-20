@@ -41,7 +41,8 @@ export default function TextMotion({
   textCenter = false,
 }) {
   //   const splitted = referer?.split('/') || []
-  const [ref, inView] = useInView();
+  const useInviewOpt = { rootMargin: "0px 0px" };
+  const [ref, inView] = useInView(useInviewOpt);
   const controls = useAnimation();
   const [activePresetInView, setActivePresetInView] = useState(false);
   useEffect(() => {
@@ -52,12 +53,12 @@ export default function TextMotion({
     }
   }, [controls, inView]);
 
-  setTimeout(() => {
-    setActivePresetInView(true);
-  }, delay * 1000);
+  // setTimeout(() => {
+  //   setActivePresetInView(true);
+  // }, delay * 1000);
   return (
     <AnimatePresence>
-      {activePresetInView && (
+      {inView && (
         <motion.div
           style={{
             position: "relative",

@@ -3,9 +3,8 @@ import styles from "./panels.module.scss";
 import { useEffect, useState } from "react";
 import Divider from "../UI/controls/divider";
 import NewRules from "./newRule";
-import RuleList from "./ruleList";
 
-export default function Rules() {
+export default function RuleList() {
   const rules = useRulesStore((state) => state.rules);
   const addRule = useRulesStore((state) => state.addRule);
   const [controlToggle, setControlToggle] = useState(false);
@@ -39,25 +38,48 @@ export default function Rules() {
   };
 
   return (
-    <div className={styles.wrapper} style={{ width: "50vw" }}>
-      <div
-        className={styles.content}
-        style={{ display: controlToggle === true ? "flex" : "none" }}
-      >
-        <NewRules />
-        {/* <RuleList /> */}
+    <>
+      <div style={{ display: "flex" }}>
+        <p style={{ width: "50%" }}>trigger</p>
+        <p style={{ width: "50%" }}>result</p>
       </div>
+
+      <Divider color="black" direction="horizontal" />
+      <div className={styles.rulesWrapper}>
+        {rules.map((rule, index) => {
+          return (
+            <div className={styles.rule}>
+              <div className={styles.number}>{index + 1}</div>
+              {rule.ifType === "pose" ? (
+                <PoseWrapper hand={rule.pose[1]} pose={rule.pose[0]} />
+              ) : (
+                <RelationWrapper
+                  fingerA={rule.fingerA}
+                  fingerB={rule.fingerB}
+                  distance={rule.distance}
+                />
+              )}
+              <div>👉</div>
+              <div className={styles.thenWrapper}>
+                <div className={styles.then}>{rule.thenType}</div>
+                <div className={styles.thenDetail}>{rule.thenDetail[0]}</div>
+              </div>
+              <div className={styles.delete} onClick={() => {}}>
+                ⨉
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <Divider color="lightgrey" direction="horizontal" />
       <div
-        className={styles.header}
-        style={{
-          background: "rgba(0, 77, 192, 1)",
-        }}
         onClick={() => {
-          setControlToggle(!controlToggle);
+          // addRule({});
         }}
       >
-        <p>customize rules</p>
+        create a new rule
       </div>
-    </div>
+    </>
   );
 }
