@@ -182,7 +182,6 @@ export default function Handpose({
     ) {
       // Get Video Properties
       const video = webcamRef.current.video;
-      console.log(video);
 
       useControlsStore.setState({ cameraAccess: true });
       videoWidth = webcamRef.current.video.videoWidth;

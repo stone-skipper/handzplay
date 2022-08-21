@@ -1,98 +1,97 @@
-import { useControlsStore, useRulesStore } from "../../lib/store";
+
+import { useRulesStore } from "../../lib/store";
+import shallow from "zustand/shallow";
+
+import { useEffect, useState, useRef } from "react";
 import styles from "./panels.module.scss";
-import { useEffect, useState } from "react";
-import Divider from "../UI/controls/divider";
-import WheelPicker from "react-simple-wheel-picker";
 
-export default function NewRules() {
-  const [controlToggle, setControlToggle] = useState(false);
-  const [valueGroups, setValueGroups] = useState({
-    title: "Mr.",
-    firstName: "Micheal",
-    secondName: "Jordan",
-  });
+import { motion } from "framer-motion";
+import ScrollPicker from "./scrollPicker";
+import EnumSelect from "./enumSelect";
 
-  const handleChange = (name, value) => {
-    setValueGroups((valueGroups) => ({
-      valueGroups: {
-        ...valueGroups,
-        [name]: value,
-      },
-    }));
-  };
+export default function NewRule({ options, onScroll }) {
+  const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
 
-  const setKeyValue = (arr) => {
-    return arr.map((item) => {
-      const dataSet = {
-        id: item,
-        value: item,
-      };
-      return dataSet;
-    });
-  };
+  useEffect(() => {
+    console.log(ruleInProgress);
+  }, [ruleInProgress]);
 
-  const newOptionGroups = (optionGroups) => {
-    let groups = {};
-    for (const group in optionGroups) {
-      groups[group] = setKeyValue(optionGroups[group]);
-    }
-    return groups;
-  };
-  const optionGroups = {
-    title: ["Mr.", "Mrs.", "Ms.", "Dr."],
-    firstName: ["John", "Micheal", "Elizabeth"],
-    secondName: ["Lennon", "Jackson", "Jordan", "Legend", "Taylor"],
-  };
-
-  const opGroups = newOptionGroups(optionGroups);
-
-  let pickerColumn = [];
-  const handleOnChange = (target) => {
-    console.log(target);
-  };
-  for (const group in opGroups) {
-    const data = opGroups[group];
-
-    // pickerColumn.push(
-    //   <StyledWheelPicker
-    //     data={data}
-    //     onChange={handleOnChange}
-    //     height={400}
-    //     width={100}
-    //     titleText="Enter value same as aria-label"
-    //     itemHeight={36}
-    //     selectedID={data[0].id}
-    //     color="#999999"
-    //     activeColor="#fff"
-    //     backgroundColor="black"
-    //     shadowColor="none"
-    //   />
-    // );
-    pickerColumn.push(
-      <WheelPicker
-        data={data}
-        onChange={handleOnChange}
-        height={300}
-        width={100}
-        titleText="Enter value same as aria-label"
-        itemHeight={36}
-        selectedID={data[0].id}
-        color="lightgrey"
-        activeColor="blue"
-        backgroundColor="white"
-        shadowColor="none"
-        fontSize={14}
-      />
-    );
-  }
   return (
     <>
-      <div style={{ display: "flex" }}>
-        <p style={{ width: "50%" }}>trigger</p>
-        <p style={{ width: "50%" }}>result</p>
+      {ruleInProgress.ifType}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <EnumSelect
+          title="Trigger"
+          label="ifType"
+          options={["pose", "finger"]}
+        />
+        <EnumSelect
+          title="Result"
+          label="then"
+          options={["shape", "draw", "audio", "element", "stamp"]}
+        />
       </div>
-      <div style={{ display: "flex" }} className={styles.picker}>
-        {pickerColumn}
+
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        {ruleInProgress.ifType === "pose" && (
+          <>
+            <ScrollPicker label="hand" options={["left", "right", "both"]} />
+            <ScrollPicker
+              label="pose"
+              options={[
+                "victory",
+                "thumb-up",
+                "spidey",
+                "pointer",
+                "two",
+                "three",
+                "four",
+                "five",
+              ]}
+            />
+          </>
+        )}
+
+        <ScrollPicker
+          label="fingerA"
+          options={[
+            "left thumb",
+            "left index",
+            "left middle",
+            "left ring",
+            "left pinky",
+            "right thumb",
+            "right index",
+            "right middle",
+            "right ring",
+            "right pinky",
+          ]}
+        />
+        <ScrollPicker
+          label="fingerB"
+          options={[
+            "left thumb",
+            "left index",
+            "left middle",
+            "left ring",
+            "left pinky",
+            "right thumb",
+            "right index",
+            "right middle",
+            "right ring",
+            "right pinky",
+          ]}
+        />
+        <ScrollPicker
+          label="distance"
+          options={[10, 20, 30, 40, 50, 60, 70, 80]}
+        />
       </div>
     </>
   );

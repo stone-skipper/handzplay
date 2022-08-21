@@ -171,21 +171,35 @@
   }
 }
 
-.picker {
-  span {
-    display: none;
-  }
-  ul::-webkit-scrollbar {
-    display: none;
-  }
-  ul {
-    border-left: 1px solid black;
-  }
 
-  li p {
-    width: 100%;
-    text-align: center;
-    font-size: 1em;
-    font-family: "Manrope", sans-serif;
+// swiper
+.slideWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  padding: 20px;
+  overflow: hidden;
+
+  button {
+    display: none !important;
+    // remove the native btn
   }
+}
+
+.swiperSlide {
+  text-align: center;
+  font-size: 10px;
+  width: fit-content;
+  height: fit-content;
+  /* Center slide text vertically */
+
+  display: flex;
+  align-items: center;
+}
+
+.enumWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
 }
