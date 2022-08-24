@@ -42,9 +42,8 @@ export default function TextMotion({
 }) {
   //   const splitted = referer?.split('/') || []
   const useInviewOpt = { rootMargin: "0px 0px" };
-  const [ref, inView] = useInView(useInviewOpt);
+  const [ref, inView] = useInView();
   const controls = useAnimation();
-  const [activePresetInView, setActivePresetInView] = useState(false);
   useEffect(() => {
     if (inView) {
       controls.start("after");
@@ -53,69 +52,65 @@ export default function TextMotion({
     }
   }, [controls, inView]);
 
-  // setTimeout(() => {
-  //   setActivePresetInView(true);
-  // }, delay * 1000);
   return (
     <AnimatePresence>
-      {inView && (
-        <motion.div
-          style={{
-            position: "relative",
-            wordBreak: "break-word",
-            width: width,
-          }}
+      <motion.div
+        style={{
+          position: "relative",
+          wordBreak: "break-word",
+          width: width,
+        }}
+      >
+        <motion.h1
+          variants={letterContainerVariants}
+          ref={ref}
+          initial={"before"}
+          animate={controls}
+          transition={{ delay: delay }}
+          style={{ margin: 0, padding: 0 }}
         >
-          <motion.h1
-            variants={letterContainerVariants}
-            ref={ref}
-            initial={"before"}
-            animate={controls}
-            style={{ margin: 0, padding: 0 }}
+          <motion.div
+            style={{
+              textAlign: "left",
+              color: color,
+              fontFamily: font,
+              fontWeight: 400,
+              fontSize: fontSize,
+            }}
+            transition={{
+              duration: 0.5,
+            }}
           >
-            <motion.div
-              style={{
-                textAlign: "left",
-                color: color,
-                fontFamily: font,
-                fontWeight: 400,
-                fontSize: fontSize,
-              }}
-              transition={{
-                duration: 0.5,
-              }}
-            >
-              {content.split(" ").map((word, wordI) => (
-                <div
-                  key={`word-${word}-${wordI}`}
-                  style={{
-                    display: "inline-block",
-                  }}
-                >
-                  {Array.from(word).map((letter, index) => (
-                    <motion.span
-                      key={`${index}-${letter}`}
-                      style={{
-                        position: "relative",
-                        display: "inline-block",
-                        width: "auto",
-                        letterSpacing:
-                          index === word.length - 1 ? 0 : letterSpacing,
-                      }} // Position elements
-                      variants={letterVariants}
-                      transition={{ duration: 0.5 }}
-                    >
-                      {letter === " " ? "\u00A0" : letter}
-                    </motion.span>
-                  ))}
-                  {/* remove the last spacing */}
-                  {wordI !== content.split(" ").length - 1 ? "\u00A0" : null}
-                </div>
-              ))}
-            </motion.div>
-          </motion.h1>
-        </motion.div>
-      )}
+            {content.split(" ").map((word, wordI) => (
+              <div
+                key={`word-${word}-${wordI}`}
+                style={{
+                  display: "inline-block",
+                }}
+              >
+                {Array.from(word).map((letter, index) => (
+                  <motion.span
+                    key={`${index}-${letter}`}
+                    style={{
+                      position: "relative",
+                      display: "inline-block",
+                      width: "auto",
+                      letterSpacing:
+                        index === word.length - 1 ? 0 : letterSpacing,
+                    }} // Position elements
+                    variants={letterVariants}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {letter === " " ? "\u00A0" : letter}
+                  </motion.span>
+                ))}
+                {/* remove the last spacing */}
+                {wordI !== content.split(" ").length - 1 ? "\u00A0" : null}
+              </div>
+            ))}
+          </motion.div>
+        </motion.h1>
+      </motion.div>
     </AnimatePresence>
   );
 }

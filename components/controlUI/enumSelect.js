@@ -5,7 +5,7 @@ import styles from "./panels.module.scss";
 
 import { motion } from "framer-motion";
 
-export default function EnumSelect({ title, label, options }) {
+export default function EnumSelect({ title, label, options, onSelect }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const updateRuleInProgress = useRulesStore(
     (state) => state.updateRuleInProgress
@@ -25,6 +25,7 @@ export default function EnumSelect({ title, label, options }) {
                 setSelected(data);
                 // console.log(ruleInProgress);
               }}
+              // onClick={onSelect}
               style={{
                 cursor: "pointer",
                 color: selected === data ? "blue" : "grey",

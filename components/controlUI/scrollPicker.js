@@ -1,6 +1,6 @@
 import { useRulesStore } from "../../lib/store";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, createRef, useRef, useCallback } from "react";
 import styles from "./panels.module.scss";
 
 import { motion } from "framer-motion";
@@ -11,10 +11,32 @@ export default function ScrollPicker({ label, options }) {
   const updateRuleInProgress = useRulesStore(
     (state) => state.updateRuleInProgress
   );
-
+  const [mouseOn, setMouseOn] = useState(false);
+  const [slidesToScroll, setSlidesToScroll] = useState(1);
   useEffect(() => {
     updateRuleInProgress(label, options[0]);
   }, []);
+
+  const sliderRef = useRef(null);
+  const scroll = useCallback(
+    (y) => {
+      if (y > 0) {
+        return sliderRef?.current?.slickNext(); /// ? <- using description below
+      } else {
+        return sliderRef?.current?.slickPrev();
+      }
+    },
+    [sliderRef]
+  );
+  useEffect(() => {
+    // const sliderObject = sliderRef.current;
+    if (mouseOn === true) {
+      window.addEventListener("wheel", (e) => {
+        console.log(e);
+        scroll(e.deltaY);
+      });
+    }
+  }, [scroll]);
 
   const settings = {
     dots: false,
@@ -27,7 +49,7 @@ export default function ScrollPicker({ label, options }) {
     focusOnSelect: true,
     swipe: true,
     centerMode: true,
-    speed: 300,
+    speed: 100,
 
     beforeChange: function (currentSlide, nextSlide) {
       setCurrent(nextSlide);
@@ -43,8 +65,16 @@ export default function ScrollPicker({ label, options }) {
 
   const [current, setCurrent] = useState(0);
   return (
-    <div className={styles.slideWrapper}>
-      <Slider {...settings}>
+    <div
+      className={styles.slideWrapper}
+      onMouseEnter={() => {
+        setMouseOn(true);
+      }}
+      onMouseLeave={() => {
+        setMouseOn(false);
+      }}
+    >
+      <Slider {...settings} ref={sliderRef}>
         {options.map((data, index) => {
           return (
             <motion.div

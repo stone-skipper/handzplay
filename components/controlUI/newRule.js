@@ -1,4 +1,3 @@
-
 import { useRulesStore } from "../../lib/store";
 import shallow from "zustand/shallow";
 
@@ -18,7 +17,6 @@ export default function NewRule({ options, onScroll }) {
 
   return (
     <>
-      {ruleInProgress.ifType}
       <div
         style={{
           display: "flex",
@@ -33,15 +31,52 @@ export default function NewRule({ options, onScroll }) {
         />
         <EnumSelect
           title="Result"
-          label="then"
+          label="thenType"
           options={["shape", "draw", "audio", "element", "stamp"]}
         />
       </div>
 
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          position: "relative",
+        }}
+      >
+        {(ruleInProgress.ifType !== undefined ||
+          ruleInProgress.thenType !== undefined) && (
+          <div
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              top: 0,
+              left: 0,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div
+              style={{
+                width: "90%",
+                height: 36,
+                border: "2px solid blue",
+                borderRadius: 10,
+              }}
+            ></div>
+          </div>
+        )}
+
         {ruleInProgress.ifType === "pose" && (
           <>
+            <div>if</div>
             <ScrollPicker label="hand" options={["left", "right", "both"]} />
+            <div>
+              {ruleInProgress.hand === "both" ? "hands are" : "hand is"}
+            </div>
             <ScrollPicker
               label="pose"
               options={[
@@ -57,41 +92,70 @@ export default function NewRule({ options, onScroll }) {
             />
           </>
         )}
+        {ruleInProgress.ifType === "finger" && (
+          <>
+            <div>if</div>
 
-        <ScrollPicker
-          label="fingerA"
-          options={[
-            "left thumb",
-            "left index",
-            "left middle",
-            "left ring",
-            "left pinky",
-            "right thumb",
-            "right index",
-            "right middle",
-            "right ring",
-            "right pinky",
-          ]}
-        />
-        <ScrollPicker
-          label="fingerB"
-          options={[
-            "left thumb",
-            "left index",
-            "left middle",
-            "left ring",
-            "left pinky",
-            "right thumb",
-            "right index",
-            "right middle",
-            "right ring",
-            "right pinky",
-          ]}
-        />
-        <ScrollPicker
-          label="distance"
-          options={[10, 20, 30, 40, 50, 60, 70, 80]}
-        />
+            <ScrollPicker
+              label="fingerA"
+              options={[
+                "left thumb",
+                "left index",
+                "left middle",
+                "left ring",
+                "left pinky",
+                "right thumb",
+                "right index",
+                "right middle",
+                "right ring",
+                "right pinky",
+              ]}
+            />
+            <div>and</div>
+
+            <ScrollPicker
+              label="fingerB"
+              options={[
+                "left thumb",
+                "left index",
+                "left middle",
+                "left ring",
+                "left pinky",
+                "right thumb",
+                "right index",
+                "right middle",
+                "right ring",
+                "right pinky",
+              ]}
+            />
+            <div>are within</div>
+            <ScrollPicker
+              label="distance"
+              options={[10, 20, 30, 40, 50, 60, 70, 80]}
+            />
+            <div>px</div>
+          </>
+        )}
+        <div>{"->"}</div>
+        {ruleInProgress.thenType === "shape" && (
+          <>
+            <ScrollPicker
+              label="thenDetail"
+              options={[
+                "left thumb",
+                "left index",
+                "left middle",
+                "left ring",
+                "left pinky",
+                "right thumb",
+                "right index",
+                "right middle",
+                "right ring",
+                "right pinky",
+              ]}
+            />
+          </>
+        )}
       </div>
     </>
   );

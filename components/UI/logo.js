@@ -7,7 +7,7 @@ export default function Logo({
   color,
   displayTag,
   fontSize,
-  delay,
+  delay = 0,
 }) {
   return (
     <motion.div
@@ -21,16 +21,14 @@ export default function Logo({
         gap: 5,
       }}
     >
-      <Link href="/">
-        <TextMotion
-          font='"Gainsborough", sans-serif'
-          content={text}
-          fontSize={fontSize}
-          delay={delay}
-          color={color}
-          letterSpacing="1.2rem"
-        />
-      </Link>
+      <TextMotion
+        font='"Gainsborough", sans-serif'
+        content={text}
+        fontSize={fontSize}
+        delay={delay}
+        color={color}
+        letterSpacing="1.2rem"
+      />
       <motion.p
         style={{
           width: "100%",
