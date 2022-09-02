@@ -61,7 +61,9 @@ export default function RulesList() {
               <div>👉</div>
               <div className={styles.thenWrapper}>
                 <div className={styles.then}>{rule.thenType}</div>
-                <div className={styles.thenDetail}>{rule.thenDetail[0]}</div>
+                <div className={styles.thenDetail}>
+                  {rule.thenDetail.toString()}
+                </div>
               </div>
               <div className={styles.delete} onClick={() => {}}>
                 ⨉

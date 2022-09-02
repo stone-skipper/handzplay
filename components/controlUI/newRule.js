@@ -7,6 +7,7 @@ import styles from "./panels.module.scss";
 import { motion } from "framer-motion";
 import ScrollPicker from "./scrollPicker";
 import EnumSelect from "./enumSelect";
+import ColorPicker from "./colorPicker";
 
 export default function NewRule({ options, onScroll }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
@@ -141,19 +142,48 @@ export default function NewRule({ options, onScroll }) {
           <>
             <ScrollPicker
               label="thenDetail"
-              options={[
-                "left thumb",
-                "left index",
-                "left middle",
-                "left ring",
-                "left pinky",
-                "right thumb",
-                "right index",
-                "right middle",
-                "right ring",
-                "right pinky",
-              ]}
+              arrayIndex={0}
+              options={["rect", "line", "circle", "star", "text", "clipping"]}
             />
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "rect" && (
+                <>
+                  <ColorPicker label="thenDetail" arrayIndex={1} />
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={2}
+                    options={["fill", "stroke"]}
+                  />
+                </>
+              )}
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "line" && (
+                <>
+                  <ColorPicker label="thenDetail" arrayIndex={1} />
+                </>
+              )}
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "circle" && (
+                <>
+                  <ColorPicker label="thenDetail" arrayIndex={1} />
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={2}
+                    options={["fill", "stroke"]}
+                  />
+                </>
+              )}
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "star" && (
+                <>
+                  <ColorPicker label="thenDetail" arrayIndex={1} />
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={2}
+                    options={["fill", "stroke"]}
+                  />
+                </>
+              )}
           </>
         )}
       </div>

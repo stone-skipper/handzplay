@@ -11,20 +11,22 @@ export default function Rules() {
   const addRule = useRulesStore((state) => state.addRule);
   const [controlToggle, setControlToggle] = useState(false);
   const [ruleContent, setRuleContent] = useState("list"); //list or new
-
+  const removeRuleInProgress = useRulesStore(
+    (state) => state.removeRuleInProgress
+  );
   return (
     <div className={styles.wrapper} style={{ width: "50vw" }}>
       <div
         className={styles.content}
         style={{ display: controlToggle === true ? "flex" : "none" }}
       >
-
         {ruleContent === "new" && (
           <>
             <NewRule />
             <div
               onClick={() => {
                 setRuleContent("list");
+                removeRuleInProgress();
               }}
             >
               cancel
