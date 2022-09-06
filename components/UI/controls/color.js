@@ -2,8 +2,7 @@ import { ChromePicker, SketchPicker } from "react-color";
 import { useState } from "react";
 import { useControlsStore } from "../../../lib/store";
 
-export default function ColorSelect() {
-  const handColor = useControlsStore((state) => state.handColor);
+export default function ColorSelect({ variable, onColorChange }) {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   return (
@@ -16,14 +15,14 @@ export default function ColorSelect() {
           width: "fit-content",
           padding: 10,
           borderRadius: 2,
-          background: handColor,
+          background: variable,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           textAlign: "center",
         }}
       >
-        {handColor}
+        {variable}
       </div>
 
       <div
@@ -34,9 +33,10 @@ export default function ColorSelect() {
       >
         <ChromePicker
           disableAlpha={true}
-          color={handColor}
+          color={variable}
           onChangeComplete={(color) => {
-            useControlsStore.setState({ handColor: color.hex });
+            onColorChange(color);
+            // useControlsStore.setState({ handColor: color.hex });
           }}
         />
       </div>

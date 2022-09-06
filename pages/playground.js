@@ -15,6 +15,10 @@ export default function Playground() {
   );
   const rules = useRulesStore((state) => state.rules);
   const handColor = useControlsStore((state) => state.handColor);
+  const playgroundBgColor = useControlsStore(
+    (state) => state.playgroundBgColor
+  );
+
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
 
   useEffect(() => {
@@ -22,7 +26,10 @@ export default function Playground() {
   }, [rules]);
 
   return (
-    <div className={styles.playground}>
+    <div
+      className={styles.playground}
+      style={{ background: playgroundBgColor }}
+    >
       <Head>
         <title>PLAYGROUND</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -64,7 +71,7 @@ export default function Playground() {
             width: "fit-content",
             height: "fit-content",
             padding: 5,
-            background: "#f3f3f3",
+            background: playgroundBgColor,
           }}
         >
           <Logo color={handColor} displayTag={false} fontSize={40} />

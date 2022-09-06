@@ -15,6 +15,9 @@ export default function Controls() {
   const currentPoseL = useControlsStore((state) => state.currentPoseL);
   const currentPoseR = useControlsStore((state) => state.currentPoseR);
   const handColor = useControlsStore((state) => state.handColor);
+  const playgroundBgColor = useControlsStore(
+    (state) => state.playgroundBgColor
+  );
   const handIndicatorType = useControlsStore(
     (state) => state.handIndicatorType
   );
@@ -216,10 +219,22 @@ export default function Controls() {
           </div>
         </div>
         <p style={{ display: "flex", alignItems: "center" }}>
-          hand color <ColorSelect />
+          hand color{" "}
+          <ColorSelect
+            variable={handColor}
+            onColorChange={(color) => {
+              useControlsStore.setState({ handColor: color.hex });
+            }}
+          />
         </p>
         <p style={{ display: "flex", alignItems: "center" }}>
-          playground color <ColorSelect />
+          playground color{" "}
+          <ColorSelect
+            variable={playgroundBgColor}
+            onColorChange={(color) => {
+              useControlsStore.setState({ playgroundBgColor: color.hex });
+            }}
+          />
         </p>
       </motion.div>
       <div
