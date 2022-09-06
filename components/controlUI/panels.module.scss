@@ -171,7 +171,6 @@
   }
 }
 
-
 // swiper
 .slideWrapper {
   display: flex;
@@ -202,4 +201,14 @@
   display: flex;
   flex-direction: row;
   gap: 30px;
+}
+
+.placeholder {
+  color: grey;
+  text-align: center;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45%;
 }

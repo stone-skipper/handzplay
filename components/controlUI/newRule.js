@@ -1,4 +1,4 @@
-import { useRulesStore } from "../../lib/store";
+import { useRulesStore, useControlsStore } from "../../lib/store";
 import shallow from "zustand/shallow";
 
 import { useEffect, useState, useRef } from "react";
@@ -8,9 +8,11 @@ import { motion } from "framer-motion";
 import ScrollPicker from "./scrollPicker";
 import EnumSelect from "./enumSelect";
 import ColorPicker from "./colorPicker";
+import Divider from "../UI/controls/divider";
 
 export default function NewRule({ options, onScroll }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
+  const handColor = useControlsStore((state) => state.handColor);
 
   useEffect(() => {
     console.log(ruleInProgress);
@@ -23,17 +25,19 @@ export default function NewRule({ options, onScroll }) {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
+          paddingBottom: 8,
+          borderBottom: "1px solid black",
         }}
       >
         <EnumSelect
           title="Trigger"
           label="ifType"
-          options={["pose", "fingers"]}
+          options={["fingers", "pose"]}
         />
         <EnumSelect
           title="Result"
           label="thenType"
-          options={["shape", "draw", "audio", "element", "stamp", "transcript"]}
+          options={["shape", "draw", "audio", "stamp", "transcript", "element"]}
         />
       </div>
 
@@ -44,32 +48,31 @@ export default function NewRule({ options, onScroll }) {
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
+          padding: "12px 0",
+          borderBottom: "1px solid black",
         }}
       >
-        {(ruleInProgress.ifType !== undefined ||
-          ruleInProgress.thenType !== undefined) && (
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            top: 0,
+            left: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <div
             style={{
-              position: "absolute",
-              width: "100%",
-              height: "100%",
-              top: 0,
-              left: 0,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              width: "98%",
+              height: 36,
+              border: "2px solid " + handColor,
+              borderRadius: 10,
             }}
-          >
-            <div
-              style={{
-                width: "90%",
-                height: 36,
-                border: "2px solid blue",
-                borderRadius: 10,
-              }}
-            ></div>
-          </div>
-        )}
+          ></div>
+        </div>
 
         {ruleInProgress.ifType === "pose" && (
           <>
@@ -157,7 +160,15 @@ export default function NewRule({ options, onScroll }) {
             <div>px</div>
           </>
         )}
+        {/* arrow */}
+        {ruleInProgress.ifType === undefined && (
+          <div className={styles.placeholder}>If ...</div>
+        )}
         <div>{"->"}</div>
+        {ruleInProgress.thenType === undefined && (
+          <div className={styles.placeholder}>Then ...</div>
+        )}
+
         {ruleInProgress.thenType === "shape" && (
           <>
             <ScrollPicker

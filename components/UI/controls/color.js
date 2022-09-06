@@ -6,15 +6,21 @@ export default function ColorSelect({ variable, onColorChange }) {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div
+      style={{
+        position: "relative",
+        cursor: "pointer",
+        textTransform: "uppercase",
+      }}
+    >
       <div
         onClick={() => {
           setDisplayColorPicker(!displayColorPicker);
         }}
         style={{
-          width: "fit-content",
-          padding: 10,
-          borderRadius: 2,
+          width: 100,
+          padding: 5,
+          borderRadius: "4px 4px 0 0",
           background: variable,
           display: "flex",
           justifyContent: "center",

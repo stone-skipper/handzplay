@@ -40,6 +40,7 @@ export default function Controls() {
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
+              padding: "10px 0",
             }}
           >
             <motion.div
@@ -52,59 +53,60 @@ export default function Controls() {
             >
               <HandIllust01
                 initTop={-150}
-                initLeft={-320}
+                initLeft={-345}
                 top={-150}
-                left={-320}
+                left={-345}
               />
               <HandIllust02
                 initTop={-130}
-                initLeft={140}
+                initLeft={120}
                 top={-130}
-                left={140}
+                left={120}
               />
             </motion.div>
-            <div>
+            <div style={{ marginBottom: 10 }}>
+              <span className={styles.title}>Hand Recognition</span>
+              <br />
               <span className={styles.status}>
                 {handReady === true ? "Active" : "Loading..."}
               </span>
-              <br />
-              <span className={styles.title}>Hand Recognition</span>
             </div>
-          </div>
 
-          <div
-            style={{
-              display: "flex",
-              borderTop: "1px solid white",
-              width: "90%",
-              alignItems: "center",
-              paddingTop: 6,
-            }}
-          >
             <div
               style={{
-                width: "50%",
-                opacity: leftHand === true ? 1 : 0.4,
-                height: "fit-content",
+                display: "flex",
+                borderTop: "1px solid white",
+                width: "90%",
+                alignItems: "center",
+                paddingTop: 6,
+                // background: "yellow",
               }}
             >
-              <span className={styles.status}>
-                {currentPoseL !== "" ? currentPoseL : "--"}
-              </span>
-              <br /> <span className={styles.title}>left</span>
-            </div>
-            <Divider direction="vertical" color="white" customSize={25} />
-            <div
-              style={{
-                width: "50%",
-                opacity: rightHand === true ? 1 : 0.4,
-                height: "fit-content",
-              }}
-            >
-              <span className={styles.status}>
-                {currentPoseR !== "" ? currentPoseR : "--"}
-              </span>
-              <br /> <span className={styles.title}>right</span>
+              <div
+                style={{
+                  width: "50%",
+                  opacity: leftHand === true ? 1 : 0.4,
+                  height: "fit-content",
+                }}
+              >
+                <span className={styles.status}>
+                  {currentPoseL !== "" ? currentPoseL : "--"}
+                </span>
+                <br /> <span className={styles.title}>Left</span>
+              </div>
+              <Divider direction="vertical" color="white" customSize={25} />
+              <div
+                style={{
+                  width: "50%",
+                  opacity: rightHand === true ? 1 : 0.4,
+                  height: "fit-content",
+                }}
+              >
+                <span className={styles.status}>
+                  {currentPoseR !== "" ? currentPoseR : "--"}
+                </span>
+                <br /> <span className={styles.title}>Right</span>
+              </div>
             </div>
           </div>
         </div>
@@ -218,24 +220,24 @@ export default function Controls() {
             </div>
           </div>
         </div>
-        <p style={{ display: "flex", alignItems: "center" }}>
-          hand color{" "}
+        <div className={styles.controlWrapper}>
+          <div className={styles.controlTitle}>Hand Color</div>
           <ColorSelect
             variable={handColor}
             onColorChange={(color) => {
               useControlsStore.setState({ handColor: color.hex });
             }}
           />
-        </p>
-        <p style={{ display: "flex", alignItems: "center" }}>
-          playground color{" "}
+        </div>
+        <div className={styles.controlWrapper}>
+          <div className={styles.controlTitle}>Background Color</div>
           <ColorSelect
             variable={playgroundBgColor}
             onColorChange={(color) => {
               useControlsStore.setState({ playgroundBgColor: color.hex });
             }}
           />
-        </p>
+        </div>
       </motion.div>
       <div
         className={styles.header}

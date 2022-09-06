@@ -50,6 +50,7 @@ export default function Rules() {
           <>
             <RulesList />
             <div
+              className={styles.btn}
               onClick={() => {
                 setRuleContent("new");
               }}
