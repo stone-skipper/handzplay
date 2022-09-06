@@ -9,7 +9,8 @@ import {
   clipping,
   drawStar,
 } from "../then/shape";
-import { audio } from "../then/audio";
+import { useSpeechRecognition } from "react-speech-kit";
+// import { audio } from "../then/audio";
 
 export default function RelationCvs({
   videoWidth,
@@ -38,8 +39,21 @@ export default function RelationCvs({
   const [stampArray, setStampArray] = useState([]);
   const [stampPoint, setStampPoint] = useState([]);
 
-  const [bubbleArray, setBubbleArray] = useState([]);
-  const [bubblePoint, setBubblePoint] = useState([]);
+  const [transcriptArray, setTranscriptArray] = useState([]);
+  const [transcriptPoint, setTranscriptPoint] = useState([]);
+
+  const [value, setValue] = useState("");
+  const { listen, listening, stop } = useSpeechRecognition({
+    onResult: (result) => {
+      setValue(result);
+    },
+  });
+  useEffect(() => {
+    console.log(listening);
+    // if (listening === false) {
+    //   setValue("");
+    // }
+  }, [listening]);
 
   const drawInteraction = () => {
     reactionRef.current.width = Math.floor(videoWidth * scale);
@@ -182,6 +196,56 @@ export default function RelationCvs({
       ) === 0
     ) {
       setTrigger(false);
+    } else if (
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "transcript" &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) < distance &&
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) !== 0
+    ) {
+      setTrigger(true);
+      let midX = (fingersSelectedCoord[0].x + fingersSelectedCoord[1].x) / 2;
+      let midY = (fingersSelectedCoord[0].y + fingersSelectedCoord[1].y) / 2;
+      rect(midX + 150, midY - 150, midX, midY, "yellow", "fill", ctx);
+      text(
+        midX + 150,
+        midY - 150,
+        midX,
+        midY,
+        thenDetail[1],
+        value,
+        thenDetail[3],
+        ctx
+      );
+    } else if (
+      (fingersSelectedCoord.length !== 0 &&
+        thenType === "transcript" &&
+        getDistance(
+          fingersSelectedCoord[0].x,
+          fingersSelectedCoord[0].y,
+          fingersSelectedCoord[1].x,
+          fingersSelectedCoord[1].y
+        ) > distance) ||
+      getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) === 0
+    ) {
+      setTrigger(false);
+      let midX = (fingersSelectedCoord[0].x + fingersSelectedCoord[1].x) / 2;
+      let midY = (fingersSelectedCoord[0].y + fingersSelectedCoord[1].y) / 2;
+      setTranscriptPoint([midX + 150, midY - 150, midX, midY]);
     } else if (
       fingersSelectedCoord.length !== 0 &&
       thenType === "stamp" &&
@@ -333,6 +397,27 @@ export default function RelationCvs({
         }
       }
     }
+
+    if (transcriptArray.length !== 0 && thenType === "transcript") {
+      for (let i = 0; i < transcriptArray.length; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = "yellow";
+        ctx.rect(
+          transcriptArray[i].x - 75,
+          transcriptArray[i].y - 75,
+          150,
+          150
+        );
+        ctx.fill();
+
+        ctx.font = thenDetail[3] + "px Manrope";
+        ctx.textAlign = "center";
+        ctx.translate(transcriptArray[i].x, transcriptArray[i].y);
+        ctx.scale(-1, 1);
+        ctx.fillStyle = "black";
+        ctx.fillText(transcriptArray[i].text, 0, 0);
+      }
+    }
   };
 
   useEffect(() => {
@@ -342,8 +427,37 @@ export default function RelationCvs({
       let midY = (stampPoint[1] + stampPoint[3]) / 2;
       setStampArray([...stampArray, { x: midX, y: midY }]);
     } else if (thenType === "audio" && trigger === true) {
-      var audio = new Audio(thenDetail[0]);
+      var audioSrc;
+      if (thenDetail[0] === "drum") {
+        audioSrc = "../../media/drum01.mp3";
+        var audio = new Audio(audioSrc);
+      } else if (thenDetail[0] === "cymbalB") {
+        audioSrc = "../../media/cymbal-b.mp3";
+        var audio = new Audio(audioSrc);
+      } else if (thenDetail[0] === "cymbalC") {
+        audioSrc = "../../media/cymbal-c.mp3";
+        var audio = new Audio(audioSrc);
+      }
       audio.play();
+    } else if (
+      thenType === "transcript" &&
+      trigger === true &&
+      listening === false
+    ) {
+      listen();
+    } else if (
+      thenType === "transcript" &&
+      trigger === false &&
+      listening === true
+    ) {
+      let midX = (transcriptPoint[0] + transcriptPoint[2]) / 2;
+      let midY = (transcriptPoint[1] + transcriptPoint[3]) / 2;
+      setTranscriptArray([
+        ...transcriptArray,
+        { x: midX, y: midY, text: value },
+      ]);
+      console.log(transcriptArray);
+      stop();
     }
   }, [trigger]);
 

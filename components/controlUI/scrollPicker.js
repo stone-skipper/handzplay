@@ -1,7 +1,8 @@
 import { useRulesStore } from "../../lib/store";
 
-import { useEffect, useState, createRef, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import styles from "./panels.module.scss";
+import { useInView } from "react-intersection-observer";
 
 import { motion } from "framer-motion";
 import Slider from "react-slick";
@@ -11,11 +12,23 @@ export default function ScrollPicker({ label, arrayIndex = null, options }) {
   const updateRuleInProgress = useRulesStore(
     (state) => state.updateRuleInProgress
   );
+  const removeProperty = useRulesStore((state) => state.removeProperty);
   const [mouseOn, setMouseOn] = useState(false);
   const [slidesToScroll, setSlidesToScroll] = useState(1);
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
+
   useEffect(() => {
-    updateRuleInProgress(label, options[0], arrayIndex);
-  }, []);
+    if (inView === true) {
+      updateRuleInProgress(label, options[0], arrayIndex);
+    } else {
+      console.log(inView);
+      console.log("triggerRemove!");
+      removeProperty(label, arrayIndex);
+    }
+  }, [inView]);
 
   const sliderRef = useRef(null);
   const scroll = useCallback(
@@ -66,6 +79,7 @@ export default function ScrollPicker({ label, arrayIndex = null, options }) {
   return (
     <div
       className={styles.slideWrapper}
+      ref={ref}
       onMouseEnter={() => {
         setMouseOn(true);
       }}

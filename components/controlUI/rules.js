@@ -14,6 +14,8 @@ export default function Rules() {
   const removeRuleInProgress = useRulesStore(
     (state) => state.removeRuleInProgress
   );
+  const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
+
   return (
     <div className={styles.wrapper} style={{ width: "50vw" }}>
       <div
@@ -24,6 +26,17 @@ export default function Rules() {
           <>
             <NewRule />
             <div
+              className={styles.btn}
+              onClick={() => {
+                setRuleContent("list");
+                addRule(ruleInProgress);
+                removeRuleInProgress();
+              }}
+            >
+              add
+            </div>
+            <div
+              className={styles.btn}
               onClick={() => {
                 setRuleContent("list");
                 removeRuleInProgress();

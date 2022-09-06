@@ -315,7 +315,7 @@ export default function Handpose({
       />
       {rules !== undefined &&
         rules.map((value, index) => {
-          if (value.ifType === "relation") {
+          if (value.ifType === "fingers") {
             return (
               <RelationCvs
                 key={index}

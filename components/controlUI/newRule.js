@@ -28,12 +28,12 @@ export default function NewRule({ options, onScroll }) {
         <EnumSelect
           title="Trigger"
           label="ifType"
-          options={["pose", "finger"]}
+          options={["pose", "fingers"]}
         />
         <EnumSelect
           title="Result"
           label="thenType"
-          options={["shape", "draw", "audio", "element", "stamp"]}
+          options={["shape", "draw", "audio", "element", "stamp", "transcript"]}
         />
       </div>
 
@@ -93,23 +93,33 @@ export default function NewRule({ options, onScroll }) {
             />
           </>
         )}
-        {ruleInProgress.ifType === "finger" && (
+        {ruleInProgress.ifType === "fingers" && (
           <>
             <div>if</div>
 
             <ScrollPicker
               label="fingerA"
               options={[
-                "left thumb",
-                "left index",
-                "left middle",
-                "left ring",
-                "left pinky",
-                "right thumb",
-                "right index",
-                "right middle",
-                "right ring",
-                "right pinky",
+                // "left thumb",
+                // "left index",
+                // "left middle",
+                // "left ring",
+                // "left pinky",
+                // "right thumb",
+                // "right index",
+                // "right middle",
+                // "right ring",
+                // "right pinky",
+                "thumbL",
+                "indexL",
+                "middleL",
+                "ringL",
+                "pinkyL",
+                "thumbR",
+                "indexR",
+                "middleR",
+                "ringR",
+                "pinkyR",
               ]}
             />
             <div>and</div>
@@ -117,16 +127,26 @@ export default function NewRule({ options, onScroll }) {
             <ScrollPicker
               label="fingerB"
               options={[
-                "left thumb",
-                "left index",
-                "left middle",
-                "left ring",
-                "left pinky",
-                "right thumb",
-                "right index",
-                "right middle",
-                "right ring",
-                "right pinky",
+                // "left thumb",
+                // "left index",
+                // "left middle",
+                // "left ring",
+                // "left pinky",
+                // "right thumb",
+                // "right index",
+                // "right middle",
+                // "right ring",
+                // "right pinky",
+                "thumbL",
+                "indexL",
+                "middleL",
+                "ringL",
+                "pinkyL",
+                "thumbR",
+                "indexR",
+                "middleR",
+                "ringR",
+                "pinkyR",
               ]}
             />
             <div>are within</div>
@@ -184,7 +204,117 @@ export default function NewRule({ options, onScroll }) {
                   />
                 </>
               )}
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "clipping" && (
+                <>
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={1}
+                    options={["rect", "circ", "star"]}
+                  />
+                  <ColorPicker label="thenDetail" arrayIndex={2} />
+                </>
+              )}
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "text" && (
+                <>
+                  <ColorPicker label="thenDetail" arrayIndex={1} />
+                  {/* text input at index 2 */}
+
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={3}
+                    options={[30, 40, 50, 60, 70, 80, 90, 100]}
+                  />
+                </>
+              )}
           </>
+        )}
+        {ruleInProgress.thenType === "draw" && (
+          <>
+            <ColorPicker label="thenDetail" arrayIndex={1} />
+            <ScrollPicker
+              label="thenDetail"
+              arrayIndex={2}
+              options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            />
+          </>
+        )}
+        {ruleInProgress.thenType === "stamp" && (
+          <>
+            <ScrollPicker
+              label="thenDetail"
+              arrayIndex={0}
+              options={["rect", "circle", "star", "text"]}
+            />
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "rect" && (
+                <>
+                  <ColorPicker label="thenDetail" arrayIndex={1} />
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={2}
+                    options={["fill", "stroke"]}
+                  />
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={3}
+                    options={[10, 20, 30, 40, 50, 60, 70, 80]}
+                  />
+                </>
+              )}
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "circle" && (
+                <>
+                  <ColorPicker label="thenDetail" arrayIndex={1} />
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={2}
+                    options={["fill", "stroke"]}
+                  />
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={3}
+                    options={[10, 20, 30, 40, 50, 60, 70, 80]}
+                  />
+                </>
+              )}
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "star" && (
+                <>
+                  <ColorPicker label="thenDetail" arrayIndex={1} />
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={2}
+                    options={["fill", "stroke"]}
+                  />
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={3}
+                    options={[10, 20, 30, 40, 50, 60, 70, 80]}
+                  />
+                </>
+              )}
+            {ruleInProgress.thenDetail !== undefined &&
+              ruleInProgress.thenDetail[0] === "text" && (
+                <>
+                  <ColorPicker label="thenDetail" arrayIndex={1} />
+                  {/* text input at index 2 */}
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={3}
+                    options={[10, 20, 30, 40, 50, 60, 70, 80]}
+                  />
+                </>
+              )}
+          </>
+        )}
+        {ruleInProgress.thenType === "audio" && (
+          <ScrollPicker
+            label="thenDetail"
+            arrayIndex={0}
+            options={["drum", "cymbalB", "cymbalC"]}
+          />
         )}
       </div>
     </>

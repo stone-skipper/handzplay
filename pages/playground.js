@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import Handpose from "../components/handpose";
 import Logo from "../components/UI/logo";
 import Controls from "../components/controlUI/controls";
@@ -5,6 +7,7 @@ import Rules from "../components/controlUI/rules";
 import Grid from "../components/grid";
 import { useControlsStore, useRulesStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
+import { useEffect } from "react";
 
 export default function Playground() {
   const handIndicatorType = useControlsStore(
@@ -13,8 +16,17 @@ export default function Playground() {
   const rules = useRulesStore((state) => state.rules);
   const handColor = useControlsStore((state) => state.handColor);
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
+
+  useEffect(() => {
+    console.log(rules);
+  }, [rules]);
+
   return (
     <div className={styles.playground}>
+      <Head>
+        <title>PLAYGROUND</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <Grid color={handColor} />
       <Handpose
         handIndicatorType={handIndicatorType}

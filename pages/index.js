@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import Handpose from "../components/handpose";
 import { useEffect } from "react";
 import Logo from "../components/UI/logo";
@@ -55,6 +57,10 @@ export default function Index() {
 
   return (
     <div className={styles.app}>
+      <Head>
+        <title>HANDZPLAY</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <Handpose
         handIndicatorType={"blurred"}
         cameraFeed={false}

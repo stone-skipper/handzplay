@@ -9,7 +9,7 @@ const Grid = ({ color }) => {
   const [col, setCol] = useState(0);
   const [row, setRow] = useState(0);
 
-  const gap = 32;
+  const gap = 18;
   const backgroundType = useControlsStore((state) => state.backgroundType);
 
   useEffect(() => {

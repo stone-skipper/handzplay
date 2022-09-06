@@ -84,10 +84,13 @@ export const text = (ax, ay, bx, by, color, text, size, ctx) => {
   let midPointX = (ax + bx) / 2;
   let midPointY = (ay + by) / 2;
   ctx.beginPath();
-  ctx.font = size.toString() + "px Arial";
+  ctx.font = size.toString() + "px Manrope";
   ctx.fillStyle = color;
   ctx.textAlign = "center";
-  ctx.fillText(text, midPointX, midPointY);
+
+  ctx.translate(midPointX, midPointY);
+  ctx.scale(-1, 1);
+  ctx.fillText(text, 0, 0);
 };
 
 export const clipping = (ax, ay, bx, by, shape, color, w, h, ctx) => {

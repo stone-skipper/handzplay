@@ -5,9 +5,11 @@ import Divider from "../UI/controls/divider";
 
 export default function RulesList() {
   const rules = useRulesStore((state) => state.rules);
-  const addRule = useRulesStore((state) => state.addRule);
-  const [controlToggle, setControlToggle] = useState(false);
-  useEffect(() => {}, [rules]);
+  const removeRule = useRulesStore((state) => state.removeRule);
+
+  useEffect(() => {
+    console.log(rules);
+  }, [rules]);
 
   const PoseWrapper = ({ hand, pose }) => {
     return (
@@ -62,10 +64,16 @@ export default function RulesList() {
               <div className={styles.thenWrapper}>
                 <div className={styles.then}>{rule.thenType}</div>
                 <div className={styles.thenDetail}>
-                  {rule.thenDetail.toString()}
+                  {rule.thenDetail !== undefined && rule.thenDetail.toString()}
                 </div>
               </div>
-              <div className={styles.delete} onClick={() => {}}>
+              <div
+                className={styles.delete}
+                onClick={() => {
+                  console.log(index);
+                  removeRule(index);
+                }}
+              >
                 ⨉
               </div>
             </div>

@@ -36,14 +36,15 @@ export default function ColorPicker({ label, arrayIndex = null }) {
         style={{
           display: displayColorPicker === true ? "block" : "none",
           position: "absolute",
+          zIndex: 10,
         }}
       >
         <ChromePicker
           disableAlpha={true}
           color={selectedColor}
           onChangeComplete={(color) => {
-            setSelectedColor(color);
-            updateRuleInProgress(label, color, arrayIndex);
+            setSelectedColor(color.hex);
+            updateRuleInProgress(label, color.hex, arrayIndex);
           }}
         />
       </div>
