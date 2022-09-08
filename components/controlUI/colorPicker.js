@@ -37,6 +37,7 @@ export default function ColorPicker({ label, arrayIndex = null }) {
           display: displayColorPicker === true ? "block" : "none",
           position: "absolute",
           zIndex: 10,
+          bottom: 35,
         }}
       >
         <ChromePicker

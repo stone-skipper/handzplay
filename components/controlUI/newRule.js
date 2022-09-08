@@ -8,15 +8,32 @@ import { motion } from "framer-motion";
 import ScrollPicker from "./scrollPicker";
 import EnumSelect from "./enumSelect";
 import ColorPicker from "./colorPicker";
+import TextInput from "./textInput";
 import Divider from "../UI/controls/divider";
 
 export default function NewRule({ options, onScroll }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const handColor = useControlsStore((state) => state.handColor);
+  const removeProperty = useRulesStore((state) => state.removeProperty);
 
   useEffect(() => {
     console.log(ruleInProgress);
   }, [ruleInProgress]);
+
+  // useEffect(() => {
+  //   if (ruleInProgress.ifType === "pose") {
+  //     removeProperty("distance", null);
+  //     removeProperty("fingerA", null);
+  //     removeProperty("fingerB", null);
+  //   } else if (ruleInProgress.ifType === "fingers") {
+  //     removeProperty("pose", null);
+  //     removeProperty("hand", null);
+  //   }
+  // }, [ruleInProgress.ifType]);
+
+  // useEffect(() => {
+  //   removeProperty("thenDetail", null);
+  // }, [ruleInProgress.thenType]);
 
   return (
     <>
@@ -33,11 +50,13 @@ export default function NewRule({ options, onScroll }) {
           title="Trigger"
           label="ifType"
           options={["fingers", "pose"]}
+          relatedProperty={["fingerA", "fingerB", "distance", "pose", "hand"]}
         />
         <EnumSelect
           title="Result"
           label="thenType"
           options={["shape", "draw", "audio", "stamp", "transcript", "element"]}
+          relatedProperty={["thenDetail"]}
         />
       </div>
 
@@ -230,8 +249,7 @@ export default function NewRule({ options, onScroll }) {
               ruleInProgress.thenDetail[0] === "text" && (
                 <>
                   <ColorPicker label="thenDetail" arrayIndex={1} />
-                  {/* text input at index 2 */}
-
+                  <TextInput label="thenDetail" arrayIndex={2} />
                   <ScrollPicker
                     label="thenDetail"
                     arrayIndex={3}
@@ -243,12 +261,15 @@ export default function NewRule({ options, onScroll }) {
         )}
         {ruleInProgress.thenType === "draw" && (
           <>
-            <ColorPicker label="thenDetail" arrayIndex={1} />
+            <div>draw a</div>
+            <ColorPicker label="thenDetail" arrayIndex={0} />
+            <div>line with</div>
             <ScrollPicker
               label="thenDetail"
-              arrayIndex={2}
+              arrayIndex={1}
               options={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-            />
+            />{" "}
+            <div>thickness </div>
           </>
         )}
         {ruleInProgress.thenType === "stamp" && (
@@ -310,7 +331,7 @@ export default function NewRule({ options, onScroll }) {
               ruleInProgress.thenDetail[0] === "text" && (
                 <>
                   <ColorPicker label="thenDetail" arrayIndex={1} />
-                  {/* text input at index 2 */}
+                  <TextInput label="thenDetail" arrayIndex={2} />
                   <ScrollPicker
                     label="thenDetail"
                     arrayIndex={3}
@@ -321,11 +342,22 @@ export default function NewRule({ options, onScroll }) {
           </>
         )}
         {ruleInProgress.thenType === "audio" && (
-          <ScrollPicker
-            label="thenDetail"
-            arrayIndex={0}
-            options={["drum", "cymbalB", "cymbalC"]}
-          />
+          <>
+            <div>play </div>
+            <ScrollPicker
+              label="thenDetail"
+              arrayIndex={0}
+              options={["drum", "cymbalB", "cymbalC"]}
+            />{" "}
+            <div>sound </div>
+          </>
+        )}
+        {ruleInProgress.thenType === "transcript" && (
+          <>
+            <div>transcribe on </div>
+            <ColorPicker label="thenDetail" arrayIndex={1} />
+            <div>post-it </div>
+          </>
         )}
       </div>
     </>

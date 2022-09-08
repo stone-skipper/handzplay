@@ -5,13 +5,22 @@ import styles from "./panels.module.scss";
 
 import { motion } from "framer-motion";
 
-export default function EnumSelect({ title, label, options, onSelect }) {
+export default function EnumSelect({ title, label, options, relatedProperty }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const updateRuleInProgress = useRulesStore(
     (state) => state.updateRuleInProgress
   );
-  const [selected, setSelected] = useState("");
+  const removeRuleInProgress = useRulesStore(
+    (state) => state.removeRuleInProgress
+  );
+  const removeProperty = useRulesStore((state) => state.removeProperty);
 
+  const [selected, setSelected] = useState("");
+  useEffect(() => {
+    for (let i = 0; i < relatedProperty.length; i++) {
+      removeProperty(relatedProperty[i], null);
+    }
+  }, [selected]);
   return (
     <div className={styles.enumWrapper}>
       {title}
@@ -20,12 +29,13 @@ export default function EnumSelect({ title, label, options, onSelect }) {
           return (
             <motion.div
               key={index}
-              onClick={() => {
+              onClick={async () => {
+                // await removeRuleInProgress();
+
                 updateRuleInProgress(label, data);
                 setSelected(data);
                 // console.log(ruleInProgress);
               }}
-              // onClick={onSelect}
               style={{
                 cursor: "pointer",
                 color: selected === data ? "blue" : "grey",

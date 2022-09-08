@@ -55,7 +55,7 @@ export default function Rules() {
                 setRuleContent("new");
               }}
             >
-              create a new rule
+              + create a new rule
             </div>
           </>
         )}

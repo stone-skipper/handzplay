@@ -41,8 +41,8 @@ export default function RulesList() {
   return (
     <>
       <div style={{ display: "flex" }}>
-        <p style={{ width: "50%" }}>trigger</p>
-        <p style={{ width: "50%" }}>result</p>
+        <div style={{ width: "55%", paddingBottom: 6 }}>Trigger</div>
+        <div style={{ width: "45%", paddingBottom: 6 }}>Result</div>
       </div>
 
       <Divider color="black" direction="horizontal" />

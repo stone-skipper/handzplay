@@ -227,20 +227,21 @@ export default function RelationCvs({
         ctx
       );
     } else if (
-      (fingersSelectedCoord.length !== 0 &&
-        thenType === "transcript" &&
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "transcript" &&
+      value !== "" &&
+      (getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) > distance ||
         getDistance(
           fingersSelectedCoord[0].x,
           fingersSelectedCoord[0].y,
           fingersSelectedCoord[1].x,
           fingersSelectedCoord[1].y
-        ) > distance) ||
-      getDistance(
-        fingersSelectedCoord[0].x,
-        fingersSelectedCoord[0].y,
-        fingersSelectedCoord[1].x,
-        fingersSelectedCoord[1].y
-      ) === 0
+        ) === 0)
     ) {
       setTrigger(false);
       let midX = (fingersSelectedCoord[0].x + fingersSelectedCoord[1].x) / 2;

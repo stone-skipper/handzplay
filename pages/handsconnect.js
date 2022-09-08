@@ -37,6 +37,10 @@ function Handsconnect() {
   const [pairName, setPairName] = useState(null);
 
   const rules = useRulesStore((state) => state.rules);
+  const playgroundBgColor = useControlsStore(
+    (state) => state.playgroundBgColor
+  );
+
   const handColor = useControlsStore((state) => state.handColor);
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
 
@@ -136,7 +140,10 @@ function Handsconnect() {
   }, [router.isReady, router.query, myId]);
 
   return (
-    <div className={styles.playground}>
+    <div
+      className={styles.playground}
+      style={{ background: playgroundBgColor }}
+    >
       {/* <div
         style={{
           width: "100%",
