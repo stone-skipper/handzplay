@@ -2,6 +2,7 @@ import { useControlsStore, useRulesStore } from "../../lib/store";
 import styles from "./panels.module.scss";
 import { useEffect, useState } from "react";
 import Divider from "../UI/controls/divider";
+import NoRuleStatus from "./noRuleStatus";
 
 export default function RulesList() {
   const rules = useRulesStore((state) => state.rules);
@@ -47,6 +48,7 @@ export default function RulesList() {
 
       <Divider color="black" direction="horizontal" />
       <div className={styles.rulesWrapper}>
+        <NoRuleStatus />
         {rules.map((rule, index) => {
           return (
             <div className={styles.rule}>

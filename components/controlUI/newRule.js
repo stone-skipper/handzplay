@@ -352,6 +352,20 @@ export default function NewRule({ options, onScroll }) {
             <div>sound </div>
           </>
         )}
+        {ruleInProgress.thenType === "element" && (
+          <>
+            <ScrollPicker
+              label="thenDetail"
+              arrayIndex={0}
+              options={["rect"]}
+            />
+            <ScrollPicker
+              label="thenDetail"
+              arrayIndex={1}
+              options={["rect"]}
+            />
+          </>
+        )}
         {ruleInProgress.thenType === "transcript" && (
           <>
             <div>transcribe on </div>

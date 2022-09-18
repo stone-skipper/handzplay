@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
 
-export default function HandIllust01({ initTop, initLeft, top, left }) {
+export default function HandIllust01({
+  initTop,
+  initLeft,
+  top,
+  left,
+  color = "white",
+}) {
   const draw = {
     hidden: {
       opacity: 0,

@@ -6,35 +6,45 @@ export default function TextInput({ label, arrayIndex = null }) {
   const updateRuleInProgress = useRulesStore(
     (state) => state.updateRuleInProgress
   );
+  const [content, setContent] = useState("");
+  const baseWidth = 30;
+  const [width, setWidth] = useState(0);
+  const span = useRef();
 
-  const textRef = useRef(null);
+  useEffect(() => {
+    setWidth(span.current.offsetWidth);
+  }, [content]);
 
-  //   useEffect(() => {
-  //     updateRuleInProgress(label, selectedColor, arrayIndex);
-  //   }, []);
+  useEffect(() => {
+    updateRuleInProgress(label, content, arrayIndex);
+  }, []);
 
   return (
     <div
       style={{
         width: "fit-content",
-        padding: "0 20px",
         textAlign: "center",
-        background: "grey",
+        background: "lightgrey",
         position: "relative",
       }}
     >
+      <span style={{ position: "absolute", opacity: 0 }} ref={span}>
+        {content}
+      </span>
+
       <input
         placeholder="text"
         style={{
-          width: "fit-content",
-          background: "blue",
+          width: baseWidth + width,
+          background: "none",
           border: "none",
           outline: "none",
           textAlign: "center",
           zIndex: 10,
         }}
         onChange={(e) => {
-          textRef.current = e.target.value;
+          setContent(e.target.value);
+          // textRef.current = e.target.value;
           updateRuleInProgress(label, e.target.value, arrayIndex);
         }}
       />

@@ -34,6 +34,8 @@ export default function RelationCvs({
   };
 
   var scale = 2; // Change to 1 on retina screens to see blurry canvas.
+  const clearBtn = useControlsStore((state) => state.clearBtn);
+
   const [drawArray, setDrawArray] = useState([]);
 
   const [stampArray, setStampArray] = useState([]);
@@ -54,7 +56,22 @@ export default function RelationCvs({
     //   setValue("");
     // }
   }, [listening]);
-
+  useEffect(() => {
+    if (
+      stampArray.length !== 0 ||
+      drawArray.length !== 0 ||
+      transcriptArray.length !== 0
+    ) {
+      useControlsStore.setState({ clearBtn: true });
+    }
+  }, [stampArray, drawArray, transcriptArray]);
+  useEffect(() => {
+    if (clearBtn === false) {
+      setStampArray([]);
+      setDrawArray([]);
+      setTranscriptArray([]);
+    }
+  }, [clearBtn]);
   const drawInteraction = () => {
     reactionRef.current.width = Math.floor(videoWidth * scale);
     reactionRef.current.height = Math.floor(videoHeight * scale);
@@ -271,20 +288,20 @@ export default function RelationCvs({
         fingersSelectedCoord[1].y,
       ]);
     } else if (
-      (fingersSelectedCoord.length !== 0 &&
-        thenType === "stamp" &&
+      fingersSelectedCoord.length !== 0 &&
+      thenType === "stamp" &&
+      (getDistance(
+        fingersSelectedCoord[0].x,
+        fingersSelectedCoord[0].y,
+        fingersSelectedCoord[1].x,
+        fingersSelectedCoord[1].y
+      ) > distance ||
         getDistance(
           fingersSelectedCoord[0].x,
           fingersSelectedCoord[0].y,
           fingersSelectedCoord[1].x,
           fingersSelectedCoord[1].y
-        ) > distance) ||
-      getDistance(
-        fingersSelectedCoord[0].x,
-        fingersSelectedCoord[0].y,
-        fingersSelectedCoord[1].x,
-        fingersSelectedCoord[1].y
-      ) === 0
+        ) === 0)
     ) {
       setTrigger(false);
     } else if (
@@ -378,6 +395,14 @@ export default function RelationCvs({
             thenDetail[3]
           );
         } else if (thenDetail[0] === "text") {
+          ctx.font = thenDetail[3] + "px Manrope";
+          ctx.textAlign = "center";
+
+          ctx.fillStyle = thenDetail[1];
+          ctx.scale(-1, 1);
+
+          ctx.fillText(thenDetail[2], -stampArray[i].x, stampArray[i].y);
+          // ctx.translate(stampArray[i].x, stampArray[i].y);
         } else if (thenDetail[0] === "star") {
           drawStar(
             stampArray[i].x,
@@ -427,6 +452,7 @@ export default function RelationCvs({
       let midX = (stampPoint[0] + stampPoint[2]) / 2;
       let midY = (stampPoint[1] + stampPoint[3]) / 2;
       setStampArray([...stampArray, { x: midX, y: midY }]);
+      console.log(stampArray);
     } else if (thenType === "audio" && trigger === true) {
       var audioSrc;
       if (thenDetail[0] === "drum") {

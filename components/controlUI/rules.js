@@ -14,6 +14,13 @@ export default function Rules() {
   const removeRuleInProgress = useRulesStore(
     (state) => state.removeRuleInProgress
   );
+
+  useEffect(() => {
+    if (controlToggle === false) {
+      setRuleContent("list");
+      removeRuleInProgress();
+    }
+  }, [controlToggle]);
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
 
   return (
@@ -27,10 +34,23 @@ export default function Rules() {
             <NewRule />
             <div
               className={styles.btn}
+              style={{
+                opacity:
+                  ruleInProgress.ifType !== undefined ||
+                  ruleInProgress.thenType !== undefined
+                    ? 1
+                    : 0.5,
+              }}
               onClick={() => {
-                setRuleContent("list");
-                addRule(ruleInProgress);
-                removeRuleInProgress();
+                if (
+                  ruleInProgress.ifType !== undefined ||
+                  ruleInProgress.thenType !== undefined
+                ) {
+                  setRuleContent("list");
+                  addRule(ruleInProgress);
+                  removeRuleInProgress();
+                } else {
+                }
               }}
             >
               add
@@ -70,7 +90,7 @@ export default function Rules() {
           setControlToggle(!controlToggle);
         }}
       >
-        <p>customize rules</p>
+        <p>rules</p>
       </div>
     </div>
   );

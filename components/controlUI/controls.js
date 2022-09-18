@@ -15,6 +15,8 @@ export default function Controls() {
   const currentPoseL = useControlsStore((state) => state.currentPoseL);
   const currentPoseR = useControlsStore((state) => state.currentPoseR);
   const handColor = useControlsStore((state) => state.handColor);
+  const clearBtn = useControlsStore((state) => state.clearBtn);
+
   const playgroundBgColor = useControlsStore(
     (state) => state.playgroundBgColor
   );
@@ -94,7 +96,7 @@ export default function Controls() {
                 </span>
                 <br /> <span className={styles.title}>Left</span>
               </div>
-              <Divider direction="vertical" color="white" customSize={25} />
+              <Divider direction="vertical" color="white" customSize={30} />
               <div
                 style={{
                   width: "50%",
@@ -237,6 +239,22 @@ export default function Controls() {
               useControlsStore.setState({ playgroundBgColor: color.hex });
             }}
           />
+        </div>
+        <div className={styles.controlWrapper}>
+          <div className={styles.controlTitle}>Clear Playground</div>
+          <div
+            style={{
+              color: clearBtn === true ? handColor : "grey",
+              cursor: clearBtn === true ? "pointer" : "auto",
+            }}
+            onClick={() => {
+              if (clearBtn === true) {
+                useControlsStore.setState({ clearBtn: false });
+              }
+            }}
+          >
+            clear
+          </div>
         </div>
       </motion.div>
       <div
