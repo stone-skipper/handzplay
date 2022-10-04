@@ -26,14 +26,14 @@ export default function Controls() {
   const backgroundType = useControlsStore((state) => state.backgroundType);
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
-
-  const [controlToggle, setControlToggle] = useState(false);
+  const currentTab = useControlsStore((state) => state.currentTab);
+  // const [controlToggle, setControlToggle] = useState(false);
 
   return (
     <div className={styles.wrapper}>
       <motion.div
         className={styles.content}
-        style={{ display: controlToggle === true ? "flex" : "none" }}
+        style={{ display: currentTab === "control" ? "flex" : "none" }}
       >
         <div className={styles.statusBox}>
           <div
@@ -260,10 +260,15 @@ export default function Controls() {
       <div
         className={styles.header}
         style={{
-          background: "rgba(0, 77, 192, 0.5)",
+          background: "#4B92FD",
+          opacity: currentTab === "rules" ? 0.4 : 1,
         }}
         onClick={() => {
-          setControlToggle(!controlToggle);
+          if (currentTab === "control") {
+            useControlsStore.setState({ currentTab: "none" });
+          } else {
+            useControlsStore.setState({ currentTab: "control" });
+          }
         }}
       >
         <p>Status {"&"} settings</p>

@@ -24,7 +24,7 @@ export default function EnumSelect({ title, label, options, relatedProperty }) {
   return (
     <div className={styles.enumWrapper}>
       {title}
-      <div style={{ display: "flex", flexDirection: "row", gap: 10 }}>
+      <div style={{ display: "flex", flexDirection: "row", gap: 16 }}>
         {options.map((data, index) => {
           return (
             <motion.div
@@ -38,6 +38,7 @@ export default function EnumSelect({ title, label, options, relatedProperty }) {
               }}
               style={{
                 cursor: "pointer",
+                fontWeight: 500,
                 color: selected === data ? "blue" : "grey",
               }}
             >

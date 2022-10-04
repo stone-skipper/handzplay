@@ -15,25 +15,13 @@ export default function NewRule({ options, onScroll }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const handColor = useControlsStore((state) => state.handColor);
   const removeProperty = useRulesStore((state) => state.removeProperty);
-
+  const [highlight, setHighlight] = useState(0);
   useEffect(() => {
     console.log(ruleInProgress);
+    // if (ruleInProgress.ifType !== null) {
+    //   setHighlight(1);
+    // }
   }, [ruleInProgress]);
-
-  // useEffect(() => {
-  //   if (ruleInProgress.ifType === "pose") {
-  //     removeProperty("distance", null);
-  //     removeProperty("fingerA", null);
-  //     removeProperty("fingerB", null);
-  //   } else if (ruleInProgress.ifType === "fingers") {
-  //     removeProperty("pose", null);
-  //     removeProperty("hand", null);
-  //   }
-  // }, [ruleInProgress.ifType]);
-
-  // useEffect(() => {
-  //   removeProperty("thenDetail", null);
-  // }, [ruleInProgress.thenType]);
 
   return (
     <>
@@ -41,23 +29,65 @@ export default function NewRule({ options, onScroll }) {
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-between",
-          paddingBottom: 8,
-          borderBottom: "1px solid black",
+          gap: 4,
         }}
       >
-        <EnumSelect
-          title="Trigger"
-          label="ifType"
-          options={["fingers", "pose"]}
-          relatedProperty={["fingerA", "fingerB", "distance", "pose", "hand"]}
-        />
-        <EnumSelect
-          title="Result"
-          label="thenType"
-          options={["shape", "draw", "audio", "stamp", "transcript", "element"]}
-          relatedProperty={["thenDetail"]}
-        />
+        <div
+          style={{
+            background: "white",
+            borderRadius: 10,
+            padding: "24px 16px",
+            justifyContent: "center",
+            alignItems: "center",
+            flexGrow: 0.5,
+            border: highlight === 0 ? "2px solid #0066FF" : "none",
+            boxShadow: "0px -10px 54px 0px #004DC014",
+          }}
+        >
+          <span style={{ opacity: highlight !== 0 ? 0.2 : 1 }}>
+            <EnumSelect
+              title="Trigger type"
+              label="ifType"
+              options={["fingers", "pose"]}
+              relatedProperty={[
+                "fingerA",
+                "fingerB",
+                "distance",
+                "pose",
+                "hand",
+              ]}
+            />
+          </span>
+        </div>
+        <div
+          style={{
+            background: "white",
+            borderRadius: 10,
+            padding: "24px 16px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexGrow: 0.5,
+            border: highlight === 1 ? "2px solid #0066FF" : "none",
+            boxShadow: "0px -10px 54px 0px #004DC014",
+          }}
+        >
+          <span style={{ opacity: highlight !== 1 ? 0.2 : 1 }}>
+            <EnumSelect
+              title="Reaction type"
+              label="thenType"
+              options={[
+                "shape",
+                "draw",
+                "audio",
+                "stamp",
+                "transcript",
+                "element",
+              ]}
+              relatedProperty={["thenDetail"]}
+            />
+          </span>
+        </div>
       </div>
 
       <div
@@ -67,8 +97,15 @@ export default function NewRule({ options, onScroll }) {
           justifyContent: "center",
           alignItems: "center",
           position: "relative",
-          padding: "12px 0",
-          borderBottom: "1px solid black",
+          // padding: "12px 0",
+          background: "white",
+          borderRadius: 10,
+          padding: "24px 16px",
+          flexGrow: 0.5,
+          border: highlight === 2 ? "2px solid #0066FF" : "none",
+          boxShadow: "0px -10px 54px 0px #004DC014",
+
+          // borderBottom: "1px solid black",
         }}
       >
         <div
@@ -87,7 +124,9 @@ export default function NewRule({ options, onScroll }) {
             style={{
               width: "98%",
               height: 36,
-              border: "2px solid " + handColor,
+              background: "#EAF2FF",
+              opacity: 0.5,
+              // border: "2px solid " + handColor,
               borderRadius: 10,
             }}
           ></div>

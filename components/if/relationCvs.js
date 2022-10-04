@@ -9,6 +9,8 @@ import {
   clipping,
   drawStar,
 } from "../then/shape";
+// import ReactMobxMusic from "react-mobx-music";
+
 import { useSpeechRecognition } from "react-speech-kit";
 // import { audio } from "../then/audio";
 
@@ -377,8 +379,6 @@ export default function RelationCvs({
       for (let i = 0; i < stampArray.length; i++) {
         ctx.beginPath();
 
-        // what if reusing the shape functions here?
-
         if (thenDetail[0] === "circle") {
           ctx.arc(
             stampArray[i].x,
@@ -427,7 +427,7 @@ export default function RelationCvs({
     if (transcriptArray.length !== 0 && thenType === "transcript") {
       for (let i = 0; i < transcriptArray.length; i++) {
         ctx.beginPath();
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = thenDetail[2];
         ctx.rect(
           transcriptArray[i].x - 75,
           transcriptArray[i].y - 75,
@@ -438,10 +438,13 @@ export default function RelationCvs({
 
         ctx.font = thenDetail[3] + "px Manrope";
         ctx.textAlign = "center";
-        ctx.translate(transcriptArray[i].x, transcriptArray[i].y);
         ctx.scale(-1, 1);
-        ctx.fillStyle = "black";
-        ctx.fillText(transcriptArray[i].text, 0, 0);
+        ctx.fillStyle = thenDetail[1];
+        ctx.fillText(
+          transcriptArray[i].text,
+          -transcriptArray[i].x,
+          transcriptArray[i].y
+        );
       }
     }
   };
@@ -477,6 +480,11 @@ export default function RelationCvs({
       trigger === false &&
       listening === true
     ) {
+      stop();
+    }
+  }, [trigger]);
+  useEffect(() => {
+    if (listening === false) {
       let midX = (transcriptPoint[0] + transcriptPoint[2]) / 2;
       let midY = (transcriptPoint[1] + transcriptPoint[3]) / 2;
       setTranscriptArray([
@@ -484,9 +492,8 @@ export default function RelationCvs({
         { x: midX, y: midY, text: value },
       ]);
       console.log(transcriptArray);
-      stop();
     }
-  }, [trigger]);
+  }, [listening]);
 
   useEffect(() => {
     if (fingersSelected !== undefined) {
@@ -518,21 +525,35 @@ export default function RelationCvs({
   }, [fingersL, fingersR]);
 
   return (
-    <canvas
-      ref={reactionRef}
-      style={{
-        position: "absolute",
-        marginLeft: "auto",
-        marginRight: "auto",
-        left: 0,
-        right: 0,
-        textAlign: "center",
-        zindex: 12,
-        width: "100vw",
-        height: "100vh",
-        objectFit: "cover",
-        transform: "scaleX(-1)",
-      }}
-    />
+    <>
+      {/* {thenType === "audio" && (
+        <ReactMobxMusic instrumentNames={[thenDetail[0]]}>
+          {({ isLoading, instruments }) => {
+            if (trigger === true) {
+              instruments.get(thenDetail[0]).play("A4");
+            } else {
+              // instruments.get(thenDetail[0]).stop("A4");
+            }
+            return null;
+          }}
+        </ReactMobxMusic>
+      )} */}
+      <canvas
+        ref={reactionRef}
+        style={{
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          zindex: 12,
+          width: "100vw",
+          height: "100vh",
+          objectFit: "cover",
+          transform: "scaleX(-1)",
+        }}
+      />
+    </>
   );
 }

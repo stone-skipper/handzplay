@@ -5,6 +5,7 @@
   width: 23vw;
   display: flex;
   justify-content: flex-end;
+  gap: 4px;
   flex-direction: column;
   font-family: "Manrope", sans-serif;
   font-weight: 600;
@@ -20,11 +21,13 @@
   height: fit-content;
   color: white;
   cursor: pointer;
+  border-radius: 6px;
+
   p {
     padding: 10px;
     margin: 0;
     text-align: center;
-    font-size: 0.8em;
+    font-size: 0.85em;
   }
 }
 .content {
@@ -32,7 +35,8 @@
   display: flex;
   flex-direction: column;
   background: white;
-  border-radius: 10px 10px 0 0;
+
+  border-radius: 10px;
   justify-content: center;
   box-shadow: 0px -10px 54px rgba(0, 77, 192, 0.06);
 }
@@ -200,7 +204,7 @@
 .enumWrapper {
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  gap: 50px;
 }
 
 .placeholder {

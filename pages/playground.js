@@ -44,14 +44,14 @@ export default function Playground() {
       <div
         style={{
           display: "flex",
-          width: "94vw",
+          width: "100vw",
           position: "absolute",
-          bottom: 0,
-          left: "3vw",
+          bottom: 4,
+          gap: 4,
           justifyContent: "center",
-          gap: 0,
         }}
       >
+        <Controls />
         <Rules />
         <Controls />
       </div>
@@ -60,7 +60,7 @@ export default function Playground() {
         style={{
           width: "100vw",
           position: "absolute",
-          top: 36,
+          top: 18,
           display: "flex",
           justifyContent: "center",
           zIndex: 51,
@@ -70,7 +70,7 @@ export default function Playground() {
           style={{
             width: "fit-content",
             height: "fit-content",
-            padding: 5,
+            padding: "0 5px",
             background: playgroundBgColor,
           }}
         >

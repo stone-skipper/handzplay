@@ -28,6 +28,7 @@ const Grid = ({ color }) => {
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
+        opacity: 0.4,
       }}
     >
       {backgroundType === "dots" && (
