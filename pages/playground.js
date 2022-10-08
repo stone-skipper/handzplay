@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import Handpose from "../components/handpose";
 import Logo from "../components/UI/logo";
+import Invite from "../components/controlUI/invite";
 import Controls from "../components/controlUI/controls";
 import Rules from "../components/controlUI/rules";
 import Grid from "../components/grid";
@@ -51,7 +52,7 @@ export default function Playground() {
           justifyContent: "center",
         }}
       >
-        <Controls />
+        <Invite />
         <Rules />
         <Controls />
       </div>

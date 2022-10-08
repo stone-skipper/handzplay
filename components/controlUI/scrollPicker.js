@@ -85,7 +85,7 @@ export default function ScrollPicker({ label, arrayIndex = null, options }) {
               animate={{
                 opacity: index === current ? 1 : 0.4,
                 scale: index === current ? 1.1 : 1,
-                color: index === current ? "blue" : "black",
+                color: index === current ? "#0066FF" : "black",
               }}
             >
               <h3>{data}</h3>

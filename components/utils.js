@@ -1,6 +1,5 @@
 export const bg = "#f3f3f3";
 export const key = "#004dc0";
-
 // Points for fingers
 const fingerJoints = {
   thumb: [0, 1, 2, 3, 4],
@@ -148,5 +147,29 @@ export const drawBlurred = (predictions, color, ctx) => {
       ctx.fillStyle = color;
       ctx.fill();
     }
+  }
+};
+
+export const drawCursor = (predictions, color, side, ctx) => {
+  // Check if we have predictions
+
+  if (predictions.length > 0) {
+    // Loop through each prediction
+    const x = (predictions[4].x + predictions[8].x) / 2;
+    const y = (predictions[4].y + predictions[8].y) / 2;
+
+    ctx.beginPath();
+    ctx.textAlign = "center";
+    ctx.font = 24 + "px Manrope";
+    ctx.translate(x, y);
+    console.log(side);
+    if (side === "Left") {
+      ctx.rotate(-Math.PI / 3);
+    } else if (side === "Right") {
+      ctx.rotate(-(Math.PI * 2) / 3);
+    }
+
+    ctx.fillStyle = color;
+    ctx.fillText("➤", 0, 0);
   }
 };

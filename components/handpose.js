@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 
 import { useControlsStore, useRulesStore } from "../lib/store";
 import RelationCvs from "./if/relationCvs";
-
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import "@tensorflow/tfjs-backend-wasm";
@@ -10,7 +9,7 @@ import "@tensorflow/tfjs-backend-wasm";
 import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 
 import Webcam from "react-webcam";
-import { drawHand, drawPoints, drawBlurred } from "./utils";
+import { drawHand, drawPoints, drawBlurred, drawCursor } from "./utils";
 
 import * as fp from "fingerpose";
 import {
@@ -22,7 +21,8 @@ import {
   ThumbsUpGesture,
   VictoryGesture,
 } from "../gestures";
-import PoseCvs from "./if/poseCvs";
+import Pose from "./if/pose";
+import Fingers from "./if/fingers";
 
 export default function Handpose({
   handIndicatorType,
@@ -43,7 +43,7 @@ export default function Handpose({
   var handL, handR, hand;
 
   const [passHand, setPassHand] = useState(null);
-
+  const [palmPos, setPalmPos] = useState({ lx: 0, ly: 0, rx: 0, ry: 0 });
   const [vWidth, setvWidth] = useState(0);
   const [vHeight, setvHeight] = useState(0);
 
@@ -156,14 +156,14 @@ export default function Handpose({
         });
 
         if (result !== undefined && result.score > 9.8 && side === "left") {
-          console.log(result.name);
+          // console.log(result.name);
           useControlsStore.setState({ currentPoseL: result.name });
         } else if (
           result !== undefined &&
           result.score > 9.8 &&
           side === "right"
         ) {
-          console.log(result.name);
+          // console.log(result.name);
           useControlsStore.setState({ currentPoseR: result.name });
         } else {
           useControlsStore.setState({ currentPoseL: "" });
@@ -214,22 +214,43 @@ export default function Handpose({
         useControlsStore.setState({
           fingersR: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         });
+        setPalmPos({
+          lx: (handL.keypoints[0].x + handL.keypoints[9].x) / 2,
+          ly: (handL.keypoints[0].y + handL.keypoints[9].y) / 2,
+          rx: 0,
+          ry: 0,
+        });
       } else if (hand.length === 1 && handR !== undefined) {
         useControlsStore.setState({ rightHand: true });
         useControlsStore.setState({ leftHand: false });
         handToFinger(handR, "right");
         gestureRecognition(handR, "right");
-
         useControlsStore.setState({
           fingersL: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         });
-      } else if (hand.length === 2) {
+        setPalmPos({
+          lx: 0,
+          ly: 0,
+          rx: (handR.keypoints[0].x + handR.keypoints[9].x) / 2,
+          ry: (handR.keypoints[0].y + handR.keypoints[9].y) / 2,
+        });
+      } else if (
+        hand.length === 2 &&
+        handR !== undefined &&
+        handL !== undefined
+      ) {
         useControlsStore.setState({ leftHand: true });
         useControlsStore.setState({ rightHand: true });
         handToFinger(handL, "left");
         handToFinger(handR, "right");
         gestureRecognition(handL, "left");
         gestureRecognition(handR, "right");
+        setPalmPos({
+          lx: (handL.keypoints[0].x + handL.keypoints[9].x) / 2,
+          ly: (handL.keypoints[0].y + handL.keypoints[9].y) / 2,
+          rx: (handR.keypoints[0].x + handR.keypoints[9].x) / 2,
+          ry: (handR.keypoints[0].y + handR.keypoints[9].y) / 2,
+        });
       } else {
         useControlsStore.setState({ leftHand: false });
         useControlsStore.setState({ rightHand: false });
@@ -248,6 +269,7 @@ export default function Handpose({
         useControlsStore.setState({
           fingersR: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         });
+        setPalmPos({ lx: 0, ly: 0, rx: 0, ry: 0 });
       }
     }
   };
@@ -271,6 +293,13 @@ export default function Handpose({
           drawPoints(passHand[i].keypoints, handColor, ctx);
         } else if (handIndicatorType === "blurred") {
           drawBlurred(passHand[i].keypoints, handColor, ctx);
+        } else if (handIndicatorType === "cursor") {
+          drawCursor(
+            passHand[i].keypoints,
+            handColor,
+            passHand[i].handedness,
+            ctx
+          );
         }
       }
     }
@@ -317,7 +346,7 @@ export default function Handpose({
         rules.map((value, index) => {
           if (value.ifType === "fingers") {
             return (
-              <RelationCvs
+              <Fingers
                 key={index}
                 videoWidth={vWidth}
                 videoHeight={vHeight}
@@ -329,13 +358,14 @@ export default function Handpose({
             );
           } else if (value.ifType === "pose") {
             return (
-              <PoseCvs
+              <Pose
                 key={index}
                 videoWidth={vWidth}
                 videoHeight={vHeight}
                 pose={value.pose}
                 thenType={value.thenType}
                 thenDetail={value.thenDetail}
+                palmPos={palmPos}
               />
             );
           }

@@ -46,36 +46,50 @@ export default function Rules() {
         <>
           <NewRule />
           <div
-            className={styles.btn}
             style={{
-              opacity:
-                ruleInProgress.ifType !== undefined ||
-                ruleInProgress.thenType !== undefined
-                  ? 1
-                  : 0.5,
+              display: "flex",
+              flexDirection: "row",
+              background: "white",
+              borderRadius: 10,
+              padding: "10px 16px",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0px -10px 54px 0px #004DC014",
             }}
-            onClick={() => {
-              if (
-                ruleInProgress.ifType !== undefined ||
-                ruleInProgress.thenType !== undefined
-              ) {
+          >
+            <div
+              className={styles.btn}
+              style={{
+                color:
+                  ruleInProgress.ifType !== undefined ||
+                  ruleInProgress.thenType !== undefined
+                    ? "#0066FF"
+                    : "lightgrey",
+              }}
+              onClick={() => {
+                if (
+                  ruleInProgress.ifType !== undefined ||
+                  ruleInProgress.thenType !== undefined
+                ) {
+                  setRuleContent("list");
+                  addRule(ruleInProgress);
+                  removeRuleInProgress();
+                } else {
+                }
+              }}
+            >
+              add
+            </div>
+            <Divider direction="vertical" customSize={30} color="lightgrey" />
+            <div
+              className={styles.btn}
+              onClick={() => {
                 setRuleContent("list");
-                addRule(ruleInProgress);
                 removeRuleInProgress();
-              } else {
-              }
-            }}
-          >
-            add
-          </div>
-          <div
-            className={styles.btn}
-            onClick={() => {
-              setRuleContent("list");
-              removeRuleInProgress();
-            }}
-          >
-            cancel
+              }}
+            >
+              cancel
+            </div>
           </div>
         </>
       )}

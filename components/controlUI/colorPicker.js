@@ -20,7 +20,7 @@ export default function ColorPicker({ label, arrayIndex = null }) {
         }}
         style={{
           width: "fit-content",
-          padding: 10,
+          padding: 20,
           borderRadius: 2,
           color: selectedColor,
           display: "flex",

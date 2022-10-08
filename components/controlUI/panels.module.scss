@@ -72,7 +72,7 @@
     justify-content: flex-end;
     gap: 10px;
     align-items: flex-end;
-    text-transform: uppercase;
+    text-transform: capitalize;
     > div {
       cursor: pointer;
     }
@@ -183,7 +183,7 @@
   height: fit-content;
   padding: 20px;
   overflow: hidden;
-
+  width: fit-content;
   button {
     display: none !important;
     // remove the native btn
@@ -204,7 +204,7 @@
 .enumWrapper {
   display: flex;
   flex-direction: row;
-  gap: 50px;
+  justify-content: space-between;
 }
 
 .placeholder {
@@ -214,5 +214,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 45%;
+}
+.optionsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0.5;
+}
+.optionsHolder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+}
+
+.plainText {
+  z-index: 2;
+  // padding: 20px;
 }

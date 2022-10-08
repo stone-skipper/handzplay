@@ -38,10 +38,11 @@ export default function EnumSelect({ title, label, options, relatedProperty }) {
               }}
               style={{
                 cursor: "pointer",
-                fontWeight: 500,
-                color: selected === data ? "blue" : "grey",
+                fontWeight: selected === data ? 600 : 500,
+                color: selected === data ? "#0066FF" : "grey",
               }}
             >
+              {selected === data && "● "}
               {data}
             </motion.div>
           );

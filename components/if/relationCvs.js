@@ -12,7 +12,6 @@ import {
 // import ReactMobxMusic from "react-mobx-music";
 
 import { useSpeechRecognition } from "react-speech-kit";
-// import { audio } from "../then/audio";
 
 export default function RelationCvs({
   videoWidth,
@@ -334,45 +333,7 @@ export default function RelationCvs({
         videoHeight, // cavans height
         ctx
       );
-    } else if (
-      fingersSelectedCoord.length !== 0 &&
-      thenType === "draw" &&
-      getDistance(
-        fingersSelectedCoord[0].x,
-        fingersSelectedCoord[0].y,
-        fingersSelectedCoord[1].x,
-        fingersSelectedCoord[1].y
-      ) < distance &&
-      getDistance(
-        fingersSelectedCoord[0].x,
-        fingersSelectedCoord[0].y,
-        fingersSelectedCoord[1].x,
-        fingersSelectedCoord[1].y
-      ) !== 0
-    ) {
-      let midPointX =
-        (fingersSelectedCoord[0].x + fingersSelectedCoord[1].x) / 2;
-      let midPointY =
-        (fingersSelectedCoord[0].y + fingersSelectedCoord[1].y) / 2;
-      setDrawArray([...drawArray, { x: midPointX, y: midPointY }]);
     }
-
-    // for drawing. Reference at http://jsfiddle.net/NWBV4/10/
-    if (drawArray.length !== 0 && thenType === "draw") {
-      ctx.beginPath(), ctx.moveTo(drawArray[0].x, drawArray[0].y);
-
-      for (let i = 1; i < drawArray.length - 2; i++) {
-        var c = (drawArray[i].x + drawArray[i + 1].x) / 2,
-          d = (drawArray[i].y + drawArray[i + 1].y) / 2;
-        ctx.quadraticCurveTo(drawArray[i].x, drawArray[i].y, c, d);
-      }
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.strokeStyle = thenDetail[0];
-      ctx.lineWidth = thenDetail[1];
-      ctx.stroke();
-    }
-
     // for stamping
 
     if (stampArray.length !== 0 && thenType === "stamp") {

@@ -25,7 +25,7 @@ export default function Index() {
     // {
     //   ifType: "pose",
     //   pose: ["victory", "left"], //type of gesture, left right both
-    //   thenType: "element",
+    //   thenType: "interface",
     //   thenDetail: [
     //     "rect",
     //     {

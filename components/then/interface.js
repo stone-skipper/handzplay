@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function Element({ type, initial, onPose, trigger }) {
+export default function Interface({ type, initial, onPose, trigger }) {
   const [moveDistance, setMoveDistance] = useState(0);
   const [pos, setPos] = useState({ x: 0, y: 0 });
   useEffect(() => {

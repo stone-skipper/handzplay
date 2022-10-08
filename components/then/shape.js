@@ -129,4 +129,3 @@ export const stamp = (ax, ay, bx, by, color, shape, fillType, trigger, ctx) => {
   let midPointX = (ax + bx) / 2;
   let midPointY = (ay + by) / 2;
 };
-export const bubble = (ax, ay, bx, by) => {};

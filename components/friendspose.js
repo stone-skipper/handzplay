@@ -18,7 +18,7 @@ import {
 } from "../gestures";
 import { useControlsStore, useRulesStore } from "../lib/store";
 import RelationCvs from "./if/relationCvs";
-import PoseCvs from "./if/poseCvs";
+import Pose from "./if/Pose";
 
 export default function FriendsPose({
   handIndicatorType,
@@ -302,33 +302,6 @@ export default function FriendsPose({
           filter: handIndicatorType === "blurred" ? "blur(35px)" : "none",
         }}
       />
-      {/* {rules !== undefined &&
-        rules.map((value, index) => {
-          if (value.ifType === "relation") {
-            return (
-              <RelationCvs
-                key={index}
-                videoWidth={vWidth}
-                videoHeight={vHeight}
-                fingersSelected={[value.fingerA, value.fingerB]}
-                distance={value.distance}
-                thenType={value.thenType}
-                thenDetail={value.thenDetail}
-              />
-            );
-          } else if (value.ifType === "pose") {
-            return (
-              <PoseCvs
-                key={index}
-                videoWidth={vWidth}
-                videoHeight={vHeight}
-                pose={value.pose}
-                thenType={value.thenType}
-                thenDetail={value.thenDetail}
-              />
-            );
-          }
-        })} */}
     </div>
   );
 }

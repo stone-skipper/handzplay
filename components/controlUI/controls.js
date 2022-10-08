@@ -141,7 +141,7 @@ export default function Controls() {
           </div>
         </div>
         <div className={styles.controlWrapper}>
-          <div className={styles.controlTitle}>Hand Type</div>
+          <div className={styles.controlTitle}>Hand</div>
           <div className={styles.options}>
             <div
               onClick={() => {
@@ -178,6 +178,19 @@ export default function Controls() {
               }}
             >
               shadow
+            </div>
+            <div className={styles.dividerPosition}>
+              <Divider direction="vertical" customSize={7} color="grey" />
+            </div>
+            <div
+              onClick={() => {
+                useControlsStore.setState({ handIndicatorType: "cursor" });
+              }}
+              style={{
+                color: handIndicatorType === "cursor" ? "#004DC0" : "grey",
+              }}
+            >
+              cursor
             </div>
           </div>
         </div>{" "}
