@@ -1,14 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useControlsStore, useRulesStore } from "../../lib/store";
-import { line, rect, circle, star, text, clipping } from "../then/shape";
-import { audio } from "../then/audio";
-import { current } from "immer";
 import { motion } from "framer-motion";
 import Interface from "../then/interface";
-import DrawCvs from "./drawCvs";
-import StampCvs from "./stampCvs";
-import AudioCvs from "./audioCvs";
-import TranscriptCvs from "./transcriptCvs";
+import DrawCvs from "../then/drawCvs";
+import StampCvs from "../then/stampCvs";
+import AudioCvs from "../then/audioCvs";
+import TranscriptCvs from "../then/transcriptCvs";
 
 export default function Pose({
   videoWidth,

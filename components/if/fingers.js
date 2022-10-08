@@ -1,10 +1,10 @@
-import DrawCvs from "./drawCvs";
+import DrawCvs from "../then/drawCvs";
 import { useControlsStore } from "../../lib/store";
 import { useEffect, useState } from "react";
-import StampCvs from "./stampCvs";
-import AudioCvs from "./audioCvs";
-import TranscriptCvs from "./transcriptCvs";
-import ShapeCvs from "./shapeCvs";
+import StampCvs from "../then/stampCvs";
+import AudioCvs from "../then/audioCvs";
+import TranscriptCvs from "../then/transcriptCvs";
+import ShapeCvs from "../then/shapeCvs";
 
 export default function Fingers({
   videoWidth,

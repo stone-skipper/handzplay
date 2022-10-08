@@ -8,7 +8,7 @@ import {
   text,
   clipping,
   drawStar,
-} from "../then/shape";
+} from "./shape";
 export default function ShapeCvs({
   videoWidth,
   videoHeight,

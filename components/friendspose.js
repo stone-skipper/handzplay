@@ -17,7 +17,6 @@ import {
   VictoryGesture,
 } from "../gestures";
 import { useControlsStore, useRulesStore } from "../lib/store";
-import RelationCvs from "./if/relationCvs";
 import Pose from "./if/Pose";
 
 export default function FriendsPose({

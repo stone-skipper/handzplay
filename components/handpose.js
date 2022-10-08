@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 
 import { useControlsStore, useRulesStore } from "../lib/store";
-import RelationCvs from "./if/relationCvs";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import "@tensorflow/tfjs-backend-wasm";
