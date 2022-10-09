@@ -63,10 +63,9 @@ export default function Pose({
           }}
         >
           <Interface
-            trigger={trigger}
             type={thenDetail[0]}
-            initial={thenDetail[1]}
-            onPose={thenDetail[2]}
+            trigger={trigger}
+            thenDetail={thenDetail}
           />
         </motion.div>
       )}
