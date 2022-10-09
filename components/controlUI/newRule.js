@@ -78,6 +78,7 @@ export default function NewRule({ options, onScroll }) {
                 "distance",
                 "pose",
                 "hand",
+                "action",
               ]}
             />
           </span>
@@ -87,13 +88,11 @@ export default function NewRule({ options, onScroll }) {
             background: "white",
             borderRadius: 10,
             padding: "24px 16px",
-            display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexGrow: 0.5,
             border: highlight === 1 ? "2px solid #0066FF" : "2px solid white",
             boxShadow: "0px -10px 54px 0px #004DC014",
-            boxSizing: "border-box",
           }}
           onClick={() => {
             setHighlight(1);

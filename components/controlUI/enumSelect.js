@@ -27,10 +27,22 @@ export default function EnumSelect({
       removeProperty(relatedProperty[i], null);
     }
   }, [selected]);
+
+  useEffect(() => {
+    if (inactive.includes(selected) === true) {
+      setSelected("");
+    }
+  }, [ruleInProgress]);
   return (
     <div className={styles.enumWrapper}>
       {title}
-      <div style={{ display: "flex", flexDirection: "row", gap: 16 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 14,
+        }}
+      >
         {options.map((data, index) => {
           return (
             <motion.div
