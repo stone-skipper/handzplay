@@ -21,6 +21,15 @@ export default function RulesList() {
     );
   };
 
+  const ActionWrapper = ({ hand, action }) => {
+    return (
+      <div className={styles.trigger}>
+        <div className={styles.if}>{hand}</div> hand is{" "}
+        <div className={styles.if}>{action}</div>
+      </div>
+    );
+  };
+
   const RelationWrapper = ({ fingerA, fingerB, distance }) => {
     return (
       <div className={styles.trigger}>
@@ -53,9 +62,13 @@ export default function RulesList() {
           return (
             <div className={styles.rule}>
               <div className={styles.number}>{index + 1}</div>
-              {rule.ifType === "pose" ? (
+              {rule.ifType === "pose" && (
                 <PoseWrapper hand={rule.pose[1]} pose={rule.pose[0]} />
-              ) : (
+              )}
+              {rule.ifType === "action" && (
+                <ActionWrapper hand={rule.action[1]} action={rule.action[0]} />
+              )}
+              {rule.ifType === "fingers" && (
                 <RelationWrapper
                   fingerA={rule.fingerA}
                   fingerB={rule.fingerB}

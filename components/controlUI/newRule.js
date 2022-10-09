@@ -119,6 +119,13 @@ export default function NewRule({ options, onScroll }) {
                 "interface",
               ]}
               relatedProperty={["thenDetail"]}
+              inactive={
+                ruleInProgress.ifType === "pose"
+                  ? ["shape"]
+                  : ruleInProgress.ifType === "action"
+                  ? ["shape", "draw", "transcript", "stamp"]
+                  : []
+              }
             />
           </span>
         </div>
@@ -207,6 +214,17 @@ export default function NewRule({ options, onScroll }) {
                   "four",
                   "five",
                 ]}
+              />
+            </>
+          )}
+          {ruleInProgress.ifType === "action" && (
+            <>
+              <div className={styles.plainText}>if</div>
+              <ScrollPicker label="hand" options={["left", "right"]} />
+              <div className={styles.plainText}>hand swipes</div>
+              <ScrollPicker
+                label="action"
+                options={["left", "right", "up", "down"]}
               />
             </>
           )}

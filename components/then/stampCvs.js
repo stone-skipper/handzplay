@@ -35,8 +35,6 @@ export default function StampCvs({
 
     if (trigger === true) {
       setStampArray([...stampArray, { x: point.x, y: point.y }]);
-
-      // setStampPoint(point);
     }
 
     if (stampArray.length !== 0) {
@@ -88,13 +86,6 @@ export default function StampCvs({
       }
     }
   };
-
-  // useEffect(() => {
-  //   if (trigger === true) {
-  //     let midX = (stampPoint[0] + stampPoint[2]) / 2;
-  //     let midY = (stampPoint[1] + stampPoint[3]) / 2;
-  //   }
-  // }, [trigger]);
 
   useEffect(() => {
     drawInteraction();

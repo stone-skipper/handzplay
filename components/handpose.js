@@ -22,6 +22,7 @@ import {
 } from "../gestures";
 import Pose from "./if/pose";
 import Fingers from "./if/fingers";
+import Action from "./if/action";
 
 export default function Handpose({
   handIndicatorType,
@@ -33,7 +34,6 @@ export default function Handpose({
   const canvasRef = useRef(null);
 
   // from store
-  // const cameraFeed = useControlsStore((state) => state.cameraFeed);
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
   // const rules = useRulesStore((state) => state.rules);
@@ -74,14 +74,37 @@ export default function Handpose({
   };
 
   var videoWidth, videoHeight;
+
   const fingerX = (hand, index) => {
     if (hand !== undefined) {
       return Math.round(hand.keypoints[index].x);
     }
   };
+
   const fingerY = (hand, index) => {
     if (hand !== undefined) {
       return Math.round(hand.keypoints[index].y);
+    }
+  };
+  // action detector
+  var leftMovementArray = [];
+  var rightMovementArray = [];
+  var leftMovement;
+  var rightMovement;
+
+  const actionDirection = (motion) => {
+    let motionX = motion[1].x - motion[0].x;
+    let travelX = Math.abs(motion[1].x - motion[0].x);
+    let motionY = motion[1].y - motion[0].y;
+    let travelY = Math.abs(motion[1].y - motion[0].y);
+    if (travelX > travelY && motionX < 0) {
+      return "right";
+    } else if (travelX > travelY && motionX > 0) {
+      return "left";
+    } else if (travelX < travelY && motionY < 0) {
+      return "up";
+    } else if (travelX < travelY && motionY > 0) {
+      return "down";
     }
   };
 
@@ -219,6 +242,33 @@ export default function Handpose({
           rx: 0,
           ry: 0,
         });
+
+        leftMovementArray.push({
+          x: handL.keypoints[8].x,
+          y: handL.keypoints[8].y,
+        });
+        if (leftMovementArray.length > 2) {
+          leftMovementArray.splice(0, 1);
+          var movementX = Math.abs(
+            leftMovementArray[1].x - leftMovementArray[0].x
+          );
+          var movementY = Math.abs(
+            leftMovementArray[1].y - leftMovementArray[0].y
+          );
+          leftMovement = Math.sqrt(
+            movementX * movementX + movementY * movementY
+          );
+        }
+        if (leftMovement > 250) {
+          useControlsStore.setState({
+            currentActionL: actionDirection(leftMovementArray),
+          });
+
+          console.log("action!", leftMovementArray, leftMovement);
+          console.log(actionDirection(leftMovementArray));
+        } else {
+          useControlsStore.setState({ currentActionL: "" });
+        }
       } else if (hand.length === 1 && handR !== undefined) {
         useControlsStore.setState({ rightHand: true });
         useControlsStore.setState({ leftHand: false });
@@ -233,6 +283,33 @@ export default function Handpose({
           rx: (handR.keypoints[0].x + handR.keypoints[9].x) / 2,
           ry: (handR.keypoints[0].y + handR.keypoints[9].y) / 2,
         });
+
+        rightMovementArray.push({
+          x: handR.keypoints[8].x,
+          y: handR.keypoints[8].y,
+        });
+        if (rightMovementArray.length > 2) {
+          rightMovementArray.splice(0, 1);
+          var movementX = Math.abs(
+            rightMovementArray[1].x - rightMovementArray[0].x
+          );
+          var movementY = Math.abs(
+            rightMovementArray[1].y - rightMovementArray[0].y
+          );
+          rightMovement = Math.sqrt(
+            movementX * movementX + movementY * movementY
+          );
+        }
+        if (rightMovement > 250) {
+          useControlsStore.setState({
+            currentActionR: actionDirection(rightMovementArray),
+          });
+
+          console.log("action!", rightMovementArray, rightMovement);
+          console.log(actionDirection(rightMovementArray));
+        } else {
+          useControlsStore.setState({ currentActionR: "" });
+        }
       } else if (
         hand.length === 2 &&
         handR !== undefined &&
@@ -250,6 +327,8 @@ export default function Handpose({
           rx: (handR.keypoints[0].x + handR.keypoints[9].x) / 2,
           ry: (handR.keypoints[0].y + handR.keypoints[9].y) / 2,
         });
+        useControlsStore.setState({ currentPoseL: "" });
+        useControlsStore.setState({ currentPoseR: "" });
       } else {
         useControlsStore.setState({ leftHand: false });
         useControlsStore.setState({ rightHand: false });
@@ -262,6 +341,8 @@ export default function Handpose({
         useControlsStore.setState({ rightHand: false });
         useControlsStore.setState({ currentPoseL: "" });
         useControlsStore.setState({ currentPoseR: "" });
+        useControlsStore.setState({ currentActionL: "" });
+        useControlsStore.setState({ currentActionR: "" });
         useControlsStore.setState({
           fingersL: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         });
@@ -365,6 +446,17 @@ export default function Handpose({
                 thenType={value.thenType}
                 thenDetail={value.thenDetail}
                 palmPos={palmPos}
+              />
+            );
+          } else if (value.ifType === "action") {
+            return (
+              <Action
+                key={index}
+                videoWidth={vWidth}
+                videoHeight={vHeight}
+                action={value.action}
+                thenType={value.thenType}
+                thenDetail={value.thenDetail}
               />
             );
           }

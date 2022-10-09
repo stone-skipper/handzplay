@@ -5,7 +5,13 @@ import styles from "./panels.module.scss";
 
 import { motion } from "framer-motion";
 
-export default function EnumSelect({ title, label, options, relatedProperty }) {
+export default function EnumSelect({
+  title,
+  label,
+  options,
+  relatedProperty,
+  inactive = [],
+}) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const updateRuleInProgress = useRulesStore(
     (state) => state.updateRuleInProgress
@@ -29,15 +35,18 @@ export default function EnumSelect({ title, label, options, relatedProperty }) {
           return (
             <motion.div
               key={index}
-              onClick={async () => {
-                // await removeRuleInProgress();
-
-                updateRuleInProgress(label, data);
-                setSelected(data);
+              onClick={() => {
+                if (inactive.includes(data) === false) {
+                  updateRuleInProgress(label, data);
+                  setSelected(data);
+                }
                 // console.log(ruleInProgress);
               }}
               style={{
                 cursor: "pointer",
+                textDecorationLine:
+                  inactive.includes(data) === true ? "line-through" : "none",
+                opacity: inactive.includes(data) === true ? 0.4 : 1,
                 fontWeight: selected === data ? 600 : 500,
                 color: selected === data ? "#0066FF" : "grey",
               }}

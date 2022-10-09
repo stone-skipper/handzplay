@@ -1,14 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useControlsStore, useRulesStore } from "../../lib/store";
-import {
-  line,
-  rect,
-  circle,
-  star,
-  text,
-  clipping,
-  drawStar,
-} from "./shape";
+import { line, rect, circle, star, text, clipping, drawStar } from "./shape";
 export default function ShapeCvs({
   videoWidth,
   videoHeight,
@@ -88,7 +80,7 @@ export default function ShapeCvs({
 
   useEffect(() => {
     drawInteraction();
-    console.log(points);
+    // console.log(points);
   }, [points]);
 
   return (

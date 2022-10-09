@@ -15,15 +15,16 @@ export default function DrawCvs({
   const clearBtn = useControlsStore((state) => state.clearBtn);
 
   const [drawArray, setDrawArray] = useState([]);
+  const [lineArray, setLineArray] = useState([]);
 
   useEffect(() => {
-    if (drawArray.length !== 0) {
+    if (lineArray.length !== 0) {
       useControlsStore.setState({ clearBtn: true });
     }
-  }, [drawArray]);
+  }, [lineArray]);
   useEffect(() => {
     if (clearBtn === false) {
-      setDrawArray([]);
+      setLineArray([]);
     }
   }, [clearBtn]);
 
@@ -35,28 +36,56 @@ export default function DrawCvs({
 
     if (trigger === true) {
       setDrawArray([...drawArray, { x: point.x, y: point.y }]);
+      // console.log(drawArray);
     }
 
     // for drawing. Reference at http://jsfiddle.net/NWBV4/10/
-    if (drawArray.length !== 0) {
-      ctx.beginPath(), ctx.moveTo(drawArray[0].x, drawArray[0].y);
+    // if (drawArray.length !== 0) {
+    //   ctx.beginPath(), ctx.moveTo(drawArray[0].x, drawArray[0].y);
 
-      for (let i = 1; i < drawArray.length - 2; i++) {
-        var c = (drawArray[i].x + drawArray[i + 1].x) / 2,
-          d = (drawArray[i].y + drawArray[i + 1].y) / 2;
-        ctx.quadraticCurveTo(drawArray[i].x, drawArray[i].y, c, d);
+    //   for (let i = 1; i < drawArray.length - 2; i++) {
+    //     var c = (drawArray[i].x + drawArray[i + 1].x) / 2,
+    //       d = (drawArray[i].y + drawArray[i + 1].y) / 2;
+    //     ctx.quadraticCurveTo(drawArray[i].x, drawArray[i].y, c, d);
+    //   }
+    //   ctx.lineJoin = "round";
+    //   ctx.lineCap = "round";
+    //   ctx.strokeStyle = thenDetail[0];
+    //   ctx.lineWidth = thenDetail[1];
+    //   ctx.stroke();
+    // }
+    if (lineArray.length !== 0) {
+      console.log(lineArray);
+
+      for (let j = 0; j < lineArray.length; j++) {
+        if (lineArray[j].length !== 0) {
+          ctx.beginPath();
+          ctx.moveTo(lineArray[j][0].x, lineArray[j][0].y);
+
+          for (let i = 1; i < lineArray[j].length - 2; i++) {
+            var c = (lineArray[j][i].x + lineArray[j][i + 1].x) / 2,
+              d = (lineArray[j][i].y + lineArray[j][i + 1].y) / 2;
+            ctx.quadraticCurveTo(lineArray[j][i].x, lineArray[j][i].y, c, d);
+          }
+          ctx.lineJoin = "round";
+          ctx.lineCap = "round";
+          ctx.strokeStyle = thenDetail[0];
+          ctx.lineWidth = thenDetail[1];
+          ctx.stroke();
+        }
       }
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.strokeStyle = thenDetail[0];
-      ctx.lineWidth = thenDetail[1];
-      ctx.stroke();
     }
   };
 
   useEffect(() => {
     drawInteraction();
   }, [point]);
+
+  useEffect(() => {
+    if (trigger === false) {
+      setLineArray([...lineArray, drawArray]);
+    }
+  }, [trigger]);
 
   return (
     <canvas
