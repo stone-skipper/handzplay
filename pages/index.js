@@ -22,6 +22,13 @@ export default function Index() {
 
   const [isMobile, setIsMobile] = useState(false);
   const breakpoint = 640;
+  useEffect(() => {
+    if (window.innerWidth > breakpoint) {
+      setIsMobile(false);
+    } else {
+      setIsMobile(true);
+    }
+  });
   const { width } = useViewport();
 
   useEffect(() => {
@@ -30,7 +37,7 @@ export default function Index() {
     }
   }, [currentPoseL, currentPoseR]);
 
-  return width > breakpoint ? (
+  return isMobile === false ? (
     <div className={styles.app}>
       <Handpose
         handIndicatorType={"blurred"}

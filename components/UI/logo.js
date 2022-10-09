@@ -41,6 +41,8 @@ export default function Logo({
             display: displayTag === true ? "block" : "none",
             margin: 0,
             padding: 0,
+            lineHeight: 1.4,
+            fontWeight: 400,
           }}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
