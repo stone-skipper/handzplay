@@ -1,11 +1,18 @@
 import Cursor from "../components/UI/cursor";
 import { useCreateStore, Provider } from "../lib/store";
 import Head from "next/head";
+import ReactGA from "react-ga4";
+import { useEffect } from "react";
 
 import "../style.css";
 
 export default function App({ Component, pageProps }) {
   const createStore = useCreateStore(pageProps.initialZustandState);
+  useEffect(() => {
+    ReactGA.initialize("G-TXL5WE7WBK");
+    ReactGA.send("pageview");
+  }, []);
+
   return (
     <Provider createStore={createStore}>
       <Head>

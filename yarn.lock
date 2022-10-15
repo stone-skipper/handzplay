@@ -1807,6 +1807,11 @@ react-dom@^17.0.2:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-ga4@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-ga4/-/react-ga4-1.4.1.tgz#6ee2a2db115ed235b2f2092bc746b4eeeca9e206"
+  integrity sha512-ioBMEIxd4ePw4YtaloTUgqhQGqz5ebDdC4slEpLgy2sLx1LuZBC9iYCwDymTXzcntw6K1dHX183ulP32nNdG7w==
+
 react-intersection-observer@^9.4.0:
   version "9.4.0"
   resolved "https://registry.npmjs.org/react-intersection-observer/-/react-intersection-observer-9.4.0.tgz"
@@ -2123,7 +2128,7 @@ socket.io@^4.5.1:
     socket.io-adapter "~2.4.0"
     socket.io-parser "~4.0.4"
 
-"soundfont-player@github:danigb/soundfont-player":
+soundfont-player@danigb/soundfont-player:
   version "0.12.0"
   resolved "https://codeload.github.com/danigb/soundfont-player/tar.gz/93e5a9a41064d18d91ed9c35fa6e29e332ac1099"
   dependencies:
