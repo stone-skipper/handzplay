@@ -461,8 +461,32 @@ export default function NewRule({ options, onScroll }) {
               <ScrollPicker
                 label="thenDetail"
                 arrayIndex={0}
-                options={["drum", "cymbalB", "cymbalC"]}
+                options={["drum", "piano"]}
               />
+              {ruleInProgress.thenDetail[0] === "drum" && (
+                <ScrollPicker
+                  label="thenDetail"
+                  arrayIndex={1}
+                  options={[
+                    "Crash",
+                    "FloorTom",
+                    "Hihat",
+                    "Kick",
+                    "RackTom",
+                    "Ride",
+                    "Sidestick",
+                    "Snare",
+                  ]}
+                />
+              )}
+              {ruleInProgress.thenDetail[0] === "piano" && (
+                <ScrollPicker
+                  label="thenDetail"
+                  arrayIndex={1}
+                  options={["C4", "D", "E", "F", "G", "A", "B", "C5"]}
+                />
+              )}
+
               <div className={styles.plainText}>sound </div>
             </>
           )}
