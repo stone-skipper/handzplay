@@ -5,8 +5,6 @@ import {
   GestureDescription,
 } from "fingerpose";
 
-// import GestureDescription from "fingerpose";
-
 // describe five gesture
 const fiveDescription = new GestureDescription("five");
 

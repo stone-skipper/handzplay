@@ -119,9 +119,7 @@ export default function NewRule({ options, onScroll }) {
               ]}
               relatedProperty={["thenDetail"]}
               inactive={
-                ruleInProgress.ifType === "pose"
-                  ? ["shape"]
-                  : ruleInProgress.ifType === "action"
+                ruleInProgress.ifType === "action"
                   ? ["shape", "draw", "transcript", "stamp"]
                   : []
               }
@@ -205,13 +203,14 @@ export default function NewRule({ options, onScroll }) {
                 label="pose"
                 options={[
                   "victory",
-                  "thumb-up",
+                  "thumb_up",
                   "spidey",
                   "pointer",
-                  "two",
                   "three",
                   "four",
                   "five",
+                  "okay",
+                  "rock",
                 ]}
               />
             </>

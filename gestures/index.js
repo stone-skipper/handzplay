@@ -5,6 +5,8 @@ import FiveGesture from "./Five";
 import FourGesture from "./Four";
 import ThreeGesture from "./Three";
 import SpideyGesture from "./Spidey";
+import OkayGesture from "./Okay";
+import RockGesture from "./Rock";
 
 export {
   VictoryGesture,
@@ -14,4 +16,6 @@ export {
   SpideyGesture,
   FourGesture,
   ThreeGesture,
+  OkayGesture,
+  RockGesture,
 };

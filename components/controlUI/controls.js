@@ -27,7 +27,6 @@ export default function Controls() {
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
   const currentTab = useControlsStore((state) => state.currentTab);
-  // const [controlToggle, setControlToggle] = useState(false);
 
   return (
     <div className={styles.wrapper}>
@@ -274,7 +273,7 @@ export default function Controls() {
         className={styles.header}
         style={{
           background: "#4B92FD",
-          opacity: currentTab === "rules" ? 0.4 : 1,
+          opacity: currentTab === "control" || currentTab === "none" ? 1 : 0.4,
         }}
         onClick={() => {
           if (currentTab === "control") {

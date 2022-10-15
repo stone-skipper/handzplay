@@ -4,15 +4,10 @@ import { useEffect, useState } from "react";
 export default function Interface({ type, trigger, thenDetail }) {
   const [moveDistance, setMoveDistance] = useState(0);
   const [pos, setPos] = useState({ x: 0, y: 0 });
-  useEffect(() => {
-    if (trigger === true && thenDetail[1] === "position") {
-      setMoveDistance(moveDistance + thenDetail[2]);
-    }
-  }, [trigger]);
 
   const initial = {
-    width: thenDetail[1] === "size" ? thenDetail[2] : 100,
-    height: thenDetail[1] === "size" ? thenDetail[2] : 100,
+    width: thenDetail[1] === "size" ? thenDetail[2] : 200,
+    height: thenDetail[1] === "size" ? thenDetail[2] : 200,
     opacity: thenDetail[1] === "opacity" ? thenDetail[2] : 1,
     rotate: 0,
     radius: 0,
@@ -24,8 +19,8 @@ export default function Interface({ type, trigger, thenDetail }) {
   };
 
   const onPose = {
-    width: thenDetail[1] === "size" ? thenDetail[3] : 100,
-    height: thenDetail[1] === "size" ? thenDetail[3] : 100,
+    width: thenDetail[1] === "size" ? thenDetail[3] : 200,
+    height: thenDetail[1] === "size" ? thenDetail[3] : 200,
     opacity: thenDetail[1] === "opacity" ? thenDetail[3] : 1,
     rotate: 0,
     radius: 0,
@@ -35,6 +30,26 @@ export default function Interface({ type, trigger, thenDetail }) {
     textSize: thenDetail[1] === "size" ? thenDetail[3] : 30,
     text: thenDetail[1] === "content" ? thenDetail[3] : "text",
   };
+
+  const [color, setColor] = useState(initial.color);
+
+  useEffect(() => {
+    if (trigger === true && thenDetail[1] === "position") {
+      setMoveDistance(moveDistance + thenDetail[2]);
+    } else if (
+      trigger === true &&
+      thenDetail[1] === "color" &&
+      color === initial.color
+    ) {
+      setColor(onPose.color);
+    } else if (
+      trigger === true &&
+      thenDetail[1] === "color" &&
+      color === onPose.color
+    ) {
+      setColor(initial.color);
+    }
+  }, [trigger]);
 
   return (
     <motion.div
@@ -64,7 +79,7 @@ export default function Interface({ type, trigger, thenDetail }) {
             zIndex: 30,
           }}
           animate={{
-            backgroundColor: trigger === false ? initial.color : onPose.color,
+            backgroundColor: color,
             width: trigger === false ? initial.width : onPose.width,
             height: trigger === false ? initial.height : onPose.height,
             borderRadius: trigger === false ? initial.radius : onPose.radius,
@@ -84,7 +99,7 @@ export default function Interface({ type, trigger, thenDetail }) {
             borderRadius: 3000,
           }}
           animate={{
-            backgroundColor: trigger === false ? initial.color : onPose.color,
+            backgroundColor: color,
             width: trigger === false ? initial.width : onPose.width,
             height: trigger === false ? initial.height : onPose.height,
             rotate: trigger === false ? initial.rotate : onPose.rotate,
@@ -107,7 +122,7 @@ export default function Interface({ type, trigger, thenDetail }) {
             alignItems: "center",
           }}
           animate={{
-            color: trigger === false ? initial.color : onPose.color,
+            backgroundColor: color,
             fontSize: trigger === false ? initial.textSize : onPose.textSize,
             width: trigger === false ? initial.width : onPose.width,
             height: trigger === false ? initial.height : onPose.height,

@@ -15,7 +15,8 @@ export default function RulesList() {
   const PoseWrapper = ({ hand, pose }) => {
     return (
       <div className={styles.trigger}>
-        <div className={styles.if}>{hand}</div> hand is{" "}
+        <div className={styles.if}>{hand}</div>{" "}
+        {hand === "both" ? "hands are" : "hand is"}{" "}
         <div className={styles.if}>{pose}</div>
       </div>
     );
@@ -24,7 +25,7 @@ export default function RulesList() {
   const ActionWrapper = ({ hand, action }) => {
     return (
       <div className={styles.trigger}>
-        <div className={styles.if}>{hand}</div> hand is{" "}
+        <div className={styles.if}>{hand}</div> hand swipes
         <div className={styles.if}>{action}</div>
       </div>
     );
@@ -63,10 +64,10 @@ export default function RulesList() {
             <div className={styles.rule}>
               <div className={styles.number}>{index + 1}</div>
               {rule.ifType === "pose" && (
-                <PoseWrapper hand={rule.pose[1]} pose={rule.pose[0]} />
+                <PoseWrapper hand={rule.hand} pose={rule.pose} />
               )}
               {rule.ifType === "action" && (
-                <ActionWrapper hand={rule.action[1]} action={rule.action[0]} />
+                <ActionWrapper hand={rule.hand} action={rule.action} />
               )}
               {rule.ifType === "fingers" && (
                 <RelationWrapper

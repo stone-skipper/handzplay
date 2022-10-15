@@ -19,6 +19,8 @@ import {
   SpideyGesture,
   ThumbsUpGesture,
   VictoryGesture,
+  OkayGesture,
+  RockGesture,
 } from "../gestures";
 import Pose from "./if/pose";
 import Fingers from "./if/fingers";
@@ -151,6 +153,8 @@ export default function Handpose({
     FourGesture,
     ThreeGesture,
     SpideyGesture,
+    OkayGesture,
+    RockGesture,
   ]);
 
   const gestureRecognition = async (hand, side) => {
@@ -168,7 +172,7 @@ export default function Handpose({
       const gesture = await GE.estimate(keypointsArray, 8);
       if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
         //   console.log(gesture.gestures);
-
+        // console.log(gesture.poseData);
         const confidence = gesture.gestures.map(
           (keypointsArray) => keypointsArray.confidence
         );
@@ -259,13 +263,13 @@ export default function Handpose({
             movementX * movementX + movementY * movementY
           );
         }
-        if (leftMovement > 250) {
+        if (leftMovement > 220) {
           useControlsStore.setState({
             currentActionL: actionDirection(leftMovementArray),
           });
 
-          console.log("action!", leftMovementArray, leftMovement);
-          console.log(actionDirection(leftMovementArray));
+          // console.log("action!", leftMovementArray, leftMovement);
+          // console.log(actionDirection(leftMovementArray));
         } else {
           useControlsStore.setState({ currentActionL: "" });
         }
@@ -300,13 +304,13 @@ export default function Handpose({
             movementX * movementX + movementY * movementY
           );
         }
-        if (rightMovement > 250) {
+        if (rightMovement > 220) {
           useControlsStore.setState({
             currentActionR: actionDirection(rightMovementArray),
           });
 
-          console.log("action!", rightMovementArray, rightMovement);
-          console.log(actionDirection(rightMovementArray));
+          // console.log("action!", rightMovementArray, rightMovement);
+          // console.log(actionDirection(rightMovementArray));
         } else {
           useControlsStore.setState({ currentActionR: "" });
         }
@@ -442,6 +446,7 @@ export default function Handpose({
                 key={index}
                 videoWidth={vWidth}
                 videoHeight={vHeight}
+                hand={value.hand}
                 pose={value.pose}
                 thenType={value.thenType}
                 thenDetail={value.thenDetail}
@@ -454,6 +459,7 @@ export default function Handpose({
                 key={index}
                 videoWidth={vWidth}
                 videoHeight={vHeight}
+                hand={value.hand}
                 action={value.action}
                 thenType={value.thenType}
                 thenDetail={value.thenDetail}

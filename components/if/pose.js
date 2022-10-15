@@ -5,11 +5,13 @@ import Interface from "../then/interface";
 import DrawCvs from "../then/drawCvs";
 import StampCvs from "../then/stampCvs";
 import AudioCvs from "../then/audioCvs";
+import ShapeCvs from "../then/shapeCvs";
 import TranscriptCvs from "../then/transcriptCvs";
 
 export default function Pose({
   videoWidth,
   videoHeight,
+  hand,
   pose,
   thenType,
   thenDetail,
@@ -22,18 +24,18 @@ export default function Pose({
   const [point, setPoint] = useState({ x: 0, y: 0 });
 
   const pullTrigger = () => {
-    if (pose[1] === "left" && pose[0] === currentPoseL) {
+    if (hand === "left" && pose === currentPoseL) {
       console.log("left!" + currentPoseL);
       setTrigger(true);
       setPoint({ x: palmPos.lx, y: palmPos.ly });
-    } else if (pose[1] === "right" && pose[0] === currentPoseR) {
+    } else if (hand === "right" && pose === currentPoseR) {
       console.log("right!" + currentPoseR);
       setTrigger(true);
       setPoint({ x: palmPos.rx, y: palmPos.ry });
     } else if (
-      pose[1] === "both" &&
-      pose[0] === currentPoseL &&
-      pose[0] === currentPoseR
+      hand === "both" &&
+      pose === currentPoseL &&
+      pose === currentPoseR
     ) {
       console.log("both!" + currentPoseL);
       setTrigger(true);
@@ -98,6 +100,15 @@ export default function Pose({
       )}
       {thenType === "audio" && (
         <AudioCvs trigger={trigger} thenDetail={thenDetail} point={point} />
+      )}
+      {thenType === "shape" && (
+        <ShapeCvs
+          videoWidth={videoWidth}
+          videoHeight={videoHeight}
+          trigger={trigger}
+          points={[point.x - 10, point.y - 10, point.x + 10, point.y + 10]}
+          thenDetail={thenDetail}
+        />
       )}
     </>
   );

@@ -8,6 +8,7 @@ import AudioCvs from "../then/audioCvs";
 export default function Action({
   videoWidth,
   videoHeight,
+  hand,
   action,
   thenType,
   thenDetail,
@@ -21,10 +22,10 @@ export default function Action({
   const [point, setPoint] = useState({ x: 0, y: 0 });
 
   const pullTrigger = () => {
-    if (action[1] === "left" && action[0] === currentActionL) {
+    if (hand === "left" && action === currentActionL) {
       console.log("left!" + currentActionL);
       setTrigger(true);
-    } else if (action[1] === "right" && action[0] === currentActionR) {
+    } else if (hand === "right" && action === currentActionR) {
       console.log("right!" + currentActionR);
       setTrigger(true);
     } else {

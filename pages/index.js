@@ -85,7 +85,7 @@ export default function Index() {
         <HandIllust04 initTop="9%" initLeft="45%" top="6%" left="40%" />
       </motion.div>
       <div className={styles.titleWrapper}>
-        <Logo color="white" displayTag={false} fontSize={50} delay={3} />
+        <Logo color="white" displayTag={false} fontSize={45} delay={0} />
         <div
           style={{
             color: "white",
@@ -106,7 +106,7 @@ export default function Index() {
       <div
         style={{
           position: "absolute",
-          bottom: "15%",
+          bottom: "10%",
           color: "white",
           fontSize: "0.55em",
           display: "flex",

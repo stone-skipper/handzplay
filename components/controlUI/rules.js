@@ -97,7 +97,7 @@ export default function Rules() {
         className={styles.header}
         style={{
           background: "#0066FF",
-          opacity: currentTab === "control" ? 0.4 : 1,
+          opacity: currentTab === "rules" || currentTab === "none" ? 1 : 0.4,
         }}
         onClick={() => {
           if (currentTab === "rules") {

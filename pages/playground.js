@@ -2,13 +2,14 @@ import Head from "next/head";
 
 import Handpose from "../components/handpose";
 import Logo from "../components/UI/logo";
-import Invite from "../components/controlUI/invite";
+import About from "../components/controlUI/about";
 import Controls from "../components/controlUI/controls";
 import Rules from "../components/controlUI/rules";
 import Grid from "../components/grid";
 import { useControlsStore, useRulesStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
 import { useEffect } from "react";
+import Template from "../components/controlUI/template";
 
 export default function Playground() {
   const handIndicatorType = useControlsStore(
@@ -23,6 +24,10 @@ export default function Playground() {
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
 
   useEffect(() => {
+    useControlsStore.setState({ toggleTemplate: true });
+  }, []);
+
+  useEffect(() => {
     console.log(rules);
   }, [rules]);
 
@@ -32,7 +37,7 @@ export default function Playground() {
       style={{ background: playgroundBgColor }}
     >
       <Head>
-        <title>PLAYGROUND</title>
+        <title>Handzplay Playground</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Grid color={handColor} />
@@ -52,7 +57,7 @@ export default function Playground() {
           justifyContent: "center",
         }}
       >
-        <Invite />
+        <About />
         <Rules />
         <Controls />
       </div>
@@ -78,6 +83,7 @@ export default function Playground() {
           <Logo color={handColor} displayTag={false} fontSize={40} />
         </div>
       </div>
+      <Template />
     </div>
   );
 }

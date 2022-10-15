@@ -13,13 +13,14 @@ export default function Invite() {
   const myId = useInviteStore((state) => state.myId);
   const inviteStatus = useInviteStore((state) => state.inviteStatus);
   const inviteLink = useInviteStore((state) => state.inviteLink);
+  const currentTab = useControlsStore((state) => state.currentTab);
   const [controlToggle, setControlToggle] = useState(false);
   const [btnText, setBtnText] = useState("invite a friend");
   return (
     <div className={styles.wrapper}>
       <motion.div
         className={styles.content}
-        style={{ display: controlToggle === true ? "flex" : "none" }}
+        style={{ display: currentTab === "invite" ? "flex" : "none" }}
       >
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>Your name</div>
@@ -69,12 +70,18 @@ export default function Invite() {
       <div
         className={styles.header}
         style={{
+          opacity: currentTab === "invite" || currentTab === "none" ? 1 : 0.4,
+
           background:
             inviteStatus === true ? "orange" : "rgba(0, 77, 192, 0.2)",
           color: inviteStatus === true ? "white" : "rgba(0, 77, 192, 1)",
         }}
         onClick={() => {
-          setControlToggle(!controlToggle);
+          if (currentTab === "invite") {
+            useControlsStore.setState({ currentTab: "none" });
+          } else {
+            useControlsStore.setState({ currentTab: "invite" });
+          }
         }}
       >
         <p>{inviteStatus === true ? "Connected" : "Invite"}</p>

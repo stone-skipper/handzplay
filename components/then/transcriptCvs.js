@@ -10,6 +10,7 @@ export default function TranscriptCvs({
   thenDetail,
 }) {
   const reactionRef = useRef(null);
+  const tempRef = useRef(null);
 
   var scale = 2; // Change to 1 on retina screens to see blurry canvas.
   const clearBtn = useControlsStore((state) => state.clearBtn);
@@ -32,6 +33,7 @@ export default function TranscriptCvs({
       useControlsStore.setState({ clearBtn: true });
     }
   }, [transcriptArray]);
+
   useEffect(() => {
     if (clearBtn === false) {
       setTranscriptArray([]);
@@ -44,26 +46,43 @@ export default function TranscriptCvs({
     const ctx = reactionRef.current.getContext("2d");
     ctx.scale(scale, scale);
 
-    if (trigger === true && listening === false) {
-      listen();
-    } else if (trigger === false) {
-      stop();
-    }
+    tempRef.current.width = Math.floor(videoWidth * scale);
+    tempRef.current.height = Math.floor(videoHeight * scale);
+    const tempCtx = tempRef.current.getContext("2d");
+    tempCtx.scale(scale, scale);
 
     if (listening === true) {
-      //   ctx.beginPath();
-      //   ctx.fillStyle = thenDetail[2];
-      //   ctx.rect(point.x, point.y - 150, 150, 150);
-      //   ctx.fill();
+      tempCtx.beginPath();
+      tempCtx.fillStyle = thenDetail[2];
+      tempCtx.rect(point.x, point.y - 150, 150, 150);
+      tempCtx.fill();
+      tempCtx.font = thenDetail[3] + "px Manrope";
+      tempCtx.textAlign = "center";
+      tempCtx.scale(-1, 1);
+      if (value === "") {
+        tempCtx.fillStyle = "lightgrey";
+      } else {
+        tempCtx.fillStyle = thenDetail[1];
+      }
+      tempCtx.fillText(
+        value !== "" ? value : "listening",
+        -(point.x + 75),
+        point.y - 75
+      );
+
       setTranscriptPoint([point.x + 150, point.y - 150, point.x, point.y]);
+    } else {
+      setTranscriptPoint([]);
     }
+
     if (transcriptArray.length !== 0) {
+      ctx.scale(-1, 1);
       for (let i = 0; i < transcriptArray.length; i++) {
-        if (transcriptArray.text !== "") {
+        if (transcriptArray[i].text !== "") {
           ctx.beginPath();
           ctx.fillStyle = thenDetail[2];
           ctx.rect(
-            transcriptArray[i].x - 75,
+            -(transcriptArray[i].x + 75),
             transcriptArray[i].y - 75,
             150,
             150
@@ -72,7 +91,6 @@ export default function TranscriptCvs({
 
           ctx.font = thenDetail[3] + "px Manrope";
           ctx.textAlign = "center";
-          ctx.scale(-1, 1);
           ctx.fillStyle = thenDetail[1];
           ctx.fillText(
             transcriptArray[i].text,
@@ -84,28 +102,72 @@ export default function TranscriptCvs({
     }
   };
 
-  useEffect(() => {
-    console.log(listening);
-    if (listening === true && value !== "") {
+  useEffect(async () => {
+    if (trigger === true && value !== "") {
+      // console.log(transcriptArray);
+    } else if (trigger === false && value !== "") {
       let midX = (transcriptPoint[0] + transcriptPoint[2]) / 2;
       let midY = (transcriptPoint[1] + transcriptPoint[3]) / 2;
 
-      setTranscriptArray([
+      await setTranscriptArray([
         ...transcriptArray,
         { x: midX, y: midY, text: value },
       ]);
-      console.log(transcriptArray);
-    } else if (listening === false) {
       setValue("");
     }
-  }, [listening, trigger]);
+  }, [trigger]);
+
+  useEffect(() => {
+    console.log(transcriptArray);
+  }, [transcriptArray]);
+
+  // useEffect(() => {
+  //   if (listening === false) {
+  //     listen();
+  //   } else if (trigger === false) {
+  //     stop();
+  //   }
+  // }, [trigger]);
 
   useEffect(() => {
     drawInteraction();
   }, [point]);
 
+  useEffect(() => {
+    async function handleFetchMember() {
+      try {
+        if (trigger === true) {
+          listen();
+        } else {
+          stop();
+        }
+      } catch (e) {
+        console.log(e);
+        stop();
+      }
+    }
+
+    handleFetchMember();
+  }, [trigger]);
+
   return (
     <>
+      <canvas
+        ref={tempRef}
+        style={{
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          zindex: 12,
+          width: "100vw",
+          height: "100vh",
+          objectFit: "cover",
+          transform: "scaleX(-1)",
+        }}
+      />
       <canvas
         ref={reactionRef}
         style={{
