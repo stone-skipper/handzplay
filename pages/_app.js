@@ -19,6 +19,13 @@ export default function App({ Component, pageProps }) {
         <title>HANDZPLAY</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link
+          rel="preload"
+          href="/font/GAINSBOR.TTF"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
           rel="apple-touch-icon"
           sizes="180x180"
           href="/apple-touch-icon.png"
