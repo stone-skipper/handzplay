@@ -41,21 +41,11 @@ export default function Action({
   return (
     <>
       {thenType === "interface" && (
-        <motion.div
-          style={{
-            width: "fit-content",
-            height: "fit-content",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Interface
-            type={thenDetail[0]}
-            trigger={trigger}
-            thenDetail={thenDetail}
-          />
-        </motion.div>
+        <Interface
+          type={thenDetail[0]}
+          trigger={trigger}
+          thenDetail={thenDetail}
+        />
       )}
 
       {thenType === "audio" && (

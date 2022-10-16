@@ -27,6 +27,12 @@ export default function StampCvs({
     }
   }, [clearBtn]);
 
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+  }
+
   const drawInteraction = () => {
     reactionRef.current.width = Math.floor(videoWidth * scale);
     reactionRef.current.height = Math.floor(videoHeight * scale);
@@ -61,6 +67,8 @@ export default function StampCvs({
           ctx.textAlign = "center";
 
           ctx.fillStyle = thenDetail[1];
+          // ctx.rotate((getRandomInt(-15, 15) * Math.PI) / 180);
+
           ctx.scale(-1, 1);
 
           ctx.fillText(thenDetail[2], -stampArray[i].x, stampArray[i].y);

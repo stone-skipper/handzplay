@@ -43,6 +43,27 @@ export default function Handpose({
 
   var handL, handR, hand;
 
+  var interfaceTextArray = [];
+  var interfaceCircleArray = [];
+  var interfaceRectArray = [];
+
+  useEffect(() => {
+    rules
+      .filter((value) => {
+        return value.ifType === "action" && value.thenType === "interface";
+      })
+      .forEach((x) => {
+        if (x.thenDetail[0] === "text") {
+          interfaceTextArray.push(x);
+        } else if (x.thenDetail[0] === "rect") {
+          interfaceRectArray.push(x);
+        } else if (x.thenDetail[0] === "circle") {
+          interfaceCircleArray.push(x);
+        }
+      });
+    console.log(interfaceTextArray, interfaceCircleArray, interfaceRectArray);
+  }, [rules]);
+
   const [passHand, setPassHand] = useState(null);
   const [palmPos, setPalmPos] = useState({ lx: 0, ly: 0, rx: 0, ry: 0 });
   const [vWidth, setvWidth] = useState(0);
@@ -453,7 +474,23 @@ export default function Handpose({
                 palmPos={palmPos}
               />
             );
-          } else if (value.ifType === "action") {
+          }
+        })}
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 15,
+        }}
+      >
+        {rules
+          .filter((value) => {
+            return value.ifType === "action";
+          })
+          .map((value, index) => {
             return (
               <Action
                 key={index}
@@ -465,8 +502,47 @@ export default function Handpose({
                 thenDetail={value.thenDetail}
               />
             );
-          }
-        })}
+          })}
+
+        {/* {interfaceTextArray.length !== 0 && (
+          <Action
+            videoWidth={vWidth}
+            videoHeight={vHeight}
+            hand={() => {
+              let hands = [];
+              for (let i = 0; i < interfaceTextArray.length; i++) {
+                hands.push(interfaceTextArray[i].hand);
+              }
+              return hands;
+            }}
+            action={() => {
+              let actions = [];
+              for (let i = 0; i < interfaceTextArray.length; i++) {
+                actions.push(interfaceTextArray[i].action);
+              }
+              return actions;
+            }}
+            thenType="interface"
+            thenDetail={() => {
+              let details = [];
+              for (let i = 0; i < interfaceTextArray.length; i++) {
+                details.push(interfaceTextArray[i].thenDetail);
+              }
+              return details;
+            }}
+          />
+        )} */}
+      </div>
+      {/* {if (
+            value.ifType === "action" &&
+            rules.filter((value) => {
+              return value.ifType === "action";
+            }).length > 0
+          ) {
+            return (
+             
+            );
+          }} */}
     </div>
   );
 }

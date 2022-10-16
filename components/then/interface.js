@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useControlsStore } from "../../lib/store";
 
 export default function Interface({ type, trigger, thenDetail }) {
   const [moveDistance, setMoveDistance] = useState(0);
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const handColor = useControlsStore((state) => state.handColor);
 
   const initial = {
     width: thenDetail[1] === "size" ? thenDetail[2] : 200,
@@ -11,10 +13,10 @@ export default function Interface({ type, trigger, thenDetail }) {
     opacity: thenDetail[1] === "opacity" ? thenDetail[2] : 1,
     rotate: 0,
     radius: 0,
-    color: thenDetail[1] === "color" ? thenDetail[2] : "#0066FF",
+    color: thenDetail[1] === "color" ? thenDetail[2] : handColor,
     x: 0,
     y: 0,
-    textSize: thenDetail[1] === "size" ? thenDetail[2] : 30,
+    textSize: thenDetail[1] === "size" ? thenDetail[2] : 40,
     text: thenDetail[1] === "content" ? thenDetail[2] : "text",
   };
 
@@ -24,10 +26,10 @@ export default function Interface({ type, trigger, thenDetail }) {
     opacity: thenDetail[1] === "opacity" ? thenDetail[3] : 1,
     rotate: 0,
     radius: 0,
-    color: thenDetail[1] === "color" ? thenDetail[3] : "#0066FF",
+    color: thenDetail[1] === "color" ? thenDetail[3] : handColor,
     x: 0,
     y: 0,
-    textSize: thenDetail[1] === "size" ? thenDetail[3] : 30,
+    textSize: thenDetail[1] === "size" ? thenDetail[3] : 40,
     text: thenDetail[1] === "content" ? thenDetail[3] : "text",
   };
 
@@ -52,28 +54,20 @@ export default function Interface({ type, trigger, thenDetail }) {
   }, [trigger]);
 
   return (
-    <motion.div
-      drag={true}
-      dragElastic={0.2}
-      dragMomentum={false}
-      onDragEnd={(event, info) => {
-        setPos({
-          x: info.point.x - window.innerWidth / 2,
-          y: info.point.y - window.innerHeight / 2,
-        });
-        setMoveDistance(0);
-      }}
-      style={{
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div style={{ width: initial.width, height: initial.height }}>
       {type === "rect" && (
         <motion.div
-          center="true"
+          drag={true}
+          dragElastic={0.2}
+          dragMomentum={false}
+          onDragEnd={(event, info) => {
+            setPos({
+              x: info.point.x - window.innerWidth / 2,
+              y: info.point.y - window.innerHeight / 2,
+            });
+            setMoveDistance(0);
+          }}
+          // center="true"
           style={{
             position: "absolute",
             zIndex: 30,
@@ -92,7 +86,17 @@ export default function Interface({ type, trigger, thenDetail }) {
       )}
       {type === "circle" && (
         <motion.div
-          center="true"
+          // center="true"
+          drag={true}
+          dragElastic={0.2}
+          dragMomentum={false}
+          onDragEnd={(event, info) => {
+            setPos({
+              x: info.point.x - window.innerWidth / 2,
+              y: info.point.y - window.innerHeight / 2,
+            });
+            setMoveDistance(0);
+          }}
           style={{
             position: "absolute",
             zIndex: 30,
@@ -111,7 +115,17 @@ export default function Interface({ type, trigger, thenDetail }) {
       )}
       {type === "text" && (
         <motion.div
-          center="true"
+          // center="true"
+          drag={true}
+          dragElastic={0.2}
+          dragMomentum={false}
+          onDragEnd={(event, info) => {
+            setPos({
+              x: info.point.x - window.innerWidth / 2,
+              y: info.point.y - window.innerHeight / 2,
+            });
+            setMoveDistance(0);
+          }}
           style={{
             position: "absolute",
             zIndex: 30,
@@ -131,11 +145,12 @@ export default function Interface({ type, trigger, thenDetail }) {
             opacity: trigger === false ? initial.opacity : onPose.opacity,
             y: thenDetail[3] === "y" ? moveDistance + pos.y : pos.y,
             x: thenDetail[3] === "x" ? moveDistance + pos.x : pos.x,
+            color: "white",
           }}
         >
           {trigger === false ? initial.text : onPose.text}
         </motion.div>
       )}
-    </motion.div>
+    </div>
   );
 }

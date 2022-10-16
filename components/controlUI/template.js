@@ -8,6 +8,7 @@ import {
   moveSet,
   whiteboardSet,
   browseSet,
+  spideySet,
 } from "../../lib/rulePreset";
 
 export default function Template() {
@@ -75,13 +76,17 @@ export default function Template() {
         <div className={styles.templateGrid}>
           <Items
             title="blank"
-            onClick={() => {}}
+            onClick={() => {
+              useControlsStore.setState({ handIndicatorType: "skeleton" });
+              useControlsStore.setState({ handColor: "#0066FF" });
+            }}
             description="start from a scratch"
           />
           <Items
             title="gestures"
             onClick={() => {
               useControlsStore.setState({ handIndicatorType: "skeleton" });
+              useControlsStore.setState({ handColor: "#0066FF" });
 
               for (let i = 0; i < gestureSet.length; i++) {
                 addRule(gestureSet[i]);
@@ -93,6 +98,7 @@ export default function Template() {
             title="drumkit"
             onClick={() => {
               useControlsStore.setState({ handIndicatorType: "skeleton" });
+              useControlsStore.setState({ handColor: "#0066FF" });
 
               for (let i = 0; i < drumSet.length; i++) {
                 addRule(drumSet[i]);
@@ -101,27 +107,35 @@ export default function Template() {
             description="use fingers to play your rhythm"
           />
           <Items
-            title="browse"
+            title="spidey"
             onClick={() => {
               useControlsStore.setState({ handIndicatorType: "blurred" });
-              for (let i = 0; i < browseSet.length; i++) {
-                addRule(browseSet[i]);
+              useControlsStore.setState({ handColor: "red" });
+
+              for (let i = 0; i < spideySet.length; i++) {
+                addRule(spideySet[i]);
               }
             }}
+            description="leave your traces with gestures"
           />
           <Items
-            title="move"
+            title="swipe"
             onClick={() => {
               useControlsStore.setState({ handIndicatorType: "blurred" });
+              useControlsStore.setState({ handColor: "#0066FF" });
+
               for (let i = 0; i < moveSet.length; i++) {
                 addRule(moveSet[i]);
               }
             }}
+            description="swipe gestures over the air "
           />
           <Items
             title="whiteboard"
             onClick={() => {
               useControlsStore.setState({ handIndicatorType: "cursor" });
+              useControlsStore.setState({ handColor: "#0066FF" });
+
               for (let i = 0; i < whiteboardSet.length; i++) {
                 addRule(whiteboardSet[i]);
               }

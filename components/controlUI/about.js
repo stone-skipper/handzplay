@@ -17,11 +17,12 @@ export default function About() {
       >
         <div style={{ color: handColor, fontSize: "1.1em", lineHeight: 1.5 }}>
           Handzplay aims to explore the potential of hand gestures as a way of
-          interacting with devices and interfaces, and share the potential with
-          bigger audiences.
-          <br /> <br />
-          Play around with it by using some templates or creating your own
-          rules! <br />
+          interacting with devices and interfaces. <br />
+          <br />
+          With any device with camera, you can use your fingers and hands to
+          interact, and create new ‘rules’, defining what triggers which
+          reactions.
+          <br />
           <br />
           If you have any inquiry or ideas, please reach out to me via{" "}
           <a
