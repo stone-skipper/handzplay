@@ -61,7 +61,7 @@ export default function Index() {
         <HandIllust04 initTop="9%" initLeft="52%" top="6%" left="60%" />
       </motion.div>
       <div className={styles.titleWrapper}>
-        <Logo color="white" displayTag={true} fontSize={64} delay={3} />
+        <Logo color="white" displayTag={true} fontSize={64} delay={0.6} />
         <LoadingSlider />
       </div>
 
