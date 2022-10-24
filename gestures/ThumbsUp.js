@@ -1,4 +1,9 @@
-import { Finger, FingerCurl, FingerDirection, GestureDescription } from "fingerpose";
+import {
+  Finger,
+  FingerCurl,
+  FingerDirection,
+  GestureDescription,
+} from "fingerpose";
 
 // import GestureDescription from "fingerpose";
 
@@ -10,6 +15,8 @@ const thumbsUpDescription = new GestureDescription("thumbs_up");
 // - direction vertical up (best)
 // - direction diagonal up left / right (acceptable)
 thumbsUpDescription.addCurl(Finger.Thumb, FingerCurl.NoCurl, 1.0);
+// thumbsUpDescription.addCurl(Finger.Thumb, FingerCurl.HalfCurl, 1.0);
+
 thumbsUpDescription.addDirection(Finger.Thumb, FingerDirection.VerticalUp, 1.0);
 thumbsUpDescription.addDirection(
   Finger.Thumb,
@@ -33,25 +40,25 @@ for (let finger of [Finger.Index, Finger.Middle, Finger.Ring, Finger.Pinky]) {
 
 // require the index finger to be somewhat left or right pointing
 // but NOT down and NOT fully up
-thumbsUpDescription.addDirection(
-  Finger.Index,
-  FingerDirection.DiagonalUpLeft,
-  1.0
-);
-thumbsUpDescription.addDirection(
-  Finger.Index,
-  FingerDirection.HorizontalLeft,
-  1.0
-);
-thumbsUpDescription.addDirection(
-  Finger.Index,
-  FingerDirection.HorizontalRight,
-  1.0
-);
-thumbsUpDescription.addDirection(
-  Finger.Index,
-  FingerDirection.DiagonalUpRight,
-  1.0
-);
+// thumbsUpDescription.addDirection(
+//   Finger.Index,
+//   FingerDirection.DiagonalUpLeft,
+//   1.0
+// );
+// thumbsUpDescription.addDirection(
+//   Finger.Index,
+//   FingerDirection.HorizontalLeft,
+//   1.0
+// );
+// thumbsUpDescription.addDirection(
+//   Finger.Index,
+//   FingerDirection.HorizontalRight,
+//   1.0
+// );
+// thumbsUpDescription.addDirection(
+//   Finger.Index,
+//   FingerDirection.DiagonalUpRight,
+//   1.0
+// );
 
 export default thumbsUpDescription;
