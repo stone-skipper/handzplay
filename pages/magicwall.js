@@ -100,7 +100,7 @@ export default function Playground() {
             color={handColor}
             displayTag={false}
             fontSize={40}
-            text={"MAGIC WALL"}
+            text={"M-W"}
           />
         </div>
       </div>
