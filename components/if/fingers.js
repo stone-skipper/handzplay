@@ -92,6 +92,8 @@ export default function Fingers({
           fingersSelectedCoord.push({ x: fingersL[6], y: fingersL[7] });
         } else if (fingersSelected[i] === "pinkyL") {
           fingersSelectedCoord.push({ x: fingersL[8], y: fingersL[9] });
+        } else if (fingersSelected[i] === "thumbTapL") {
+          fingersSelectedCoord.push({ x: fingersL[10], y: fingersL[11] });
         } else if (fingersSelected[i] === "thumbR") {
           fingersSelectedCoord.push({ x: fingersR[0], y: fingersR[1] });
         } else if (fingersSelected[i] === "indexR") {
@@ -102,6 +104,8 @@ export default function Fingers({
           fingersSelectedCoord.push({ x: fingersR[6], y: fingersR[7] });
         } else if (fingersSelected[i] === "pinkyR") {
           fingersSelectedCoord.push({ x: fingersR[8], y: fingersR[9] });
+        } else if (fingersSelected[i] === "thumbTapR") {
+          fingersSelectedCoord.push({ x: fingersR[10], y: fingersR[11] });
         }
       }
     }

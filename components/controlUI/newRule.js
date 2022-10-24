@@ -253,6 +253,8 @@ export default function NewRule({ options, onScroll }) {
                   "middleR",
                   "ringR",
                   "pinkyR",
+                  "thumbTapL",
+                  "thumbTapR",
                 ]}
               />
               <div className={styles.plainText}>and</div>
@@ -280,6 +282,8 @@ export default function NewRule({ options, onScroll }) {
                   "middleR",
                   "ringR",
                   "pinkyR",
+                  "thumbTapL",
+                  "thumbTapR",
                 ]}
               />
               <div className={styles.plainText}>are within</div>
@@ -328,7 +332,7 @@ export default function NewRule({ options, onScroll }) {
                 )}
               {ruleInProgress.thenDetail !== undefined &&
                 ruleInProgress.thenDetail[0] === "circle" && (
-                  <div>
+                  <div className={styles.optionsHolder}>
                     <ColorPicker label="thenDetail" arrayIndex={1} />
                     <ScrollPicker
                       label="thenDetail"
