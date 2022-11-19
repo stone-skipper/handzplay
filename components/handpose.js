@@ -398,6 +398,13 @@ export default function Handpose({
       for (let i = 0; i < passHand.length; i++) {
         if (handIndicatorType === "skeleton") {
           drawHand(passHand[i].keypoints, handColor, ctx);
+        } else if (handIndicatorType === "blurDot") {
+          drawCursor(
+            passHand[i].keypoints,
+            handColor,
+            passHand[i].handedness,
+            ctx
+          );
         } else if (handIndicatorType === "points") {
           drawPoints(passHand[i].keypoints, handColor, ctx);
         } else if (handIndicatorType === "blurred") {
@@ -448,7 +455,11 @@ export default function Handpose({
           height: "100vh",
           objectFit: "cover",
           transform: "scaleX(-1)",
-          filter: handIndicatorType === "blurred" ? "blur(35px)" : "none",
+          transition: "0.3s",
+          filter:
+            handIndicatorType === "blurred" || handIndicatorType === "blurDot"
+              ? "blur(35px)"
+              : "blur(0px)",
         }}
       />
       {rules !== undefined &&

@@ -39,9 +39,9 @@ export default function Playground() {
     if (currentPoseR === "pointer" || currentPoseL === "pointer") {
       useControlsStore.setState({ handIndicatorType: "cursor" });
     } else {
-      useControlsStore.setState({ handIndicatorType: "blurred" });
+      useControlsStore.setState({ handIndicatorType: "blurDot" });
     }
-  }, [currentPoseR]);
+  }, [currentPoseR, currentPoseL]);
 
   useEffect(() => {
     console.log(rules);
