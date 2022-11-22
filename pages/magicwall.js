@@ -70,11 +70,12 @@ export default function Playground() {
           position: "absolute",
           bottom: 4,
           gap: 4,
-          justifyContent: "center",
+          marginLeft: 4,
+          justifyContent: "flex-start",
         }}
       >
-        <About />
-        <Rules />
+        {/* <About /> */}
+        {/* <Rules /> */}
         <Controls />
       </div>
 
@@ -100,11 +101,11 @@ export default function Playground() {
             color={handColor}
             displayTag={false}
             fontSize={40}
-            text={"M-W"}
+            text={"MW"}
           />
         </div>
       </div>
-      <Template />
+      {/* <Template /> */}
     </div>
   );
 }

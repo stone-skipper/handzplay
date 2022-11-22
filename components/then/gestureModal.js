@@ -14,6 +14,7 @@ export default function GestureModal({ type, action, thenDetail }) {
     confirm: { opacity: 0, rotate: -20, background: "green" },
     decline: { opacity: 0, rotate: 20, background: "red" },
   };
+
   const initial = {
     width: thenDetail[1] === "size" ? thenDetail[2] : 200,
     height: thenDetail[1] === "size" ? thenDetail[2] : 200,
