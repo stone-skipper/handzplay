@@ -1,11 +1,7 @@
 import Head from "next/head";
 
 import Handpose from "../components/handpose";
-import Logo from "../components/UI/logo";
-import About from "../components/controlUI/about";
 import Controls from "../components/controlUI/controls";
-import Rules from "../components/controlUI/rules";
-import Grid from "../components/grid";
 import AmbientMode from "../components/magicwall/ambientMode";
 import Canvas from "../components/magicwall/canvas";
 import Auth from "../components/magicwall/auth";
@@ -13,7 +9,6 @@ import Dashboard from "../components/magicwall/dashboard";
 import { useControlsStore, useRulesStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
 import { useEffect, useState } from "react";
-import Template from "../components/controlUI/template";
 import { magicWall } from "../lib/rulePreset";
 
 export default function Playground() {
@@ -72,7 +67,7 @@ export default function Playground() {
             background: "green",
           }}
           onClick={() => {
-            if (sequence < 5) {
+            if (sequence < 4) {
               setSequence(sequence + 1);
             } else {
               setSequence(0);
@@ -91,7 +86,7 @@ export default function Playground() {
           }}
           onClick={() => {
             if (sequence < 1) {
-              setSequence(5);
+              setSequence(4);
             } else {
               setSequence(sequence - 1);
             }
@@ -130,12 +125,8 @@ export default function Playground() {
           justifyContent: "flex-start",
         }}
       >
-        {/* <About /> */}
-        {/* <Rules /> */}
         <Controls />
       </div>
-
-      {/* <Template /> */}
     </div>
   );
 }

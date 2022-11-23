@@ -7,6 +7,7 @@ import ThreeGesture from "./Three";
 import SpideyGesture from "./Spidey";
 import OkayGesture from "./Okay";
 import RockGesture from "./Rock";
+import ClickedPointer from "./ClickedPointer";
 
 export {
   VictoryGesture,
@@ -18,4 +19,5 @@ export {
   ThreeGesture,
   OkayGesture,
   RockGesture,
+  ClickedPointer,
 };

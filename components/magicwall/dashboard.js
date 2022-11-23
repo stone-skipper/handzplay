@@ -3,7 +3,7 @@ import HoverClick from "../then/hoverClick";
 
 const dashboardWidth = 200;
 
-export default function Auth({ display = true }) {
+export default function Dashboard({ display = true }) {
   return (
     <div
       style={{
@@ -36,24 +36,28 @@ export default function Auth({ display = true }) {
           height={dashboardWidth}
           initialColor="white"
           content="blah"
+          display={display}
         />
         <HoverClick
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
           content="blah"
+          display={display}
         />
         <HoverClick
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
           content="blah"
+          display={display}
         />
         <HoverClick
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
           content="blah"
+          display={display}
         />
       </div>
     </div>

@@ -21,6 +21,7 @@ import {
   VictoryGesture,
   OkayGesture,
   RockGesture,
+  ClickedPointer,
 } from "../gestures";
 import Pose from "./if/pose";
 import Fingers from "./if/fingers";
@@ -181,6 +182,7 @@ export default function Handpose({
     SpideyGesture,
     OkayGesture,
     RockGesture,
+    ClickedPointer,
   ]);
 
   const gestureRecognition = async (hand, side) => {

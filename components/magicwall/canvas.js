@@ -1,6 +1,18 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { useControlsStore } from "../../lib/store";
+import HoverClick from "../then/hoverClick";
 
 export default function Canvas({ display = true, notification = true }) {
+  const currentActionL = useControlsStore((state) => state.currentActionL);
+  const currentActionR = useControlsStore((state) => state.currentActionR);
+  useEffect(() => {
+    if (currentActionL === "left" || currentActionR === "left") {
+    } else if (currentActionL === "right" || currentActionR === "right") {
+    } else {
+    }
+  }, [currentActionL, currentActionR]);
+
   return (
     <div
       style={{
@@ -29,7 +41,6 @@ export default function Canvas({ display = true, notification = true }) {
         }}
       >
         <motion.div
-          //   initial={{ opacity: 0, y: 20 }}
           animate={{
             opacity: notification === true ? 1 : 0,
             y: notification === true ? 0 : 20,
@@ -40,10 +51,26 @@ export default function Canvas({ display = true, notification = true }) {
             padding: 6,
             background: "white",
             borderRadius: 4,
+            display: "flex",
+            flexDirection: "row",
           }}
           transition={{ duration: 0.3 }}
         >
-          notification swipe
+          John Liu Calling
+          <div style={{ display: "flex" }}>
+            <HoverClick
+              width={50}
+              height={50}
+              content="call"
+              initialColor={"green"}
+            />
+            <HoverClick
+              width={50}
+              height={50}
+              content="accept"
+              initialColor={"red"}
+            />
+          </div>
         </motion.div>
       </div>
     </div>
