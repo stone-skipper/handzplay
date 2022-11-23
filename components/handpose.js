@@ -38,6 +38,7 @@ export default function Handpose({
   // from store
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
+  const handCursorType = useControlsStore((state) => state.handCursorType);
   // const rules = useRulesStore((state) => state.rules);
   // const handColor = useControlsStore((state) => state.handColor);
 
@@ -403,6 +404,8 @@ export default function Handpose({
             passHand[i].keypoints,
             handColor,
             passHand[i].handedness,
+            handCursorType[0],
+            handCursorType[1],
             ctx
           );
         } else if (handIndicatorType === "points") {
@@ -414,6 +417,8 @@ export default function Handpose({
             passHand[i].keypoints,
             handColor,
             passHand[i].handedness,
+            handCursorType[0],
+            handCursorType[1],
             ctx
           );
         }

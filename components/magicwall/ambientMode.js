@@ -7,20 +7,26 @@ export default function AmbientMode({ display = true }) {
         display: display === true ? "flex" : "none",
         justifyContent: "center",
         alignItems: "center",
+        position: "absolute",
+        top: 0,
+        left: 0,
       }}
     >
       <div
         style={{
           width: "80vw",
           height: "80vh",
-          background: "blue",
+          background: "#9CABC2",
           overflow: "hidden",
           borderRadius: 20,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          color: "white",
         }}
-      ></div>
+      >
+        some sort of ambient video here
+      </div>
     </div>
   );
 }

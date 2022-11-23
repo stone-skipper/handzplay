@@ -150,7 +150,7 @@ export const drawBlurred = (predictions, color, ctx) => {
   }
 };
 
-export const drawCursor = (predictions, color, side, ctx) => {
+export const drawCursor = (predictions, color, side, cursor, size, ctx) => {
   // Check if we have predictions
 
   if (predictions.length > 0) {
@@ -160,9 +160,9 @@ export const drawCursor = (predictions, color, side, ctx) => {
 
     ctx.beginPath();
     ctx.textAlign = "center";
-    ctx.font = 24 + "px Manrope";
+    ctx.font = size + "px Manrope";
     ctx.translate(x, y);
-    console.log(side);
+    // console.log(side);
     if (side === "Left") {
       ctx.rotate(-Math.PI / 3);
     } else if (side === "Right") {
@@ -170,6 +170,6 @@ export const drawCursor = (predictions, color, side, ctx) => {
     }
 
     ctx.fillStyle = color;
-    ctx.fillText("➤", 0, 0);
+    ctx.fillText(cursor, 0, 0);
   }
 };
