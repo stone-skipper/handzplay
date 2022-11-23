@@ -6,6 +6,7 @@ import About from "../components/controlUI/about";
 import Controls from "../components/controlUI/controls";
 import Rules from "../components/controlUI/rules";
 import Grid from "../components/grid";
+import AmbientMode from "../components/magicwall/ambientMode";
 import { useControlsStore, useRulesStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
 import { useEffect } from "react";
@@ -48,15 +49,12 @@ export default function Playground() {
   }, [rules]);
 
   return (
-    <div
-      className={styles.playground}
-      style={{ background: playgroundBgColor }}
-    >
+    <div className={styles.playground} style={{ background: "black" }}>
       <Head>
         <title>Handzplay Magic Wall</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <Grid color={handColor} />
+      {/* <AmbientMode display={true} /> */}
       <Handpose
         handIndicatorType={handIndicatorType}
         cameraFeed={cameraFeed}
@@ -79,32 +77,6 @@ export default function Playground() {
         <Controls />
       </div>
 
-      <div
-        style={{
-          width: "100vw",
-          position: "absolute",
-          top: 18,
-          display: "flex",
-          justifyContent: "center",
-          zIndex: 51,
-        }}
-      >
-        <div
-          style={{
-            width: "fit-content",
-            height: "fit-content",
-            padding: "0 5px",
-            background: playgroundBgColor,
-          }}
-        >
-          <Logo
-            color={handColor}
-            displayTag={false}
-            fontSize={40}
-            text={"MW"}
-          />
-        </div>
-      </div>
       {/* <Template /> */}
     </div>
   );
