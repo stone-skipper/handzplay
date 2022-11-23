@@ -58,7 +58,14 @@ export default function Playground() {
         <title>Handzplay Magic Wall</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <div style={{ color: "white", position: "fixed", zIndex: 10 }}>
+      <div
+        style={{
+          color: "white",
+          position: "fixed",
+          zIndex: 10,
+          textAlign: "center",
+        }}
+      >
         <div
           style={{
             width: "fit-content",
@@ -76,7 +83,7 @@ export default function Playground() {
         >
           ↑
         </div>
-        {sequence}
+        <div style={{ color: "green" }}> {sequence}</div>
         <div
           style={{
             width: "fit-content",

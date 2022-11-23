@@ -15,7 +15,7 @@ export default function Dashboard({ display = true }) {
         position: "absolute",
         top: 0,
         left: 0,
-        background: "#9CABC2",
+        background: "#EBF1F6",
         flexDirection: "column",
         gap: 20,
       }}

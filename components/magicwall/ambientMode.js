@@ -16,13 +16,13 @@ export default function AmbientMode({ display = true }) {
         style={{
           width: "80vw",
           height: "80vh",
-          background: "#9CABC2",
+          background: "#EBF1F6",
           overflow: "hidden",
           borderRadius: 20,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          color: "white",
+          color: "black",
         }}
       >
         some sort of ambient video here

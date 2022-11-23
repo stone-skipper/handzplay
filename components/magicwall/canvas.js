@@ -18,7 +18,7 @@ export default function Canvas({ display = true, notification = true }) {
       style={{
         width: "100vw",
         height: "100vh",
-        background: "#9CABC2",
+        background: "#EBF1F6",
         display: display === true ? "flex" : "none",
         justifyContent: "center",
         alignItems: "center",
@@ -63,12 +63,14 @@ export default function Canvas({ display = true, notification = true }) {
               height={50}
               content="call"
               initialColor={"green"}
+              display={true}
             />
             <HoverClick
               width={50}
               height={50}
               content="accept"
               initialColor={"red"}
+              display={true}
             />
           </div>
         </motion.div>
