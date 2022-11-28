@@ -5,6 +5,7 @@ import Controls from "../components/controlUI/controls";
 import AmbientMode from "../components/magicwall/ambientMode";
 import Canvas from "../components/magicwall/canvas";
 import Auth from "../components/magicwall/auth";
+import Guide from "../components/magicwall/guide";
 import Dashboard from "../components/magicwall/dashboard";
 import {
   useControlsStore,
@@ -28,6 +29,7 @@ export default function Playground() {
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
 
   const sequence = useMagicWallStore((state) => state.sequence);
+  const [guide, setGuide] = useState(false);
 
   useEffect(() => {
     useControlsStore.setState({ handColor: "#B9B4EC" });
@@ -71,6 +73,7 @@ export default function Playground() {
         <title>Handzplay Magic Wall</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+      <Guide display={guide} />
       <div
         style={{
           color: "white",
@@ -114,16 +117,19 @@ export default function Playground() {
         >
           ↓
         </div>
-        {/* <div
+        <div
           style={{
             width: "fit-content",
             height: "fit-content",
             padding: 10,
             background: "green",
           }}
+          onClick={() => {
+            setGuide(!guide);
+          }}
         >
           guide
-        </div> */}
+        </div>
       </div>
       <AmbientMode display={sequence === 0 ? true : false} />
       <Auth

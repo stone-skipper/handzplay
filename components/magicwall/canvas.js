@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useControlsStore } from "../../lib/store";
 import HoverClick from "../then/hoverClick";
 
@@ -8,10 +8,27 @@ export default function Canvas({ display = true, notification = true }) {
   const currentActionR = useControlsStore((state) => state.currentActionR);
   useEffect(() => {
     if (currentActionL === "left" || currentActionR === "left") {
+      setAccept(true);
     } else if (currentActionL === "right" || currentActionR === "right") {
+      setDecline(true);
     } else {
     }
   }, [currentActionL, currentActionR]);
+
+  const [accept, setAccept] = useState(false);
+  const [decline, setDecline] = useState(false);
+
+  useEffect(() => {
+    if (accept === true) {
+      setTimeout(() => {
+        setAccept(false);
+      }, 1000);
+    } else if (decline === true) {
+      setTimeout(() => {
+        setDecline(false);
+      }, 1000);
+    }
+  }, [accept, decline]);
 
   return (
     <div
@@ -49,7 +66,7 @@ export default function Canvas({ display = true, notification = true }) {
             width: "fit-content",
             height: "fit-content",
             padding: 10,
-            background: "white",
+            background: decline === true ? "red" : "white",
             borderRadius: 4,
             display: "flex",
             flexDirection: "row",
@@ -59,28 +76,72 @@ export default function Canvas({ display = true, notification = true }) {
           }}
           transition={{ duration: 0.3 }}
         >
-          John Liu is inviting you for collaboration
-          <div style={{ display: "flex" }}>
-            <HoverClick
-              width={90}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "fit-content",
+              height: "fit-content",
+              position: "relative",
+            }}
+          >
+            {/* <HoverClick
+              width={800}
               height={50}
-              content="call"
-              initialColor={"green"}
-              hoverColor={"blue"}
+              content="John Liu is inviting you for collaboration"
+              initialColor={"transparent"}
+              hoverColor={"grey"}
               display={true}
-            />
-            <HoverClick
-              width={90}
-              height={50}
-              content="accept"
-              initialColor={"red"}
-              hoverColor={"blue"}
-              display={true}
-            />
+            /> */}
+            <div
+              style={{
+                width: 800,
+                height: 60,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              John Liu is inviting you for collaboration
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                right: 0,
+                gap: 5,
+              }}
+            >
+              <motion.div
+                style={{
+                  background: "green",
+                  padding: 20,
+                  borderRadius: 10,
+                  display: "flex",
+                  alignItems: "center",
+                  scale: accept === true ? 1.1 : 1,
+                }}
+              >
+                accept
+              </motion.div>
+              <motion.div
+                style={{
+                  background: "red",
+                  padding: 20,
+                  borderRadius: 10,
+                  display: "flex",
+                  alignItems: "center",
+                  scale: decline === true ? 1.1 : 1,
+                }}
+              >
+                decline
+              </motion.div>
+            </div>
           </div>
-          <div style={{ position: "absolute", bottom: -40, opacity: 0.5 }}>
+          {/* <div style={{ position: "absolute", bottom: -40, opacity: 0.5 }}>
             gesture guidance here
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </div>

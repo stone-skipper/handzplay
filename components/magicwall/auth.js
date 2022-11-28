@@ -9,18 +9,21 @@ export default function Auth({ display = true, detectRaisedHand = false }) {
 
   useEffect(() => {
     let timerId;
-    if (display === true && detectRaisedHand === true) {
+    if (sequence === 1 && detectRaisedHand === true) {
       timerId = setInterval(() => {
         setVerificationTimer((prev) => prev + 100);
       }, 100);
-    } else if (display === true && detectRaisedHand === false) {
+    } else if (sequence === 1 && detectRaisedHand === false) {
       setVerificationTimer(0);
+    } else if (sequence !== 1) {
+      setVerificationTimer(0);
+      setVerified(false);
     }
 
     return function cleanup() {
       clearInterval(timerId);
     };
-  }, [detectRaisedHand]);
+  }, [detectRaisedHand, sequence]);
 
   useEffect(() => {
     if (verificationTimer > 1000) {
@@ -69,29 +72,43 @@ export default function Auth({ display = true, detectRaisedHand = false }) {
             display: verified === true ? "none" : "flex",
             justifyContent: "center",
             alignItems: "center",
-            width: 83,
-            height: 83,
+            width: 90,
+            height: 90,
             borderRadius: 80,
             overflow: detectRaisedHand === true ? "hidden" : "visible",
             strokeLinecap: "round",
           }}
           animate={{
-            borderTop: detectRaisedHand === true ? "5px solid #A4B8CD" : "none",
-            borderRight:
-              detectRaisedHand === true ? "5px solid #A4B8CD" : "none",
-            borderBottom:
-              detectRaisedHand === true ? "5px solid #A4B8CD" : "none",
-            borderLeft:
-              detectRaisedHand === true ? "5px solid #A4B8CD" : "none",
+            background:
+              detectRaisedHand === true
+                ? "conic-gradient(#A4B8CD 100%, 0, white 0%)"
+                : "conic-gradient(#A4B8CD 0%, 0, white 100%)",
+
+            // borderTop: detectRaisedHand === true ? "5px solid #A4B8CD" : "none",
+            // borderRight:
+            //   detectRaisedHand === true ? "5px solid #A4B8CD" : "none",
+            // borderBottom:
+            //   detectRaisedHand === true ? "5px solid #A4B8CD" : "none",
+            // borderLeft:
+            //   detectRaisedHand === true ? "5px solid #A4B8CD" : "none",
           }}
           transition={{
-            borderTop: { duration: 0.2, delay: 0 },
-            borderRight: { duration: 0.2, delay: 0.2 },
-            borderBottom: { duration: 0.2, delay: 0.4 },
-            borderLeft: { duration: 0.2, delay: 0.6 },
+            duration: 1,
           }}
         >
-          <img src="magicwall/smiley.png"></img>
+          <div
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: 80,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              background: "white",
+            }}
+          >
+            <img src="magicwall/smiley.png"></img>
+          </div>
         </motion.div>
 
         <div style={{ display: verified === true ? "none" : "block" }}>
