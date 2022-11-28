@@ -53,7 +53,17 @@ export default function Playground() {
   }, [rules]);
 
   return (
-    <div className={styles.playground} style={{ background: "black" }}>
+    <div
+      className={styles.playground}
+      style={{ background: "black" }}
+      onKeyDown={(e) => {
+        console.log(e.key);
+        if (e.key === "1" || "2" || "3" || "4" || "0") {
+          setSequence(parseInt(e.key));
+        }
+      }}
+      tabIndex="0"
+    >
       <Head>
         <title>Handzplay Magic Wall</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />

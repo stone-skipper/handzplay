@@ -34,7 +34,7 @@ export default function Canvas({ display = true, notification = true }) {
           width: "100vw",
           height: "fit-content",
           position: "absolute",
-          bottom: 40,
+          bottom: 130,
           display: "flex",
           justifyContent: "center",
           display: notification === true ? "flex" : "none",
@@ -48,30 +48,38 @@ export default function Canvas({ display = true, notification = true }) {
           style={{
             width: "fit-content",
             height: "fit-content",
-            padding: 6,
+            padding: 10,
             background: "white",
             borderRadius: 4,
             display: "flex",
             flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 60,
           }}
           transition={{ duration: 0.3 }}
         >
-          John Liu Calling
+          John Liu is inviting you for collaboration
           <div style={{ display: "flex" }}>
             <HoverClick
-              width={50}
+              width={90}
               height={50}
               content="call"
               initialColor={"green"}
+              hoverColor={"blue"}
               display={true}
             />
             <HoverClick
-              width={50}
+              width={90}
               height={50}
               content="accept"
               initialColor={"red"}
+              hoverColor={"blue"}
               display={true}
             />
+          </div>
+          <div style={{ position: "absolute", bottom: -40, opacity: 0.5 }}>
+            gesture guidance here
           </div>
         </motion.div>
       </div>

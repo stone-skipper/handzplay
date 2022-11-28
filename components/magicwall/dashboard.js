@@ -20,7 +20,7 @@ export default function Dashboard({ display = true }) {
         gap: 20,
       }}
     >
-      <h1> Hello, Sam</h1>
+      <h1>Dashboard</h1>
       <div
         style={{
           width: "fit-content",
@@ -35,6 +35,7 @@ export default function Dashboard({ display = true }) {
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
+          hoverColor="#7B61FF"
           content="blah"
           display={display}
         />
@@ -42,6 +43,7 @@ export default function Dashboard({ display = true }) {
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
+          hoverColor="#7B61FF"
           content="blah"
           display={display}
         />
@@ -49,6 +51,7 @@ export default function Dashboard({ display = true }) {
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
+          hoverColor="#7B61FF"
           content="blah"
           display={display}
         />
@@ -56,6 +59,7 @@ export default function Dashboard({ display = true }) {
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
+          hoverColor="#7B61FF"
           content="blah"
           display={display}
         />

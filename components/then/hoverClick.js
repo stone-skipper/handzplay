@@ -20,14 +20,18 @@ export default function HoverClick({
   const ref = useRef(null);
 
   useEffect(() => {
-    setwWidth(window.innerWidth / 2);
-    setwHeight(window.innerHeight / 2);
-    console.log(wWidth, wHeight);
+    setwWidth(window.innerWidth);
+    setwHeight(window.innerHeight);
   }, []);
+
+  const cameraSize = useControlsStore((state) => state.cameraSize);
 
   useEffect(() => {
     let boundingRect = ref.current.getBoundingClientRect();
-    setBoundary([wWidth - boundingRect.x / 2, boundingRect.y / 2]);
+    setBoundary([
+      ((wWidth - boundingRect.x) * cameraSize[0]) / wWidth,
+      (boundingRect.y * cameraSize[1]) / wHeight,
+    ]);
 
     // console.log(
     //   fingersL[2],
@@ -38,14 +42,14 @@ export default function HoverClick({
     //   boundary[1] + height / 2
     // );
     if (
-      (fingersL[2] > boundary[0] - width / 2 &&
+      (fingersL[2] > boundary[0] - width &&
         fingersL[2] < boundary[0] &&
         fingersL[3] > boundary[1] &&
-        fingersL[3] < boundary[1] + height / 2) ||
-      (fingersR[2] > boundary[0] - width / 2 &&
+        fingersL[3] < boundary[1] + height) ||
+      (fingersR[2] > boundary[0] - width &&
         fingersR[2] < boundary[0] &&
         fingersR[3] > boundary[1] &&
-        fingersR[3] < boundary[1] + height / 2)
+        fingersR[3] < boundary[1] + height)
     ) {
       setHovered(true);
     } else {
@@ -65,10 +69,16 @@ export default function HoverClick({
         background: initialColor,
         originX: 0,
         originY: 0,
+        fontSize: 20,
       }}
       ref={ref}
       animate={{
-        background: hovered === true ? "blue" : initialColor,
+        // background: hovered === true ? "blue" : initialColor,
+        border:
+          hovered === true ? "3px solid " + hoverColor : "3px solid white",
+        width: width - 6,
+        height: height - 6,
+        color: hovered === true ? hoverColor : "black",
       }}
       transition={{
         duration: 0.3,
