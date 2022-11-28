@@ -1,33 +1,40 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useMagicWallStore } from "../../lib/store";
 
-export default function Auth({
-  display = true,
-  detectRaisedHand = false,
-  triggerFace = false,
-}) {
+export default function Auth({ display = true, detectRaisedHand = false }) {
   const [verified, setVerified] = useState(false);
   const [verificationTimer, setVerificationTimer] = useState(0);
+  const sequence = useMagicWallStore((state) => state.sequence);
+
   useEffect(() => {
-    if (detectRaisedHand === true) {
-      setTimeout(() => {
-        setVerified(true);
-      }, 1000);
-      // setVerified(true);
-      // const interval = setInterval(() => {
-      //   setVerificationTimer(verificationTimer + 100);
-      // }, 100);
-      // return () => clearInterval(interval);
-    } else {
-      // setVerificationTimer(0);
+    let timerId;
+    if (display === true && detectRaisedHand === true) {
+      timerId = setInterval(() => {
+        setVerificationTimer((prev) => prev + 100);
+      }, 100);
+    } else if (display === true && detectRaisedHand === false) {
+      setVerificationTimer(0);
     }
+
+    return function cleanup() {
+      clearInterval(timerId);
+    };
   }, [detectRaisedHand]);
 
-  // useEffect(() => {
-  //   if (verificationTimer > 1000) {
-  //     setVerified(true);
-  //   }
-  // }, [verificationTimer]);
+  useEffect(() => {
+    if (verificationTimer > 1000) {
+      setVerified(true);
+    }
+  }, [verificationTimer]);
+
+  useEffect(() => {
+    if (verified === true) {
+      setTimeout(() => {
+        useMagicWallStore.setState({ sequence: sequence + 1 });
+      }, 1000);
+    }
+  }, [verified]);
 
   return (
     <div
@@ -113,6 +120,7 @@ export default function Auth({
           {detectRaisedHand === true
             ? "hold still for 1 sec"
             : "wave to sign in"}{" "}
+          {verificationTimer}
         </div>
         <motion.div
           style={{ fontSize: 35 }}

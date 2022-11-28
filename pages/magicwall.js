@@ -6,7 +6,11 @@ import AmbientMode from "../components/magicwall/ambientMode";
 import Canvas from "../components/magicwall/canvas";
 import Auth from "../components/magicwall/auth";
 import Dashboard from "../components/magicwall/dashboard";
-import { useControlsStore, useRulesStore } from "../lib/store";
+import {
+  useControlsStore,
+  useRulesStore,
+  useMagicWallStore,
+} from "../lib/store";
 import styles from "../handsplay.module.scss";
 import { useEffect, useState } from "react";
 import { magicWall } from "../lib/rulePreset";
@@ -21,10 +25,9 @@ export default function Playground() {
   const currentPoseL = useControlsStore((state) => state.currentPoseL);
 
   const addRule = useRulesStore((state) => state.addRule);
-
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
 
-  const [sequence, setSequence] = useState(0);
+  const sequence = useMagicWallStore((state) => state.sequence);
 
   useEffect(() => {
     useControlsStore.setState({ handColor: "#B9B4EC" });
@@ -59,7 +62,7 @@ export default function Playground() {
       onKeyDown={(e) => {
         console.log(e.key);
         if (e.key === "1" || "2" || "3" || "4" || "0") {
-          setSequence(parseInt(e.key));
+          useMagicWallStore.setState({ sequence: parseInt(e.key) });
         }
       }}
       tabIndex="0"
@@ -85,9 +88,9 @@ export default function Playground() {
           }}
           onClick={() => {
             if (sequence < 4) {
-              setSequence(sequence + 1);
+              useMagicWallStore.setState({ sequence: sequence + 1 });
             } else {
-              setSequence(0);
+              useMagicWallStore.setState({ sequence: 0 });
             }
           }}
         >
@@ -103,14 +106,24 @@ export default function Playground() {
           }}
           onClick={() => {
             if (sequence < 1) {
-              setSequence(4);
+              useMagicWallStore.setState({ sequence: 4 });
             } else {
-              setSequence(sequence - 1);
+              useMagicWallStore.setState({ sequence: sequence - 1 });
             }
           }}
         >
           ↓
         </div>
+        {/* <div
+          style={{
+            width: "fit-content",
+            height: "fit-content",
+            padding: 10,
+            background: "green",
+          }}
+        >
+          guide
+        </div> */}
       </div>
       <AmbientMode display={sequence === 0 ? true : false} />
       <Auth

@@ -42,14 +42,14 @@ export default function HoverClick({
     //   boundary[1] + height / 2
     // );
     if (
-      (fingersL[2] > boundary[0] - width &&
+      (fingersL[2] > boundary[0] - (width * cameraSize[0]) / wWidth &&
         fingersL[2] < boundary[0] &&
         fingersL[3] > boundary[1] &&
-        fingersL[3] < boundary[1] + height) ||
-      (fingersR[2] > boundary[0] - width &&
+        fingersL[3] < boundary[1] + (height * cameraSize[1]) / wHeight) ||
+      (fingersR[2] > boundary[0] - (width * cameraSize[0]) / wWidth &&
         fingersR[2] < boundary[0] &&
         fingersR[3] > boundary[1] &&
-        fingersR[3] < boundary[1] + height)
+        fingersR[3] < boundary[1] + (height * cameraSize[1]) / wHeight)
     ) {
       setHovered(true);
     } else {
