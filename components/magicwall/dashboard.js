@@ -36,32 +36,36 @@ export default function Dashboard({ display = true }) {
           height={dashboardWidth}
           initialColor="white"
           hoverColor="#7B61FF"
-          content="blah"
+          content="photo"
           display={display}
+          id="photo"
         />
         <HoverClick
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
           hoverColor="#7B61FF"
-          content="blah"
+          content="canvas"
           display={display}
+          id="canvas"
         />
         <HoverClick
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
           hoverColor="#7B61FF"
-          content="blah"
+          content="wellness"
           display={display}
+          id="wellness"
         />
         <HoverClick
           width={dashboardWidth}
           height={dashboardWidth}
           initialColor="white"
           hoverColor="#7B61FF"
-          content="blah"
+          content="call"
           display={display}
+          id="call"
         />
       </div>
     </div>

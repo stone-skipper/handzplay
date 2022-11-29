@@ -136,8 +136,7 @@ export default function Auth({ display = true, detectRaisedHand = false }) {
           </motion.div>
           {detectRaisedHand === true
             ? "hold still for 1 sec"
-            : "wave to sign in"}{" "}
-          {verificationTimer}
+            : "wave to sign in"}
         </div>
         <motion.div
           style={{ fontSize: 35 }}

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { useControlsStore } from "../../lib/store";
+import { useControlsStore, useMagicWallStore } from "../../lib/store";
 
 export default function HoverClick({
   width,
@@ -9,12 +9,15 @@ export default function HoverClick({
   hoverColor,
   content,
   display,
+  id,
 }) {
   const [hovered, setHovered] = useState(false);
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
-  const [boundary, setBoundary] = useState([0, 0]);
+  const selectedApp = useMagicWallStore((state) => state.selectedApp);
 
+  const [boundary, setBoundary] = useState([0, 0]);
+  const [selected, setSelected] = useState(false);
   const [wWidth, setwWidth] = useState(0);
   const [wHeight, setwHeight] = useState(0);
   const ref = useRef(null);
@@ -33,14 +36,6 @@ export default function HoverClick({
       (boundingRect.y * cameraSize[1]) / wHeight,
     ]);
 
-    // console.log(
-    //   fingersL[2],
-    //   fingersL[3],
-    //   boundary[0],
-    //   boundary[0] - width / 2,
-    //   boundary[1],
-    //   boundary[1] + height / 2
-    // );
     if (
       (fingersL[2] > boundary[0] - (width * cameraSize[0]) / wWidth &&
         fingersL[2] < boundary[0] &&
@@ -71,6 +66,7 @@ export default function HoverClick({
         originY: 0,
         fontSize: 20,
       }}
+      id={id}
       ref={ref}
       animate={{
         // background: hovered === true ? "blue" : initialColor,

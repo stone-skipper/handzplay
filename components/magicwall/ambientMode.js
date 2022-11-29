@@ -1,4 +1,19 @@
+import { useEffect } from "react";
+import { useControlsStore, useMagicWallStore } from "../../lib/store";
+
 export default function AmbientMode({ display = true }) {
+  // const currentActionL = useControlsStore((state) => state.currentActionL);
+  // const currentActionR = useControlsStore((state) => state.currentActionR);
+
+  // const sequence = useMagicWallStore((state) => state.sequence);
+  // useEffect(() => {
+  //   if (
+  //     sequence === 0 &&
+  //     (currentActionL === "left" || currentActionR === "left")
+  //   ) {
+  //     useMagicWallStore.setState({ sequence: 1 });
+  //   }
+  // }, [currentActionL, currentActionR]);
   return (
     <div
       style={{

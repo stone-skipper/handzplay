@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useControlsStore } from "../../lib/store";
-import HoverClick from "../then/hoverClick";
 
 export default function Canvas({ display = true, notification = true }) {
   const currentActionL = useControlsStore((state) => state.currentActionL);
