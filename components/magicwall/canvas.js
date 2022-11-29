@@ -44,7 +44,11 @@ export default function Canvas({ display = true, notification = true }) {
         gap: 40,
       }}
     >
-      static canvas comes here
+      <motion.img
+        src="magicwall/canvas.png"
+        style={{ width: "130%" }}
+        animate={{ opacity: notification === true ? 0.2 : 1 }}
+      ></motion.img>
       <div
         style={{
           width: "100vw",
