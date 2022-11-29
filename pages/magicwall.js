@@ -131,13 +131,13 @@ export default function Playground() {
           guide
         </div>
       </div>
-      <AmbientMode display={sequence === 0 ? true : false} />
-      <Auth
+      <AmbientMode display={sequence === 0 || sequence === 1 ? true : false} />
+      {/* <Auth
         display={sequence === 1 ? true : false}
         detectRaisedHand={
           currentPoseL === "five" || currentPoseR === "five" ? true : false
         }
-      />
+      /> */}
       <Dashboard display={sequence === 2 ? true : false} />
       <Canvas
         display={sequence === 3 || sequence === 4 ? true : false}
