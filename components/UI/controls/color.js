@@ -31,6 +31,7 @@ export default function ColorSelect({ variable, onColorChange }) {
           display: displayColorPicker === true ? "block" : "none",
           position: "absolute",
           bottom: 38,
+          right: 0,
         }}
       >
         <ChromePicker

@@ -17,7 +17,7 @@ export default function NewRule({ options, onScroll }) {
   const removeProperty = useRulesStore((state) => state.removeProperty);
   const [highlight, setHighlight] = useState(0);
   useEffect(() => {
-    console.log(ruleInProgress.ifType);
+    console.log(ruleInProgress);
     if (
       ruleInProgress.ifType === undefined &&
       ruleInProgress.thenType === undefined
@@ -215,17 +215,18 @@ export default function NewRule({ options, onScroll }) {
               />
             </>
           )}
-          {ruleInProgress.ifType === "action" && (
-            <>
-              <div className={styles.plainText}>if</div>
-              <ScrollPicker label="hand" options={["left", "right"]} />
-              <div className={styles.plainText}>hand swipes</div>
-              <ScrollPicker
-                label="action"
-                options={["left", "right", "up", "down"]}
-              />
-            </>
-          )}
+          {ruleInProgress.ifType === "action" &&
+            ruleInProgress.thenType === "audio" && (
+              <>
+                <div className={styles.plainText}>if</div>
+                <ScrollPicker label="hand" options={["left", "right"]} />
+                <div className={styles.plainText}>hand swipes</div>
+                <ScrollPicker
+                  label="action"
+                  options={["left", "right", "up", "down"]}
+                />
+              </>
+            )}
           {ruleInProgress.ifType === "fingers" && (
             <>
               <div className={styles.plainText}>if</div>
@@ -299,8 +300,10 @@ export default function NewRule({ options, onScroll }) {
           )}
         </div>
         {/* arrow */}
-
-        <div>{"->"}</div>
+        {ruleInProgress.thenType === "interface" &&
+        ruleInProgress.ifType === "action" ? null : (
+          <div>{"->"}</div>
+        )}
 
         <div className={styles.optionsWrapper}>
           {ruleInProgress.thenType === undefined && (
@@ -494,112 +497,225 @@ export default function NewRule({ options, onScroll }) {
               <div className={styles.plainText}>sound </div>
             </>
           )}
-          {ruleInProgress.thenType === "interface" && (
-            <>
-              <ScrollPicker
-                label="thenDetail"
-                arrayIndex={0}
-                options={["rect", "circle", "text"]}
-              />
-              <div className={styles.plainText}>to change</div>
-              {ruleInProgress.thenDetail !== undefined &&
-                ruleInProgress.thenDetail[0] !== "text" && (
-                  <ScrollPicker
-                    label="thenDetail"
-                    arrayIndex={1}
-                    options={["color", "size", "opacity", "position"]}
-                  />
-                )}
-              {ruleInProgress.thenDetail !== undefined &&
-                ruleInProgress.thenDetail[0] === "text" && (
-                  <ScrollPicker
-                    label="thenDetail"
-                    arrayIndex={1}
-                    options={[
-                      "color",
-                      "size",
-                      "opacity",
-                      "position",
-                      "content",
-                    ]}
-                  />
-                )}
-              {ruleInProgress.thenDetail !== undefined &&
-                ruleInProgress.thenDetail[1] === "color" && (
-                  <>
-                    <div className={styles.plainText}>from</div>
-                    <ColorPicker label="thenDetail" arrayIndex={2} />
-                    <div className={styles.plainText}>to</div>
-                    <ColorPicker label="thenDetail" arrayIndex={3} />
-                  </>
-                )}
-              {ruleInProgress.thenDetail !== undefined &&
-                ruleInProgress.thenDetail[1] === "size" && (
-                  <>
-                    <div className={styles.plainText}>from</div>
+          {ruleInProgress.thenType === "interface" &&
+            ruleInProgress.ifType !== "action" && (
+              <>
+                <ScrollPicker
+                  label="thenDetail"
+                  arrayIndex={0}
+                  options={["rect", "circle", "text"]}
+                />
+                <div className={styles.plainText}>to change</div>
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[0] !== "text" && (
                     <ScrollPicker
                       label="thenDetail"
-                      arrayIndex={2}
-                      options={[10, 20, 30, 40, 50, 60, 70, 80]}
+                      arrayIndex={1}
+                      options={["color", "size", "opacity", "position"]}
                     />
-                    <div className={styles.plainText}>to</div>
+                  )}
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[0] === "text" && (
                     <ScrollPicker
                       label="thenDetail"
-                      arrayIndex={3}
-                      options={[10, 20, 30, 40, 50, 60, 70, 80]}
-                    />
-                  </>
-                )}
-              {ruleInProgress.thenDetail !== undefined &&
-                ruleInProgress.thenDetail[1] === "opacity" && (
-                  <>
-                    <div className={styles.plainText}>from</div>
-                    <ScrollPicker
-                      label="thenDetail"
-                      arrayIndex={2}
+                      arrayIndex={1}
                       options={[
-                        0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
+                        "color",
+                        "size",
+                        "opacity",
+                        "position",
+                        "content",
                       ]}
                     />
-                    <div className={styles.plainText}>to</div>
-                    <ScrollPicker
-                      label="thenDetail"
-                      arrayIndex={3}
-                      options={[
-                        0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
-                      ]}
-                    />
-                  </>
-                )}
-              {ruleInProgress.thenDetail !== undefined &&
-                ruleInProgress.thenDetail[1] === "position" && (
-                  <>
-                    <div className={styles.plainText}>by</div>
-                    <ScrollPicker
-                      label="thenDetail"
-                      arrayIndex={2}
-                      options={[10, 20, 30, 40, 50, 60, 70, 80]}
-                    />
-                    <div className={styles.plainText}>to</div>
-                    <ScrollPicker
-                      label="thenDetail"
-                      arrayIndex={3}
-                      options={["x", "y"]}
-                    />
-                    <div className={styles.plainText}>axis</div>
-                  </>
-                )}
-              {ruleInProgress.thenDetail !== undefined &&
-                ruleInProgress.thenDetail[1] === "content" && (
-                  <>
-                    <div className={styles.plainText}>from</div>
-                    <TextInput label="thenDetail" arrayIndex={2} />
-                    <div className={styles.plainText}>to</div>
-                    <TextInput label="thenDetail" arrayIndex={3} />
-                  </>
-                )}
-            </>
-          )}
+                  )}
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[1] === "color" && (
+                    <>
+                      <div className={styles.plainText}>from</div>
+                      <ColorPicker label="thenDetail" arrayIndex={2} />
+                      <div className={styles.plainText}>to</div>
+                      <ColorPicker label="thenDetail" arrayIndex={3} />
+                    </>
+                  )}
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[1] === "size" && (
+                    <>
+                      <div className={styles.plainText}>from</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={2}
+                        options={[10, 20, 30, 40, 50, 60, 70, 80]}
+                      />
+                      <div className={styles.plainText}>to</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={3}
+                        options={[10, 20, 30, 40, 50, 60, 70, 80]}
+                      />
+                    </>
+                  )}
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[1] === "opacity" && (
+                    <>
+                      <div className={styles.plainText}>from</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={2}
+                        options={[
+                          0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
+                        ]}
+                      />
+                      <div className={styles.plainText}>to</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={3}
+                        options={[
+                          0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
+                        ]}
+                      />
+                    </>
+                  )}
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[1] === "position" && (
+                    <>
+                      <div className={styles.plainText}>by</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={2}
+                        options={[10, 20, 30, 40, 50, 60, 70, 80]}
+                      />
+                      <div className={styles.plainText}>to</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={3}
+                        options={["x", "y"]}
+                      />
+                      <div className={styles.plainText}>axis</div>
+                    </>
+                  )}
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[1] === "content" && (
+                    <>
+                      <div className={styles.plainText}>from</div>
+                      <TextInput label="thenDetail" arrayIndex={2} />
+                      <div className={styles.plainText}>to</div>
+                      <TextInput label="thenDetail" arrayIndex={3} />
+                    </>
+                  )}
+              </>
+            )}
+          {ruleInProgress.thenType === "interface" &&
+            ruleInProgress.ifType === "action" && (
+              <>
+                {/* initial status */}
+
+                {/* type */}
+                <ScrollPicker
+                  label="thenDetail"
+                  arrayIndex={0}
+                  options={["rect", "circle", "text"]}
+                />
+                <div className={styles.plainText}>with</div>
+                <ScrollPicker
+                  label="thenDetail"
+                  arrayIndex={1}
+                  options={[20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300]}
+                />
+                <ColorPicker label="thenDetail" arrayIndex={2} />
+                <TextInput label="thenDetail" arrayIndex={3} />
+                <div className={styles.plainText}>to change</div>
+                <ScrollPicker
+                  label="thenDetail"
+                  arrayIndex={4}
+                  options={["color", "size", "opacity", "rotate"]}
+                />
+
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[4] === "color" && (
+                    <>
+                      <div className={styles.plainText}>←</div>
+                      <ColorPicker label="thenDetail" arrayIndex={5} />
+                      <div className={styles.plainText}>→</div>
+                      <ColorPicker label="thenDetail" arrayIndex={6} />
+                      <div className={styles.plainText}>↑</div>
+                      <ColorPicker label="thenDetail" arrayIndex={7} />
+                      <div className={styles.plainText}>↓</div>
+                      <ColorPicker label="thenDetail" arrayIndex={8} />
+                    </>
+                  )}
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[4] === "size" && (
+                    <>
+                      <div className={styles.plainText}>←</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={5}
+                        options={[-30, -20, -10, 0, 10, 20, 30, 40]}
+                      />
+                      <div className={styles.plainText}>→</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={6}
+                        options={[-30, -20, -10, 0, 10, 20, 30, 40]}
+                      />
+                      <div className={styles.plainText}>↑</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={7}
+                        options={[-30, -20, -10, 0, 10, 20, 30, 40]}
+                      />
+                      <div className={styles.plainText}>↓</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={8}
+                        options={[-30, -20, -10, 0, 10, 20, 30, 40]}
+                      />
+                    </>
+                  )}
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[4] === "rotate" && (
+                    <>
+                      <div className={styles.plainText}>←</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={5}
+                        options={[-30, -20, -10, 0, 10, 20, 30, 40]}
+                      />
+                      <div className={styles.plainText}>→</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={6}
+                        options={[-30, -20, -10, 0, 10, 20, 30, 40]}
+                      />
+                      <div className={styles.plainText}>↑</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={7}
+                        options={[-30, -20, -10, 0, 10, 20, 30, 40]}
+                      />
+                      <div className={styles.plainText}>↓</div>
+                      <ScrollPicker
+                        label="thenDetail"
+                        arrayIndex={8}
+                        options={[-30, -20, -10, 0, 10, 20, 30, 40]}
+                      />
+                    </>
+                  )}
+                {ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[4] === "text" && (
+                    <>
+                      <div className={styles.plainText}>←</div>
+                      <TextInput label="thenDetail" arrayIndex={5} />
+                      <div className={styles.plainText}>→</div>
+                      <TextInput label="thenDetail" arrayIndex={6} />
+                      <div className={styles.plainText}>↑</div>
+                      <TextInput label="thenDetail" arrayIndex={7} />
+                      <div className={styles.plainText}>↓</div>
+                      <TextInput label="thenDetail" arrayIndex={8} />
+                    </>
+                  )}
+              </>
+            )}
           {ruleInProgress.thenType === "transcript" && (
             <>
               <div className={styles.plainText}>transcribe on </div>

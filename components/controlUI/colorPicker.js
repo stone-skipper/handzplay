@@ -12,6 +12,7 @@ export default function ColorPicker({ label, arrayIndex = null }) {
   useEffect(() => {
     updateRuleInProgress(label, selectedColor, arrayIndex);
   }, []);
+
   return (
     <div style={{ position: "relative" }}>
       <div

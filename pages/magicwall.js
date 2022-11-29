@@ -39,9 +39,13 @@ export default function Playground() {
   }, []);
 
   useEffect(() => {
+    useControlsStore.setState({ handIndicatorType: "cursor" });
+    useControlsStore.setState({ handCursorType: ["●", 50] });
+    useControlsStore.setState({ handBlur: 6 });
+
     if (currentPoseR === "pointer" || currentPoseL === "pointer") {
       useControlsStore.setState({ handCursorType: ["➤", 24] });
-      useControlsStore.setState({ handIndicatorType: "cursor" });
+      useControlsStore.setState({ handBlur: 0 });
     }
     // else if (currentPoseR === "five" || currentPoseL === "five") {
     //   useControlsStore.setState({ handCursorType: ["✋", 40] });
@@ -49,7 +53,7 @@ export default function Playground() {
     // }
     else {
       useControlsStore.setState({ handCursorType: ["●", 50] });
-      useControlsStore.setState({ handIndicatorType: "blurDot" });
+      useControlsStore.setState({ handBlur: 6 });
     }
   }, [currentPoseR, currentPoseL]);
 

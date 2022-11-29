@@ -40,6 +40,7 @@ export default function Handpose({
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
   const handCursorType = useControlsStore((state) => state.handCursorType);
+  const handBlur = useControlsStore((state) => state.handBlur);
   // const rules = useRulesStore((state) => state.rules);
   // const handColor = useControlsStore((state) => state.handColor);
 
@@ -65,6 +66,15 @@ export default function Handpose({
       });
     console.log(interfaceTextArray, interfaceCircleArray, interfaceRectArray);
   }, [rules]);
+
+  useEffect(() => {
+    if (handIndicatorType === "blurred") {
+      useControlsStore.setState({ handBlur: 35 });
+    } else if (handIndicatorType === "cursor") {
+    } else {
+      useControlsStore.setState({ handBlur: 0 });
+    }
+  }, [handIndicatorType]);
 
   const [passHand, setPassHand] = useState(null);
   const [palmPos, setPalmPos] = useState({ lx: 0, ly: 0, rx: 0, ry: 0 });
@@ -405,15 +415,6 @@ export default function Handpose({
       for (let i = 0; i < passHand.length; i++) {
         if (handIndicatorType === "skeleton") {
           drawHand(passHand[i].keypoints, handColor, ctx);
-        } else if (handIndicatorType === "blurDot") {
-          drawCursor(
-            passHand[i].keypoints,
-            handColor,
-            passHand[i].handedness,
-            handCursorType[0],
-            handCursorType[1],
-            ctx
-          );
         } else if (handIndicatorType === "points") {
           drawPoints(passHand[i].keypoints, handColor, ctx);
         } else if (handIndicatorType === "blurred") {
@@ -469,11 +470,8 @@ export default function Handpose({
           height: "100vh",
           objectFit: "cover",
           transform: "scaleX(-1)",
-          transition: "0.3s",
-          filter:
-            handIndicatorType === "blurred" || handIndicatorType === "blurDot"
-              ? "blur(5px)"
-              : "blur(0px)",
+          transition: "0.2s",
+          filter: "blur(" + handBlur + "px)",
         }}
       />
       {rules !== undefined &&

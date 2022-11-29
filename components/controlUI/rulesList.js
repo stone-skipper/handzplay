@@ -30,6 +30,14 @@ export default function RulesList() {
       </div>
     );
   };
+  const InterfaceWrapper = ({ hand, action }) => {
+    return (
+      <div className={styles.trigger}>
+        <div className={styles.if}>{hand}</div> hand swipes
+        <div className={styles.if}>{action}</div>
+      </div>
+    );
+  };
 
   const RelationWrapper = ({ fingerA, fingerB, distance }) => {
     return (
@@ -66,8 +74,11 @@ export default function RulesList() {
               {rule.ifType === "pose" && (
                 <PoseWrapper hand={rule.hand} pose={rule.pose} />
               )}
-              {rule.ifType === "action" && (
+              {rule.ifType === "action" && rule.thenType === "audio" && (
                 <ActionWrapper hand={rule.hand} action={rule.action} />
+              )}
+              {rule.ifType === "action" && rule.thenType === "interface" && (
+                <InterfaceWrapper hand={rule.hand} action={rule.action} />
               )}
               {rule.ifType === "fingers" && (
                 <RelationWrapper
