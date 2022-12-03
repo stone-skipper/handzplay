@@ -30,11 +30,11 @@ export default function RulesList() {
       </div>
     );
   };
-  const InterfaceWrapper = ({ hand, action }) => {
+  const InterfaceWrapper = ({ type, property }) => {
     return (
       <div className={styles.trigger}>
-        <div className={styles.if}>{hand}</div> hand swipes
-        <div className={styles.if}>{action}</div>
+        <div className={styles.if}>{type}</div> to change
+        <div className={styles.if}>{property}</div>
       </div>
     );
   };
@@ -78,7 +78,10 @@ export default function RulesList() {
                 <ActionWrapper hand={rule.hand} action={rule.action} />
               )}
               {rule.ifType === "action" && rule.thenType === "interface" && (
-                <InterfaceWrapper hand={rule.hand} action={rule.action} />
+                <InterfaceWrapper
+                  type={rule.thenDetail[0]}
+                  property={rule.thenDetail[4]}
+                />
               )}
               {rule.ifType === "fingers" && (
                 <RelationWrapper

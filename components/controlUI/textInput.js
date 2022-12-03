@@ -24,8 +24,11 @@ export default function TextInput({ label, arrayIndex = null }) {
       style={{
         width: "fit-content",
         textAlign: "center",
-        background: "lightgrey",
+        background: "#DAE4FF",
         position: "relative",
+        // margin: 12,
+        borderRadius: 3,
+        padding: 3,
       }}
     >
       <span style={{ position: "absolute", opacity: 0 }} ref={span}>
@@ -44,7 +47,6 @@ export default function TextInput({ label, arrayIndex = null }) {
         }}
         onChange={(e) => {
           setContent(e.target.value);
-          // textRef.current = e.target.value;
           updateRuleInProgress(label, e.target.value, arrayIndex);
         }}
       />

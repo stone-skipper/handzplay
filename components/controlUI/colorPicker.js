@@ -21,7 +21,7 @@ export default function ColorPicker({ label, arrayIndex = null }) {
         }}
         style={{
           width: "fit-content",
-          padding: 20,
+          // padding: 12,
           borderRadius: 2,
           color: selectedColor,
           display: "flex",

@@ -9,7 +9,6 @@ import ScrollPicker from "./scrollPicker";
 import EnumSelect from "./enumSelect";
 import ColorPicker from "./colorPicker";
 import TextInput from "./textInput";
-import Divider from "../UI/controls/divider";
 
 export default function NewRule({ options, onScroll }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
@@ -42,6 +41,8 @@ export default function NewRule({ options, onScroll }) {
         style={{
           display: "flex",
           flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
           gap: 4,
         }}
       >
@@ -143,6 +144,8 @@ export default function NewRule({ options, onScroll }) {
           border: highlight === 2 ? "2px solid #0066FF" : "2px solid white",
           boxShadow: "0px -10px 54px 0px #004DC014",
           boxSizing: "border-box",
+          width: "fit-content",
+          minWidth: "52.8vw",
           // borderBottom: "1px solid black",
         }}
         onClick={() => {
@@ -165,8 +168,10 @@ export default function NewRule({ options, onScroll }) {
           <div
             style={{
               width: "98%",
-              height: 60,
+              height: 65,
               zIndex: 2,
+              pointerEvents: "none",
+
               background:
                 "linear-gradient(rgba(255,255,255,1), rgba(255,255,255,0))",
             }}
@@ -184,8 +189,10 @@ export default function NewRule({ options, onScroll }) {
           <div
             style={{
               width: "98%",
-              height: 60,
+              height: 65,
               zIndex: 2,
+              // background: "blue",
+              pointerEvents: "none",
               background:
                 "linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1))",
             }}
@@ -615,7 +622,7 @@ export default function NewRule({ options, onScroll }) {
                   arrayIndex={0}
                   options={["rect", "circle", "text"]}
                 />
-                <div className={styles.plainText}>with</div>
+                <div className={styles.plainText}>sized</div>
                 <ScrollPicker
                   label="thenDetail"
                   arrayIndex={1}
@@ -623,12 +630,13 @@ export default function NewRule({ options, onScroll }) {
                 />
                 <ColorPicker label="thenDetail" arrayIndex={2} />
                 <TextInput label="thenDetail" arrayIndex={3} />
-                <div className={styles.plainText}>to change</div>
+                <div className={styles.plainText}>changes</div>
                 <ScrollPicker
                   label="thenDetail"
                   arrayIndex={4}
-                  options={["color", "size", "opacity", "rotate"]}
+                  options={["color", "size", "rotate", "text"]}
                 />
+                <div className={styles.plainText}>when hand swipes to </div>
 
                 {ruleInProgress.thenDetail !== undefined &&
                   ruleInProgress.thenDetail[4] === "color" && (

@@ -182,9 +182,11 @@
   justify-content: center;
   align-items: center;
   height: fit-content;
-  padding: 20px;
-  overflow: hidden;
+  // padding: 3px;
+  overflow-x: visible;
+  overflow-y: hidden;
   width: fit-content;
+  padding: 3px;
   button {
     display: none !important;
     // remove the native btn
@@ -194,12 +196,19 @@
 .swiperSlide {
   text-align: center;
   font-size: 10px;
+  margin: 0 3px;
+  // line-height: 1em;
   width: fit-content;
   height: fit-content;
   /* Center slide text vertically */
-
+  user-select: none;
   display: flex;
   align-items: center;
+  justify-content: center;
+  > h3 {
+    margin-block-start: 0.9em;
+    margin-block-end: 0.9em;
+  }
 }
 
 .enumWrapper {
@@ -222,7 +231,10 @@
   justify-content: center;
   align-items: center;
   flex-grow: 0.5;
+  gap: 12px;
+  // background: blue;
 }
+
 .optionsHolder {
   display: flex;
   justify-content: space-between;
