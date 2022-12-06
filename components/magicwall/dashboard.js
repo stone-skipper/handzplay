@@ -40,6 +40,7 @@ export default function Dashboard({ display = true }) {
           content="photo"
           display={display}
           id="photo"
+          gesture="okay"
         />
         <HoverClick
           width={dashboardWidth}
@@ -49,6 +50,7 @@ export default function Dashboard({ display = true }) {
           content="canvas"
           display={display}
           id="canvas"
+          gesture="okay"
         />
         <HoverClick
           width={dashboardWidth}
@@ -58,6 +60,7 @@ export default function Dashboard({ display = true }) {
           content="wellness"
           display={display}
           id="wellness"
+          gesture="okay"
         />
         <HoverClick
           width={dashboardWidth}
@@ -67,6 +70,7 @@ export default function Dashboard({ display = true }) {
           content="call"
           display={display}
           id="call"
+          gesture="okay"
         />
       </div>
     </div>

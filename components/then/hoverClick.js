@@ -10,11 +10,15 @@ export default function HoverClick({
   content,
   display,
   id,
+  gesture,
 }) {
   const [hovered, setHovered] = useState(false);
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
   const selectedApp = useMagicWallStore((state) => state.selectedApp);
+
+  const currentPoseR = useControlsStore((state) => state.currentPoseR);
+  const currentPoseL = useControlsStore((state) => state.currentPoseL);
 
   const [boundary, setBoundary] = useState([0, 0]);
   const [selected, setSelected] = useState(false);
@@ -26,6 +30,23 @@ export default function HoverClick({
     setwWidth(window.innerWidth);
     setwHeight(window.innerHeight);
   }, []);
+
+  useEffect(() => {
+    if (
+      hovered === true &&
+      (currentPoseL === gesture || currentPoseR === gesture)
+    ) {
+      setSelected(true);
+    }
+  }, [currentPoseL, currentPoseR]);
+
+  useEffect(() => {
+    if (selected === true) {
+      setTimeout(() => {
+        setSelected(false);
+      }, 1000);
+    }
+  }, [selected]);
 
   const cameraSize = useControlsStore((state) => state.cameraSize);
 
@@ -86,7 +107,9 @@ export default function HoverClick({
         ease: "easeInOut",
       }}
     >
-      <span style={{ padding: 15 }}> {content}</span>
+      <span style={{ padding: 15 }}>
+        {content} {selected === true ? "clicked" : ""}
+      </span>
     </motion.div>
   );
 }
