@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import HoverClick from "../then/hoverClick";
+
+const dashboardWidth = 400;
+const dashboardHeight = 100;
+
 import Clock from "./clock";
 
-const dashboardWidth = 200;
-
-export default function Dashboard({ display = true }) {
+export default function DashboardVert({ display = true }) {
   return (
     <div
       style={{
@@ -22,19 +24,19 @@ export default function Dashboard({ display = true }) {
       }}
     >
       <Clock />
+
       <div
         style={{
           width: "fit-content",
           height: "fit-content",
           display: "grid",
-          gridTemplateRows: "repeat(2, " + dashboardWidth + "px)",
-          gridTemplateColumns: "repeat(2, " + dashboardWidth + "px)",
+          gridTemplateRows: "repeat(3, " + dashboardHeight + "px)",
           gap: 20,
         }}
       >
         <HoverClick
           width={dashboardWidth}
-          height={dashboardWidth}
+          height={dashboardHeight}
           initialColor="#EBF1F6"
           hoverColor="#7B61FF"
           content="photo"
@@ -43,7 +45,7 @@ export default function Dashboard({ display = true }) {
         />
         <HoverClick
           width={dashboardWidth}
-          height={dashboardWidth}
+          height={dashboardHeight}
           initialColor="#EBF1F6"
           hoverColor="#7B61FF"
           content="canvas"
@@ -52,21 +54,12 @@ export default function Dashboard({ display = true }) {
         />
         <HoverClick
           width={dashboardWidth}
-          height={dashboardWidth}
+          height={dashboardHeight}
           initialColor="#EBF1F6"
           hoverColor="#7B61FF"
           content="wellness"
           display={display}
           id="wellness"
-        />
-        <HoverClick
-          width={dashboardWidth}
-          height={dashboardWidth}
-          initialColor="#EBF1F6"
-          hoverColor="#7B61FF"
-          content="call"
-          display={display}
-          id="call"
         />
       </div>
     </div>

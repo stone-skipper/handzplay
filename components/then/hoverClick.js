@@ -58,20 +58,25 @@ export default function HoverClick({
         width: width,
         height: height,
         display: display === true ? "flex" : "none",
-        justifyContent: "center",
-        alignItems: "center",
+        // justifyContent: "center",
+        // alignItems: "center",
         borderRadius: 5,
         background: initialColor,
         originX: 0,
         originY: 0,
         fontSize: 20,
+        fontFamily: "TTcommonsDemiBold",
+        boxShadow:
+          "0px 1.56449px 1.56449px rgba(0, 42, 88, 0.08), 0px 3.12899px 3.12899px rgba(0, 42, 88, 0.08), 0px 6.25798px 6.25798px rgba(0, 42, 88, 0.08), 0px 12.516px 12.516px rgba(0, 42, 88, 0.08)",
       }}
       id={id}
       ref={ref}
       animate={{
         // background: hovered === true ? "blue" : initialColor,
         border:
-          hovered === true ? "3px solid " + hoverColor : "3px solid white",
+          hovered === true
+            ? "3px solid " + hoverColor
+            : "3px solid " + initialColor,
         width: width - 6,
         height: height - 6,
         color: hovered === true ? hoverColor : "black",
@@ -81,7 +86,7 @@ export default function HoverClick({
         ease: "easeInOut",
       }}
     >
-      {content}
+      <span style={{ padding: 15 }}> {content}</span>
     </motion.div>
   );
 }

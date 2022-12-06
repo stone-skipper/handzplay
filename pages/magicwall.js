@@ -7,6 +7,9 @@ import Canvas from "../components/magicwall/canvas";
 import Auth from "../components/magicwall/auth";
 import Guide from "../components/magicwall/guide";
 import Dashboard from "../components/magicwall/dashboard";
+import DashboardHor from "../components/magicwall/dashboardHor";
+import DashboardVert from "../components/magicwall/dashboardVert";
+
 import {
   useControlsStore,
   useRulesStore,
@@ -57,13 +60,21 @@ export default function Playground() {
     console.log(rules);
   }, [rules]);
 
+  useEffect(() => {
+    if (sequence > 7) {
+      useMagicWallStore.setState({ sequence: 0 });
+    } else if (sequence < 0) {
+      useMagicWallStore.setState({ sequence: 7 });
+    }
+  }, [sequence]);
+
   return (
     <div
       className={styles.playground}
-      style={{ background: "black" }}
+      style={{ background: "black", fontFamily: "TTcommonsMed" }}
       onKeyDown={(e) => {
         console.log(e.key);
-        if (e.key === "1" || "2" || "3" || "4" || "0") {
+        if (e.key === "1" || "2" || "3" || "4" || "0" || "5" || "6") {
           useMagicWallStore.setState({ sequence: parseInt(e.key) });
         }
       }}
@@ -90,7 +101,7 @@ export default function Playground() {
             background: "green",
           }}
           onClick={() => {
-            if (sequence < 4) {
+            if (sequence < 6) {
               useMagicWallStore.setState({ sequence: sequence + 1 });
             } else {
               useMagicWallStore.setState({ sequence: 0 });
@@ -109,7 +120,7 @@ export default function Playground() {
           }}
           onClick={() => {
             if (sequence < 1) {
-              useMagicWallStore.setState({ sequence: 4 });
+              useMagicWallStore.setState({ sequence: 6 });
             } else {
               useMagicWallStore.setState({ sequence: sequence - 1 });
             }
@@ -139,9 +150,11 @@ export default function Playground() {
         }
       /> */}
       <Dashboard display={sequence === 2 ? true : false} />
+      <DashboardHor display={sequence === 3 ? true : false} />
+      <DashboardVert display={sequence === 4 ? true : false} />
       <Canvas
-        display={sequence === 3 || sequence === 4 ? true : false}
-        notification={sequence === 4 ? true : false}
+        display={sequence === 5 || sequence === 6 ? true : false}
+        notification={sequence === 6 ? true : false}
       />
 
       <Handpose
@@ -150,7 +163,7 @@ export default function Playground() {
         rules={rules}
         handColor={handColor}
       />
-      <div
+      {/* <div
         style={{
           display: "flex",
           width: "100vw",
@@ -162,7 +175,7 @@ export default function Playground() {
         }}
       >
         <Controls />
-      </div>
+      </div> */}
     </div>
   );
 }

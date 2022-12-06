@@ -17,14 +17,7 @@ export default function AmbientMode({ display = true }) {
       videoRef.current.playbackRate = 0.5;
     }
   }, [videoRef.current]);
-  // useEffect(() => {
-  //   if (
-  //     sequence === 0 &&
-  //     (currentActionL === "left" || currentActionR === "left")
-  //   ) {
-  //     useMagicWallStore.setState({ sequence: 1 });
-  //   }
-  // }, [currentActionL, currentActionR]);
+
   return (
     <div
       style={{
