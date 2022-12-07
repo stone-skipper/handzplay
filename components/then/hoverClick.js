@@ -10,7 +10,7 @@ export default function HoverClick({
   content,
   display,
   id,
-  gesture,
+  gesture = "okay",
 }) {
   const [hovered, setHovered] = useState(false);
   const fingersL = useControlsStore((state) => state.fingersL);
