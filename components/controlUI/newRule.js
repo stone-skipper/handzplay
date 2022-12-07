@@ -1,5 +1,4 @@
 import { useRulesStore, useControlsStore } from "../../lib/store";
-import shallow from "zustand/shallow";
 
 import { useEffect, useState, useRef } from "react";
 import styles from "./panels.module.scss";

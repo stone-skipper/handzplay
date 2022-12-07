@@ -9,8 +9,9 @@ export default function EnumSelect({
   title,
   label,
   options,
-  relatedProperty,
+  relatedProperty = [],
   inactive = [],
+  arrayIndex = null,
 }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const updateRuleInProgress = useRulesStore(
@@ -33,6 +34,10 @@ export default function EnumSelect({
       setSelected("");
     }
   }, [ruleInProgress]);
+
+  useEffect(() => {
+    updateRuleInProgress(label, selected, arrayIndex);
+  }, []);
   return (
     <div className={styles.enumWrapper}>
       {title}
@@ -49,7 +54,7 @@ export default function EnumSelect({
               key={index}
               onClick={() => {
                 if (inactive.includes(data) === false) {
-                  updateRuleInProgress(label, data);
+                  updateRuleInProgress(label, data, arrayIndex);
                   setSelected(data);
                 }
                 // console.log(ruleInProgress);
@@ -61,6 +66,7 @@ export default function EnumSelect({
                 opacity: inactive.includes(data) === true ? 0.4 : 1,
                 fontWeight: selected === data ? 600 : 500,
                 color: selected === data ? "#0066FF" : "grey",
+                userSelect: "none",
               }}
             >
               {selected === data && "● "}

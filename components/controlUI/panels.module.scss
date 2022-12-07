@@ -97,6 +97,7 @@
   text-align: center;
   cursor: pointer;
   text-transform: capitalize;
+  user-select: none;
 }
 
 .rule {
@@ -173,6 +174,7 @@
     align-items: center;
     font-size: 0.7em;
     cursor: pointer;
+    user-select: none;
   }
 }
 
@@ -293,3 +295,5 @@
   color: rgba(0, 0, 0, 0.3);
   width: 80%;
 }
+
+/* new interface */

@@ -5,7 +5,7 @@ import Divider from "../UI/controls/divider";
 
 import RulesList from "./rulesList";
 import NewRule from "./newRule";
-import { current } from "immer";
+import NewInterface from "./newInterface";
 
 export default function Rules() {
   const rules = useRulesStore((state) => state.rules);
@@ -27,24 +27,117 @@ export default function Rules() {
   return (
     <div className={styles.wrapper} style={{ width: "52.8vw" }}>
       {ruleContent === "list" && (
-        <div
-          className={styles.content}
-          style={{ display: currentTab === "rules" ? "flex" : "none" }}
-        >
-          <RulesList />
+        <>
           <div
-            className={styles.btn}
-            onClick={() => {
-              setRuleContent("new");
+            className={styles.content}
+            style={{ display: currentTab === "rules" ? "flex" : "none" }}
+          >
+            <RulesList />
+            {/* <div style={{ display: "flex", width: "100%" }}>
+            <div
+              className={styles.btn}
+              onClick={() => {
+                setRuleContent("new");
+              }}
+            >
+              + create a new rule
+            </div>
+            <div
+              className={styles.btn}
+              onClick={() => {
+                setRuleContent("new");
+              }}
+            >
+              + add a new interface
+            </div>
+          </div> */}
+          </div>
+          <div
+            style={{
+              display: currentTab === "rules" ? "flex" : "none",
+              flexDirection: "row",
+              background: "white",
+              borderRadius: 10,
+              padding: "10px 16px",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0px -10px 54px 0px #004DC014",
             }}
           >
-            + create a new rule
+            <div
+              className={styles.btn}
+              onClick={() => {
+                setRuleContent("new");
+              }}
+            >
+              + Create a new rule
+            </div>
+            <Divider direction="vertical" customSize={30} color="lightgrey" />
+            <div
+              className={styles.btn}
+              onClick={() => {
+                setRuleContent("newInter");
+              }}
+            >
+              + Add a new interface
+            </div>
           </div>
-        </div>
+        </>
       )}
       {ruleContent === "new" && (
         <>
           <NewRule />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              background: "white",
+              borderRadius: 10,
+              padding: "10px 16px",
+              justifyContent: "center",
+              alignItems: "center",
+              boxShadow: "0px -10px 54px 0px #004DC014",
+            }}
+          >
+            <div
+              className={styles.btn}
+              style={{
+                color:
+                  ruleInProgress.ifType !== undefined ||
+                  ruleInProgress.thenType !== undefined
+                    ? "#0066FF"
+                    : "lightgrey",
+              }}
+              onClick={() => {
+                if (
+                  ruleInProgress.ifType !== undefined ||
+                  ruleInProgress.thenType !== undefined
+                ) {
+                  setRuleContent("list");
+                  addRule(ruleInProgress);
+                  removeRuleInProgress();
+                } else {
+                }
+              }}
+            >
+              add
+            </div>
+            <Divider direction="vertical" customSize={30} color="lightgrey" />
+            <div
+              className={styles.btn}
+              onClick={() => {
+                setRuleContent("list");
+                removeRuleInProgress();
+              }}
+            >
+              cancel
+            </div>
+          </div>
+        </>
+      )}
+      {ruleContent === "newInter" && (
+        <>
+          <NewInterface />
           <div
             style={{
               display: "flex",
@@ -107,7 +200,7 @@ export default function Rules() {
           }
         }}
       >
-        <p>rules</p>
+        <p>conditions</p>
       </div>
     </div>
   );
