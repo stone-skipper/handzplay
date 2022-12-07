@@ -6,6 +6,7 @@ import styles from "./panels.module.scss";
 import EnumSelect from "./enumSelect";
 import ColorPicker from "./colorPicker";
 import TextInput from "./textInput";
+import ReactionWrapper from "./reactionWrapper";
 
 export default function NewInterface({}) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
@@ -21,43 +22,6 @@ export default function NewInterface({}) {
 
   //   updateRuleInProgress(label, value, arrayIndex);
 
-  const ReactionWrapper = ({ title, options, label }) => {
-    const [add, setAdd] = useState(false);
-    return (
-      <div
-        style={{
-          padding: 10,
-          opacity: add === true ? 1 : 0.4,
-          display: "flex",
-          background: "#F0F4FB",
-          gap: 10,
-          justifyContent: "space-between",
-          borderRadius: 5,
-        }}
-      >
-        <div style={{ display: "flex", gap: 10 }}>
-          <motion.div
-            className={styles.delete}
-            style={{
-              cursor: "pointer",
-              userSelect: "none",
-            }}
-            animate={{
-              rotate: add === true ? 45 : 0,
-            }}
-            onClick={() => {
-              setAdd(!add);
-            }}
-          >
-            +
-          </motion.div>
-          <div>{title}</div>
-        </div>
-
-        <EnumSelect title="" label={label} arrayIndex={0} options={options} />
-      </div>
-    );
-  };
   return (
     <>
       <div
@@ -156,32 +120,32 @@ export default function NewInterface({}) {
           >
             <ReactionWrapper
               title="Swipe Left"
-              options={["color", "size", "position", "text"]}
+              options={["color", "size", "text"]}
               label="left"
             />
             <ReactionWrapper
               title="Swipe Right"
-              options={["color", "size", "position", "text"]}
+              options={["color", "size", "text"]}
               label="right"
             />
             <ReactionWrapper
               title="Swipe Up"
-              options={["color", "size", "position", "text"]}
+              options={["color", "size", "text"]}
               label="up"
             />
             <ReactionWrapper
               title="Swipe Down"
-              options={["color", "size", "position", "text"]}
+              options={["color", "size", "text"]}
               label="down"
             />
             <ReactionWrapper
               title="Hover"
-              options={["color", "size", "position", "text"]}
+              options={["color", "size", "text"]}
               label="hover"
             />
             <ReactionWrapper
               title="Click"
-              options={["okay", "pointer", "rock", "thumb"]}
+              options={["okay", "pointer", "rock", "thumbs_up"]}
               label="click"
             />
           </div>
@@ -201,7 +165,14 @@ export default function NewInterface({}) {
       >
         {/* preview */}
         {ruleInProgress.thenDetail !== undefined && (
-          <div style={{ display: "flex", flexDirection: "column", gap: 30 }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 30,
+              alignItems: "center",
+            }}
+          >
             <p style={{ opacity: 0.5, textAlign: "center", fontSize: "0.8em" }}>
               preview
             </p>

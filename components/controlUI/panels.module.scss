@@ -213,6 +213,46 @@
   }
 }
 
+.slideWrapperHor {
+  // justify-content: center;
+  // align-items: center;
+
+  // // padding: 3px;
+  // // width: fit-content;
+  // padding: 3px;
+  // background: green;
+
+  button {
+    display: none !important;
+    // remove the native btn
+  }
+  // .slick-list {
+  // }
+  // .slick-track {
+  //   display: flex;
+  //   flex-direction: row;
+  // }
+}
+.swiperSlideHor {
+  text-align: center;
+  font-size: 10px;
+  margin: 0 3px;
+  // line-height: 1em;
+  // width: fit-content;
+  /* Center slide text vertically */
+  user-select: none;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  > h3 {
+    margin-block-start: 0.9em;
+    margin-block-end: 0.9em;
+    width: fit-content;
+    height: fit-content;
+  }
+}
+
 .enumWrapper {
   display: flex;
   flex-direction: row;

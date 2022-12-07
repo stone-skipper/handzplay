@@ -12,6 +12,7 @@ export default function EnumSelect({
   relatedProperty = [],
   inactive = [],
   arrayIndex = null,
+  display = true,
 }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const updateRuleInProgress = useRulesStore(
@@ -38,6 +39,12 @@ export default function EnumSelect({
   useEffect(() => {
     updateRuleInProgress(label, selected, arrayIndex);
   }, []);
+
+  useEffect(() => {
+    if (display === false) {
+      setSelected("");
+    }
+  }, [display]);
   return (
     <div className={styles.enumWrapper}>
       {title}

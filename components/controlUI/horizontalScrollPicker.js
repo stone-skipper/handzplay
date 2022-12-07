@@ -47,10 +47,9 @@ export default function HorizontalScrollPicker({
   const settings = {
     dots: false,
     infinite: false,
+    vertical: false,
     slidesToShow: 1,
     slidesToScroll: 1,
-    // vertical: true,
-    // verticalSwiping: true,
     swipeToSlide: true,
     focusOnSelect: true,
     swipe: true,
@@ -72,7 +71,8 @@ export default function HorizontalScrollPicker({
   const [current, setCurrent] = useState(0);
   return (
     <div
-      className={styles.slideWrapper}
+      className={styles.slideWrapperHor}
+      style={{ width: "50%" }}
       onMouseEnter={() => {
         setMouseOn(true);
       }}
@@ -84,7 +84,7 @@ export default function HorizontalScrollPicker({
         {options.map((data, index) => {
           return (
             <motion.div
-              className={styles.swiperSlide}
+              className={styles.swiperSlideHor}
               key={index}
               animate={{
                 opacity: index === current ? 1 : 0.4,

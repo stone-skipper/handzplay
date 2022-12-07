@@ -112,6 +112,12 @@ export default function Handpose({
     }, 10);
   };
 
+  const removeProperty = (propKey, { [propKey]: propValue, ...rest }) => rest;
+  const removeProperties = (object, ...keys) =>
+    keys.length
+      ? removeProperties(removeProperty(keys.pop(), object), ...keys)
+      : object;
+
   var videoWidth, videoHeight;
 
   const fingerX = (hand, index) => {
@@ -518,6 +524,15 @@ export default function Handpose({
             return value.ifType === "action";
           })
           .map((value, index) => {
+            let actionDetails = (({ left, right, up, down, hover, click }) => ({
+              left,
+              right,
+              up,
+              down,
+              hover,
+              click,
+            }))(value);
+            // need to remove undefined
             return (
               <Action
                 key={index}
@@ -527,6 +542,7 @@ export default function Handpose({
                 action={value.action}
                 thenType={value.thenType}
                 thenDetail={value.thenDetail}
+                actionDetail={actionDetails}
               />
             );
           })}
