@@ -75,9 +75,9 @@ export default function Auth({ display = true, detectRaisedHand = false }) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // background: "white",
+            background: "#40586D",
             overflow: "hidden",
-            opacity: detectRaisedHand === true ? 0.4 : 0,
+            opacity: detectRaisedHand === true ? 1 : 0,
           }}
         >
           <motion.div
@@ -94,8 +94,8 @@ export default function Auth({ display = true, detectRaisedHand = false }) {
             animate={{
               background:
                 detectRaisedHand === true
-                  ? "conic-gradient(#A4B8CD 100%, 0, transparent 0%)"
-                  : "conic-gradient(#A4B8CD 0%, 0, transparent 100%)",
+                  ? "conic-gradient(white 100%, 0, transparent 0%)"
+                  : "conic-gradient(white 0%, 0, transparent 100%)",
 
               // borderTop: detectRaisedHand === true ? "5px solid #A4B8CD" : "none",
               // borderRight:
@@ -111,6 +111,12 @@ export default function Auth({ display = true, detectRaisedHand = false }) {
           >
             <img src="magicwall/smiley.png"></img>
           </motion.div>
+          {verified === true && (
+            <img
+              style={{ width: "100%", height: "100%" }}
+              src="magicwall/avatar.png"
+            ></img>
+          )}
         </div>
 
         <div style={{ display: verified === true ? "none" : "block" }}>

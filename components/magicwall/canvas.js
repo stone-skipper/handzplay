@@ -6,6 +6,7 @@ import SwipeNoti from "./swipeNoti";
 export default function Canvas({ display = true, notification = true }) {
   const currentActionL = useControlsStore((state) => state.currentActionL);
   const currentActionR = useControlsStore((state) => state.currentActionR);
+
   useEffect(() => {
     if (currentActionL === "left" || currentActionR === "left") {
       setAccept(true);
@@ -31,7 +32,7 @@ export default function Canvas({ display = true, notification = true }) {
   }, [accept, decline]);
 
   return (
-    <div
+    <motion.div
       style={{
         width: "100vw",
         height: "100vh",
@@ -44,6 +45,7 @@ export default function Canvas({ display = true, notification = true }) {
         left: 0,
         gap: 40,
       }}
+      animate={{ opacity: display === true ? 1 : 0 }}
     >
       <motion.img
         src="magicwall/canvas.png"
@@ -62,6 +64,6 @@ export default function Canvas({ display = true, notification = true }) {
       >
         <SwipeNoti display={notification} accept={accept} decline={decline} />
       </div>
-    </div>
+    </motion.div>
   );
 }

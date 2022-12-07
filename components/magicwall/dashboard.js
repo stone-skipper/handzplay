@@ -6,7 +6,7 @@ const dashboardWidth = 200;
 
 export default function Dashboard({ display = true }) {
   return (
-    <div
+    <motion.div
       style={{
         width: "100vw",
         height: "100vh",
@@ -20,6 +20,7 @@ export default function Dashboard({ display = true }) {
         flexDirection: "column",
         gap: 20,
       }}
+      animate={{ opacity: display === true ? 1 : 0 }}
     >
       <Clock />
       <div
@@ -73,6 +74,6 @@ export default function Dashboard({ display = true }) {
           gesture="okay"
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
