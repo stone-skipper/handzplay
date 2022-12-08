@@ -6,7 +6,13 @@ import styles from "./panels.module.scss";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
 
-export default function ScrollPicker({ label, arrayIndex = null, options }) {
+export default function ScrollPicker({
+  active = true,
+  label,
+  arrayIndex = null,
+  options,
+  arrow = false,
+}) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const updateRuleInProgress = useRulesStore(
     (state) => state.updateRuleInProgress
@@ -16,8 +22,10 @@ export default function ScrollPicker({ label, arrayIndex = null, options }) {
   const [slidesToScroll, setSlidesToScroll] = useState(1);
 
   useEffect(() => {
-    updateRuleInProgress(label, options[0], arrayIndex);
-  }, []);
+    if (active === true) {
+      updateRuleInProgress(label, options[0], arrayIndex);
+    }
+  }, [active]);
 
   const sliderRef = useRef(null);
   const scroll = useCallback(

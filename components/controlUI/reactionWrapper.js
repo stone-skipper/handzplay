@@ -5,9 +5,15 @@ import styles from "./panels.module.scss";
 import { useRulesStore } from "../../lib/store";
 import ColorPicker from "./colorPicker";
 import TextInput from "./textInput";
-import HorizontalScrollPicker from "./horizontalScrollPicker";
+import ScrollPicker from "./scrollPicker";
 
-export default function ReactionWrapper({ title, options, label }) {
+export default function ReactionWrapper({
+  title,
+  options,
+  label,
+  scroll = false,
+  scrollOption = null,
+}) {
   const [add, setAdd] = useState(false);
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const removeProperty = useRulesStore((state) => state.removeProperty);
@@ -21,7 +27,7 @@ export default function ReactionWrapper({ title, options, label }) {
     if (add === false) {
       removeProperty(label, null);
     } else {
-      updateRuleInProgress(label, [], null);
+      // updateRuleInProgress(label, [], null);
     }
   }, [add]);
   return (
@@ -61,6 +67,24 @@ export default function ReactionWrapper({ title, options, label }) {
         arrayIndex={0}
         options={options}
       /> */}
+      {scroll === true && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: 30,
+            overflow: "hidden",
+          }}
+        >
+          <ScrollPicker
+            active={add}
+            label={label}
+            arrayIndex={2}
+            options={scrollOption}
+          />
+        </div>
+      )}
       <EnumSelect
         title=""
         label={label}

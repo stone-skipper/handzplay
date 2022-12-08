@@ -145,7 +145,9 @@ export default function NewInterface({}) {
             />
             <ReactionWrapper
               title="Click"
-              options={["okay", "pointer", "rock", "thumbs_up"]}
+              options={["color", "size", "text"]}
+              scroll={true}
+              scrollOption={["okay", "pointer", "rock", "thumbs_up"]}
               label="click"
             />
           </div>
