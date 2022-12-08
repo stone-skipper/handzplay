@@ -3,6 +3,10 @@ import { useEffect, useState, useRef } from "react";
 import { useControlsStore } from "../../lib/store";
 
 export default function Element({ currentAction, thenDetail, actionDetail }) {
+  const [checkAction, setCheckAction] = useState([]);
+  const [hovered, setHovered] = useState(false);
+  const [clicked, setClicked] = useState(false);
+
   const [moveDistance, setMoveDistance] = useState(0);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
@@ -11,7 +15,6 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
   const [color, setColor] = useState(thenDetail[1]);
   const [text, setText] = useState(thenDetail[3]);
 
-  const [hovered, setHovered] = useState(false);
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
   const [boundary, setBoundary] = useState([0, 0]);
@@ -23,7 +26,7 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
   useEffect(() => {
     setwWidth(window.innerWidth);
     setwHeight(window.innerHeight);
-    console.log(actionDetail);
+    setCheckAction(Object.getOwnPropertyNames(actionDetail));
   }, []);
 
   const cameraSize = useControlsStore((state) => state.cameraSize);
@@ -53,19 +56,81 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
   }, [fingersL, fingersR]);
 
   useEffect(() => {
-    console.log(currentAction);
-  }, [currentAction]);
+    if (text !== thenDetail[3]) {
+      setTimeout(() => {
+        setText(thenDetail[3]);
+      }, 1000);
+    }
+  }, [text]);
 
   const [variant, setVariant] = useState({
-    left: {},
-    right: {},
-    up: {},
-    down: {},
-    hover: {},
-    click: {},
+    initial: { width: size, height: size, rotate: rotate, background: color },
   });
 
-  useEffect(() => {}, [actionDetail]);
+  useEffect(() => {
+    // console.log(Object.getOwnPropertyNames(actionDetail));
+    if (actionDetail.left !== undefined) {
+      setVariant({
+        ...variant,
+        left: {
+          background:
+            actionDetail.left[0] === "color" ? actionDetail.left[1] : color,
+          width: actionDetail.left[0] === "size" ? actionDetail.left[1] : size,
+          height: actionDetail.left[0] === "size" ? actionDetail.left[1] : size,
+        },
+      });
+      if (actionDetail.left[0] === "text" && currentAction === "left") {
+        setText(actionDetail.left[1]);
+        setTimeout(() => {
+          setText(thenDetail[3]);
+        }, 1000);
+      }
+    }
+    if (actionDetail.right !== undefined) {
+      setVariant({
+        ...variant,
+        right: {
+          background:
+            actionDetail.right[0] === "color" ? actionDetail.right[1] : color,
+          width:
+            actionDetail.right[0] === "size" ? actionDetail.right[1] : size,
+          height:
+            actionDetail.right[0] === "size" ? actionDetail.right[1] : size,
+        },
+      });
+      if (actionDetail.right[0] === "text" && currentAction === "right") {
+        setText(actionDetail.right[1]);
+      }
+    }
+    if (actionDetail.up !== undefined) {
+      setVariant({
+        ...variant,
+        up: {
+          background:
+            actionDetail.up[0] === "color" ? actionDetail.up[1] : color,
+          width: actionDetail.up[0] === "size" ? actionDetail.up[1] : size,
+          height: actionDetail.up[0] === "size" ? actionDetail.up[1] : size,
+        },
+      });
+      if (actionDetail.up[0] === "text" && currentAction === "up") {
+        setText(actionDetail.up[1]);
+      }
+    }
+    if (actionDetail.down !== undefined) {
+      setVariant({
+        ...variant,
+        down: {
+          background:
+            actionDetail.down[0] === "color" ? actionDetail.down[1] : color,
+          width: actionDetail.down[0] === "size" ? actionDetail.down[1] : size,
+          height: actionDetail.down[0] === "size" ? actionDetail.down[1] : size,
+        },
+      });
+      if (actionDetail.down[0] === "text" && currentAction === "down") {
+        setText(actionDetail.down[1]);
+      }
+    }
+  }, [actionDetail]);
 
   return (
     <>
@@ -81,7 +146,11 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
           }}
           ref={ref}
           variants={variant}
-          animate={{ width: size, height: size }}
+          animate={
+            checkAction.includes(currentAction) === true
+              ? currentAction
+              : "initial"
+          }
         >
           {text}
         </motion.div>

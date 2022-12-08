@@ -524,15 +524,14 @@ export default function Handpose({
             return value.ifType === "action";
           })
           .map((value, index) => {
-            let actionDetails = (({ left, right, up, down, hover, click }) => ({
-              left,
-              right,
-              up,
-              down,
-              hover,
-              click,
-            }))(value);
-            // need to remove undefined
+            let actionDetails = (({
+              action,
+              hand,
+              thenType,
+              thenDetail,
+              ifType,
+              ...remaining
+            }) => remaining)(value);
             return (
               <Action
                 key={index}
