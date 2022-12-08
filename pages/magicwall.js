@@ -51,7 +51,8 @@ export default function Playground() {
     //   useControlsStore.setState({ handIndicatorType: "cursor" });
     // }
     else {
-      useControlsStore.setState({ handCursorType: ["●", 50] });
+      useControlsStore.setState({ handCursorType: ["●", 80] });
+      // useControlsStore.setState({ handColor: "purple" });
       useControlsStore.setState({ handIndicatorType: "blurDot" });
     }
   }, [currentPoseR, currentPoseL]);

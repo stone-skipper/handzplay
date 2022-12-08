@@ -41,6 +41,7 @@ export default function DashboardHor({ display = true }) {
           content="photo"
           display={display}
           id="photo"
+          gesture="okay"
         />
         <HoverClick
           width={dashboardWidth}
@@ -50,6 +51,7 @@ export default function DashboardHor({ display = true }) {
           content="canvas"
           display={display}
           id="canvas"
+          gesture="okay"
         />
         <HoverClick
           width={dashboardWidth}
@@ -59,6 +61,7 @@ export default function DashboardHor({ display = true }) {
           content="wellness"
           display={display}
           id="wellness"
+          gesture="okay"
         />
       </div>
     </div>
