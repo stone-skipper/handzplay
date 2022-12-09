@@ -62,8 +62,10 @@ export default function NewInterface({}) {
               style={{
                 padding: 10,
                 display: "flex",
-                gap: 15,
+                justifyContent: "flex-start",
+                gap: 20,
                 flexDirection: "column",
+                // flexDirection: "column",
               }}
             >
               <EnumSelect

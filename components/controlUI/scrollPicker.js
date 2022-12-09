@@ -23,7 +23,10 @@ export default function ScrollPicker({
 
   useEffect(() => {
     if (active === true) {
+      setCurrent(0);
       updateRuleInProgress(label, options[0], arrayIndex);
+    } else {
+      setCurrent(null);
     }
   }, [active]);
 
@@ -77,6 +80,7 @@ export default function ScrollPicker({
   return (
     <div
       className={styles.slideWrapper}
+      style={{ pointerEvents: active === false ? "none" : "initial" }}
       onMouseEnter={() => {
         setMouseOn(true);
       }}
@@ -84,6 +88,37 @@ export default function ScrollPicker({
         setMouseOn(false);
       }}
     >
+      <div
+        style={{
+          position: "absolute",
+          display: arrow === true ? "flex" : "none",
+          flexDirection: "column",
+          width: "fit-content",
+          height: "fit-content",
+          justifyContent: "center",
+          userSelect: "none",
+          textAlign: "center",
+          alignItems: "center",
+          gap: 10,
+          fontSize: "0.8em",
+        }}
+      >
+        <div
+          style={{}}
+          onClick={() => {
+            sliderRef?.current?.slickPrev();
+          }}
+        >
+          ↑
+        </div>
+        <div
+          onClick={() => {
+            sliderRef?.current?.slickNext();
+          }}
+        >
+          ↓
+        </div>
+      </div>
       <Slider {...settings} ref={sliderRef}>
         {options.map((data, index) => {
           return (

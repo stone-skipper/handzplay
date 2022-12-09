@@ -1,4 +1,3 @@
-import { ChromePicker } from "react-color";
 import { useState, useEffect, useRef } from "react";
 import { useRulesStore } from "../../lib/store";
 

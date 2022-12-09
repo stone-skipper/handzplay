@@ -305,6 +305,7 @@
   background: white;
   padding: 24px;
   border-radius: 10px;
+  position: relative;
 }
 .templateItems {
   text-align: center;
@@ -322,7 +323,7 @@
 
 .templateGrid {
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(4, auto);
   grid-gap: 15px;
   grid-template-rows: repeat(2, auto);
 }

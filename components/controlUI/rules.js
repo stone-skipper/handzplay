@@ -33,24 +33,6 @@ export default function Rules() {
             style={{ display: currentTab === "rules" ? "flex" : "none" }}
           >
             <RulesList />
-            {/* <div style={{ display: "flex", width: "100%" }}>
-            <div
-              className={styles.btn}
-              onClick={() => {
-                setRuleContent("new");
-              }}
-            >
-              + create a new rule
-            </div>
-            <div
-              className={styles.btn}
-              onClick={() => {
-                setRuleContent("new");
-              }}
-            >
-              + add a new interface
-            </div>
-          </div> */}
           </div>
           <div
             style={{

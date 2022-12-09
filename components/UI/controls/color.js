@@ -2,7 +2,11 @@ import { ChromePicker, SketchPicker } from "react-color";
 import { useState } from "react";
 import { useControlsStore } from "../../../lib/store";
 
-export default function ColorSelect({ variable, onColorChange }) {
+export default function ColorSelect({
+  variable,
+  onColorChange,
+  border = false,
+}) {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
 
   return (
@@ -21,6 +25,10 @@ export default function ColorSelect({ variable, onColorChange }) {
           alignItems: "center",
           textAlign: "center",
           textTransform: "uppercase",
+          userSelect: "none",
+          cursor: "pointer",
+          border:
+            border === true ? "1px solid lightgrey" : "0px solid lightgrey",
         }}
       >
         {variable}

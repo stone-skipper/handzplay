@@ -89,12 +89,13 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
       }
     }
 
-    if (actionDetail.click !== undefined && hovered === true) {
+    if (actionDetail.click !== undefined) {
       console.log(actionDetail.click[2]);
 
       if (
-        currentPoseL === actionDetail.click[2] ||
-        currentPoseR === actionDetail.click[2]
+        (currentPoseL === actionDetail.click[2] ||
+          currentPoseR === actionDetail.click[2]) &&
+        hovered === true
       ) {
         setClicked(true);
         console.log("clicked");
@@ -175,11 +176,19 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
             background: color,
             color: "white",
             rotate: rotate,
-            borderRadius: 10000,
+            borderRadius: 5000,
           }}
           ref={ref}
           variants={variant}
-          animate={{ width: size, height: size }}
+          animate={
+            checkAction.includes(currentAction) === true
+              ? currentAction
+              : checkAction.includes("hover") === true && hovered === true
+              ? "hover"
+              : checkAction.includes("click") === true && clicked === true
+              ? "click"
+              : "initial"
+          }
         >
           {text}
         </motion.div>
@@ -190,14 +199,20 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            background: "transparent",
             color: color,
-            fontSize: size,
             rotate: rotate,
           }}
           ref={ref}
           variants={variant}
-          animate={{ width: size, height: size }}
+          animate={
+            checkAction.includes(currentAction) === true
+              ? currentAction
+              : checkAction.includes("hover") === true && hovered === true
+              ? "hover"
+              : checkAction.includes("click") === true && clicked === true
+              ? "click"
+              : "initial"
+          }
         >
           {text}
         </motion.div>

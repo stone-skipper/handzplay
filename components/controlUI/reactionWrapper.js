@@ -73,15 +73,17 @@ export default function ReactionWrapper({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: 30,
+            height: 20,
             overflow: "hidden",
+            width: 90,
           }}
         >
           <ScrollPicker
-            active={add}
+            active={add === true ? true : false}
             label={label}
             arrayIndex={2}
             options={scrollOption}
+            arrow={true}
           />
         </div>
       )}
@@ -91,6 +93,7 @@ export default function ReactionWrapper({
         arrayIndex={0}
         options={options}
         display={add === true ? true : false}
+        active={add}
       />
       {ruleInProgress[label] !== undefined &&
         ruleInProgress[label][0] === "color" && (

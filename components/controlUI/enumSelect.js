@@ -13,6 +13,7 @@ export default function EnumSelect({
   inactive = [],
   arrayIndex = null,
   display = true,
+  active = true,
 }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const updateRuleInProgress = useRulesStore(
@@ -46,7 +47,10 @@ export default function EnumSelect({
     }
   }, [display]);
   return (
-    <div className={styles.enumWrapper}>
+    <div
+      className={styles.enumWrapper}
+      style={{ pointerEvents: active === false ? "none" : "initial" }}
+    >
       {title}
       <div
         style={{

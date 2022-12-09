@@ -26,6 +26,7 @@ import {
 import Pose from "./if/pose";
 import Fingers from "./if/fingers";
 import Action from "./if/action";
+import DrawMode from "./then/drawMode";
 
 export default function Handpose({
   handIndicatorType,
@@ -39,6 +40,7 @@ export default function Handpose({
   // from store
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
+  const drawMode = useControlsStore((state) => state.drawMode);
   const handCursorType = useControlsStore((state) => state.handCursorType);
   const handBlur = useControlsStore((state) => state.handBlur);
   // const rules = useRulesStore((state) => state.rules);
@@ -471,7 +473,7 @@ export default function Handpose({
           left: 0,
           right: 0,
           textAlign: "center",
-          zindex: 9,
+          // zindex: 9,
           width: "100vw",
           height: "100vh",
           objectFit: "cover",
@@ -480,6 +482,7 @@ export default function Handpose({
           filter: "blur(" + handBlur + "px)",
         }}
       />
+      {drawMode === true && <DrawMode />}
       {rules !== undefined &&
         rules.map((value, index) => {
           if (value.ifType === "fingers") {
