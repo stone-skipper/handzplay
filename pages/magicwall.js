@@ -5,8 +5,16 @@ import Controls from "../components/controlUI/controls";
 import AmbientMode from "../components/magicwall/ambientMode";
 import Canvas from "../components/magicwall/canvas";
 import Auth from "../components/magicwall/auth";
+import Guide from "../components/magicwall/guide";
 import Dashboard from "../components/magicwall/dashboard";
-import { useControlsStore, useRulesStore } from "../lib/store";
+import DashboardHor from "../components/magicwall/dashboardHor";
+import DashboardVert from "../components/magicwall/dashboardVert";
+
+import {
+  useControlsStore,
+  useRulesStore,
+  useMagicWallStore,
+} from "../lib/store";
 import styles from "../handsplay.module.scss";
 import { useEffect, useState } from "react";
 import { magicWall } from "../lib/rulePreset";
@@ -21,10 +29,10 @@ export default function Playground() {
   const currentPoseL = useControlsStore((state) => state.currentPoseL);
 
   const addRule = useRulesStore((state) => state.addRule);
-
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
 
-  const [sequence, setSequence] = useState(0);
+  const sequence = useMagicWallStore((state) => state.sequence);
+  const [guide, setGuide] = useState(false);
 
   useEffect(() => {
     useControlsStore.setState({ handColor: "#B9B4EC" });
@@ -43,7 +51,8 @@ export default function Playground() {
     //   useControlsStore.setState({ handIndicatorType: "cursor" });
     // }
     else {
-      useControlsStore.setState({ handCursorType: ["●", 50] });
+      useControlsStore.setState({ handCursorType: ["●", 80] });
+      // useControlsStore.setState({ handColor: "purple" });
       useControlsStore.setState({ handIndicatorType: "blurDot" });
     }
   }, [currentPoseR, currentPoseL]);
@@ -52,12 +61,31 @@ export default function Playground() {
     console.log(rules);
   }, [rules]);
 
+  useEffect(() => {
+    if (sequence > 7) {
+      useMagicWallStore.setState({ sequence: 0 });
+    } else if (sequence < 0) {
+      useMagicWallStore.setState({ sequence: 7 });
+    }
+  }, [sequence]);
+
   return (
-    <div className={styles.playground} style={{ background: "black" }}>
+    <div
+      className={styles.playground}
+      style={{ background: "black", fontFamily: "TTcommonsMed" }}
+      onKeyDown={(e) => {
+        console.log(e.key);
+        if (e.key === "1" || "2" || "3" || "4" || "0" || "5" || "6") {
+          useMagicWallStore.setState({ sequence: parseInt(e.key) });
+        }
+      }}
+      tabIndex="0"
+    >
       <Head>
         <title>Handzplay Magic Wall</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+      <Guide display={guide} />
       <div
         style={{
           color: "white",
@@ -74,10 +102,10 @@ export default function Playground() {
             background: "green",
           }}
           onClick={() => {
-            if (sequence < 4) {
-              setSequence(sequence + 1);
+            if (sequence < 6) {
+              useMagicWallStore.setState({ sequence: sequence + 1 });
             } else {
-              setSequence(0);
+              useMagicWallStore.setState({ sequence: 0 });
             }
           }}
         >
@@ -93,26 +121,41 @@ export default function Playground() {
           }}
           onClick={() => {
             if (sequence < 1) {
-              setSequence(4);
+              useMagicWallStore.setState({ sequence: 6 });
             } else {
-              setSequence(sequence - 1);
+              useMagicWallStore.setState({ sequence: sequence - 1 });
             }
           }}
         >
           ↓
         </div>
+        <div
+          style={{
+            width: "fit-content",
+            height: "fit-content",
+            padding: 10,
+            background: "green",
+          }}
+          onClick={() => {
+            setGuide(!guide);
+          }}
+        >
+          guide
+        </div>
       </div>
-      <AmbientMode display={sequence === 0 ? true : false} />
-      <Auth
+      <AmbientMode display={sequence === 0 || sequence === 1 ? true : false} />
+      {/* <Auth
         display={sequence === 1 ? true : false}
         detectRaisedHand={
           currentPoseL === "five" || currentPoseR === "five" ? true : false
         }
-      />
+      /> */}
       <Dashboard display={sequence === 2 ? true : false} />
+      <DashboardHor display={sequence === 3 ? true : false} />
+      <DashboardVert display={sequence === 4 ? true : false} />
       <Canvas
-        display={sequence === 3 || sequence === 4 ? true : false}
-        notification={sequence === 4 ? true : false}
+        display={sequence === 5 || sequence === 6 ? true : false}
+        notification={sequence === 6 ? true : false}
       />
 
       <Handpose
@@ -121,7 +164,7 @@ export default function Playground() {
         rules={rules}
         handColor={handColor}
       />
-      <div
+      {/* <div
         style={{
           display: "flex",
           width: "100vw",
@@ -133,7 +176,7 @@ export default function Playground() {
         }}
       >
         <Controls />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -1,20 +1,38 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useControlsStore } from "../../lib/store";
-import HoverClick from "../then/hoverClick";
+import SwipeNoti from "./swipeNoti";
 
 export default function Canvas({ display = true, notification = true }) {
   const currentActionL = useControlsStore((state) => state.currentActionL);
   const currentActionR = useControlsStore((state) => state.currentActionR);
+
   useEffect(() => {
     if (currentActionL === "left" || currentActionR === "left") {
+      setAccept(true);
     } else if (currentActionL === "right" || currentActionR === "right") {
+      setDecline(true);
     } else {
     }
   }, [currentActionL, currentActionR]);
 
+  const [accept, setAccept] = useState(false);
+  const [decline, setDecline] = useState(false);
+
+  useEffect(() => {
+    if (accept === true) {
+      setTimeout(() => {
+        setAccept(false);
+      }, 1000);
+    } else if (decline === true) {
+      setTimeout(() => {
+        setDecline(false);
+      }, 1000);
+    }
+  }, [accept, decline]);
+
   return (
-    <div
+    <motion.div
       style={{
         width: "100vw",
         height: "100vh",
@@ -27,54 +45,25 @@ export default function Canvas({ display = true, notification = true }) {
         left: 0,
         gap: 40,
       }}
+      animate={{ opacity: display === true ? 1 : 0 }}
     >
-      static canvas comes here
+      <motion.img
+        src="magicwall/canvas.png"
+        style={{ width: "130%" }}
+        animate={{ opacity: notification === true ? 0.2 : 1 }}
+      ></motion.img>
       <div
         style={{
           width: "100vw",
           height: "fit-content",
           position: "absolute",
-          bottom: 40,
           display: "flex",
           justifyContent: "center",
           display: notification === true ? "flex" : "none",
         }}
       >
-        <motion.div
-          animate={{
-            opacity: notification === true ? 1 : 0,
-            y: notification === true ? 0 : 20,
-          }}
-          style={{
-            width: "fit-content",
-            height: "fit-content",
-            padding: 6,
-            background: "white",
-            borderRadius: 4,
-            display: "flex",
-            flexDirection: "row",
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          John Liu Calling
-          <div style={{ display: "flex" }}>
-            <HoverClick
-              width={50}
-              height={50}
-              content="call"
-              initialColor={"green"}
-              display={true}
-            />
-            <HoverClick
-              width={50}
-              height={50}
-              content="accept"
-              initialColor={"red"}
-              display={true}
-            />
-          </div>
-        </motion.div>
+        <SwipeNoti display={notification} accept={accept} decline={decline} />
       </div>
-    </div>
+    </motion.div>
   );
 }

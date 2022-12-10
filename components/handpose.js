@@ -80,6 +80,10 @@ export default function Handpose({
     flipHorizontal: true,
   };
 
+  useEffect(() => {
+    useControlsStore.setState({ cameraSize: [vWidth, vHeight] });
+  }, [vWidth, vHeight]);
+
   const runHandpose = async () => {
     const detector = await handPoseDetection.createDetector(
       model,
@@ -444,6 +448,9 @@ export default function Handpose({
           width: "100vw",
           height: "100vh",
           objectFit: "cover",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           opacity: cameraFeed === true ? 1 : 0,
         }}
       />
@@ -465,7 +472,7 @@ export default function Handpose({
           transition: "0.3s",
           filter:
             handIndicatorType === "blurred" || handIndicatorType === "blurDot"
-              ? "blur(35px)"
+              ? "blur(5px)"
               : "blur(0px)",
         }}
       />
