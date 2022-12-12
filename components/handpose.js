@@ -40,6 +40,7 @@ export default function Handpose({
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
   const handCursorType = useControlsStore((state) => state.handCursorType);
+  const handBlur = useControlsStore((state) => state.handBlur);
   // const rules = useRulesStore((state) => state.rules);
   // const handColor = useControlsStore((state) => state.handColor);
 
@@ -65,6 +66,16 @@ export default function Handpose({
       });
     console.log(interfaceTextArray, interfaceCircleArray, interfaceRectArray);
   }, [rules]);
+
+  useEffect(() => {
+    if (handIndicatorType === "blurred") {
+      useControlsStore.setState({ handBlur: 35 });
+    } else if (handIndicatorType === "cursor") {
+      useControlsStore.setState({ handBlur: 0 });
+    } else {
+      useControlsStore.setState({ handBlur: 0 });
+    }
+  }, [handIndicatorType]);
 
   const [passHand, setPassHand] = useState(null);
   const [palmPos, setPalmPos] = useState({ lx: 0, ly: 0, rx: 0, ry: 0 });
@@ -470,10 +481,7 @@ export default function Handpose({
           objectFit: "cover",
           transform: "scaleX(-1)",
           transition: "0.3s",
-          filter:
-            handIndicatorType === "blurred" || handIndicatorType === "blurDot"
-              ? "blur(5px)"
-              : "blur(0px)",
+          filter: "blur(" + handBlur + "px)",
         }}
       />
       {rules !== undefined &&
