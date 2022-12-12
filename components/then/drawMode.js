@@ -14,7 +14,7 @@ export default function DrawMode({}) {
   const [press, setPress] = useState(false);
 
   const [initialColor, setInitialColor] = useState("#ffffff");
-  const [hoverColor, setHoverColor] = useState(handColor);
+  const [hoverColor, setHoverColor] = useState("#0066FF");
   const [hoverType, setHoverType] = useState("float");
   const [toggleTools, setToggleTools] = useState(true);
 
@@ -23,6 +23,7 @@ export default function DrawMode({}) {
       useControlsStore.setState({ clearBtn: true });
     }
   }, [hoverInfo]);
+
   useEffect(() => {
     if (clearBtn === false) {
       setHoverInfo([]);
@@ -242,7 +243,7 @@ export default function DrawMode({}) {
               setToggleTools(!toggleTools);
             }}
           >
-            {toggleTools === true ? "✕" : "🖊️"}
+            {toggleTools === true ? "✕" : "🎨"}
           </div>
         </motion.div>
       </div>

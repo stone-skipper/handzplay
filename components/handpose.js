@@ -473,7 +473,7 @@ export default function Handpose({
           left: 0,
           right: 0,
           textAlign: "center",
-          // zindex: 9,
+          zIndex: fingersL[0] !== 0 || fingersR[0] !== 0 ? 9 : 0,
           width: "100vw",
           height: "100vh",
           objectFit: "cover",

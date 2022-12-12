@@ -1,16 +1,20 @@
 import { useControlsStore, useInviteStore } from "../../lib/store";
 import styles from "./panels.module.scss";
 import { useEffect, useState, useRef } from "react";
-
+import { useOnClickOutside } from "../../lib/hook";
 import { motion } from "framer-motion";
 
 export default function About() {
   const handColor = useControlsStore((state) => state.handColor);
 
   const currentTab = useControlsStore((state) => state.currentTab);
+  const ref = useRef();
+  // useOnClickOutside(ref, () =>
+  //   useControlsStore.setState({ currentTab: "none" })
+  // );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={ref}>
       <motion.div
         className={styles.content}
         style={{ display: currentTab === "about" ? "flex" : "none" }}
@@ -20,8 +24,10 @@ export default function About() {
           interacting with devices and interfaces. <br />
           <br />
           With any device with camera, you can use your fingers and hands to
-          interact, and create new ‘rules’, defining what triggers which
-          reactions.
+          interact, and create new ‘rules’, defining type of trigger and
+          reaction.
+          <br /> Or you can create new ‘interfaces’ that changes based on your
+          action, like swiping and hovering.
           <br />
           <br />
           If you have any inquiry or ideas, please reach out to me via{" "}
@@ -57,7 +63,7 @@ export default function About() {
         </div>
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>Version</div>
-          <div className={styles.options}>1.0.0 (updated 2022.10.15)</div>
+          <div className={styles.options}>1.2.0 (updated 2022.12.13)</div>
         </div>
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>References</div>

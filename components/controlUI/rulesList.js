@@ -33,8 +33,11 @@ export default function RulesList() {
   const InterfaceWrapper = ({ type, property }) => {
     return (
       <div className={styles.trigger}>
-        <div className={styles.if}>{type}</div> to change
-        <div className={styles.if}>{property}</div>
+        {property.map((value, index) => {
+          return <div className={styles.if}>{value}</div>;
+        })}
+        to change
+        <div className={styles.if}>{type}</div>
       </div>
     );
   };
@@ -68,6 +71,17 @@ export default function RulesList() {
       <div className={styles.rulesWrapper}>
         <NoRuleStatus />
         {rules.map((rule, index) => {
+          var actionDetails;
+          if (rule.ifType === "action" && rule.thenType === "interface") {
+            actionDetails = (({
+              action,
+              hand,
+              thenType,
+              thenDetail,
+              ifType,
+              ...remaining
+            }) => remaining)(rule);
+          }
           return (
             <div className={styles.rule}>
               <div className={styles.number}>{index + 1}</div>
@@ -80,7 +94,7 @@ export default function RulesList() {
               {rule.ifType === "action" && rule.thenType === "interface" && (
                 <InterfaceWrapper
                   type={rule.thenDetail[0]}
-                  property={rule.thenDetail[4]}
+                  property={Object.getOwnPropertyNames(actionDetails)}
                 />
               )}
               {rule.ifType === "fingers" && (

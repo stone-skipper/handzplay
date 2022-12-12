@@ -301,7 +301,7 @@ export default function NewRule({ options, onScroll }) {
               <div className={styles.plainText}>px</div>
             </>
           )}
-          {ruleInProgress.ifType === undefined && (
+          {ruleInProgress.ifType === "" && (
             <div className={styles.placeholder}>If ...</div>
           )}
         </div>
@@ -312,7 +312,7 @@ export default function NewRule({ options, onScroll }) {
         )}
 
         <div className={styles.optionsWrapper}>
-          {ruleInProgress.thenType === undefined && (
+          {ruleInProgress.thenType === "" && (
             <div className={styles.placeholder}>Then ...</div>
           )}
           {ruleInProgress.thenType === "shape" && (

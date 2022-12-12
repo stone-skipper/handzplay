@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRulesStore, useControlsStore } from "../../lib/store";
 import styles from "./panels.module.scss";
 import { motion } from "framer-motion";
@@ -11,11 +11,18 @@ import {
   hoverClickSet,
   spideySet,
 } from "../../lib/rulePreset";
+import { useOnClickOutside } from "../../lib/hook";
 
 export default function Template() {
   const toggleTemplate = useControlsStore((state) => state.toggleTemplate);
   const rules = useRulesStore((state) => state.rules);
   const addRule = useRulesStore((state) => state.addRule);
+  const ref = useRef();
+
+  // useOnClickOutside(ref, () =>
+  //   useControlsStore.setState({ toggleTemplate: false })
+  // );
+
   const Items = ({ title, onClick, description }) => {
     return (
       <motion.div
@@ -53,6 +60,7 @@ export default function Template() {
     <div
       className={styles.templateBg}
       style={{ display: toggleTemplate === true ? "flex" : "none" }}
+      ref={ref}
     >
       <motion.div
         className={styles.templateModal}
@@ -134,7 +142,7 @@ export default function Template() {
             onClick={() => {
               useControlsStore.setState({ drawMode: true });
             }}
-            description="draw hover button like a canvas"
+            description="draw interfaces like on a canvas"
           />
           <Items
             title="drumkit"

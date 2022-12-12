@@ -1,4 +1,14 @@
-# Zustand example
+# Handzplay
+
+This is an experiment by [Seungmee Lee](https://read.cv/seungmee_lee), playing around with gesture interaction.
+Check out the [Demo](https://handzplay.vercel.app)
+
+## References
+
+[Handpose](https://google.github.io/mediapipe/solutions/hands.html#javascript-solution-api)
+[Fingerpose](https://github.com/andypotato/fingerpose)
+
+<!-- # Zustand example
 
 This example shows how to integrate Zustand in Next.js.
 
@@ -32,4 +42,4 @@ yarn create next-app --example with-zustand with-zustand-app
 pnpm create next-app --example with-zustand with-zustand-app
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)). -->

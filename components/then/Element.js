@@ -36,12 +36,24 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
 
     for (const key of Object.keys(actionDetail)) {
       // console.log(key, actionDetail[key]);
-      variant[key] = {
-        background:
-          actionDetail[key][0] === "color" ? actionDetail[key][1] : color,
-        width: actionDetail[key][0] === "size" ? actionDetail[key][1] : size,
-        height: actionDetail[key][0] === "size" ? actionDetail[key][1] : size,
-      };
+      if (thenDetail[0] !== "text") {
+        variant[key] = {
+          background:
+            actionDetail[key][0] === "color" ? actionDetail[key][1] : color,
+          width: actionDetail[key][0] === "size" ? actionDetail[key][1] : size,
+          height: actionDetail[key][0] === "size" ? actionDetail[key][1] : size,
+        };
+      } else {
+        variant[key] = {
+          color:
+            actionDetail[key][0] === "color" ? actionDetail[key][1] : color,
+          background: "transparent",
+          fontSize:
+            actionDetail[key][0] === "size" ? actionDetail[key][1] : size,
+          width: "fit-content",
+          height: "fit-content",
+        };
+      }
     }
   }, []);
 
@@ -123,15 +135,21 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
   }, [text]);
 
   const [variant, setVariant] = useState({
-    initial: { width: size, height: size, rotate: rotate, background: color },
+    initial: {
+      width: thenDetail[0] === "text" ? "fit-content" : size,
+      height: thenDetail[0] === "text" ? "fit-content" : size,
+      rotate: rotate,
+      background: thenDetail[0] === "text" ? "transparent" : color,
+    },
   });
 
   useEffect(() => {
     if (
       checkAction.includes(currentAction) === true &&
-      actionDetail[currentAction] === "text"
+      actionDetail[currentAction][0] === "text"
     ) {
       setText(actionDetail[currentAction][1]);
+      console.log(text);
     }
   }, [currentAction]);
 
@@ -201,6 +219,9 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
             alignItems: "center",
             color: color,
             rotate: rotate,
+            background: "transparent !important",
+            fontSize: size,
+            textAlign: "center",
           }}
           ref={ref}
           variants={variant}

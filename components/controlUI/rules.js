@@ -1,20 +1,26 @@
 import { useControlsStore, useRulesStore } from "../../lib/store";
 import styles from "./panels.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Divider from "../UI/controls/divider";
 
 import RulesList from "./rulesList";
 import NewRule from "./newRule";
 import NewInterface from "./newInterface";
+import { useOnClickOutside } from "../../lib/hook";
 
 export default function Rules() {
   const rules = useRulesStore((state) => state.rules);
+  const drawMode = useControlsStore((state) => state.drawMode);
   const addRule = useRulesStore((state) => state.addRule);
   const currentTab = useControlsStore((state) => state.currentTab);
   const [ruleContent, setRuleContent] = useState("list"); //list or new
   const removeRuleInProgress = useRulesStore(
     (state) => state.removeRuleInProgress
   );
+  const ref = useRef();
+  // useOnClickOutside(ref, () =>
+  //   useControlsStore.setState({ currentTab: "none" })
+  // );
 
   useEffect(() => {
     if (currentTab !== "rules") {
@@ -25,7 +31,7 @@ export default function Rules() {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
 
   return (
-    <div className={styles.wrapper} style={{ width: "52.8vw" }}>
+    <div className={styles.wrapper} style={{ width: "52.8vw" }} ref={ref}>
       {ruleContent === "list" && (
         <>
           <div
@@ -63,6 +69,17 @@ export default function Rules() {
             >
               + Add a new interface
             </div>
+            <Divider direction="vertical" customSize={30} color="lightgrey" />
+            <div
+              className={styles.btn}
+              style={{ color: drawMode === false ? "black" : "red" }}
+              onClick={() => {
+                useControlsStore.setState({ drawMode: !drawMode });
+                useControlsStore.setState({ currentTab: "none" });
+              }}
+            >
+              {drawMode === false ? "+ Canvas Mode (Beta)" : "Exit Canvas Mode"}
+            </div>
           </div>
         </>
       )}
@@ -85,15 +102,14 @@ export default function Rules() {
               className={styles.btn}
               style={{
                 color:
-                  ruleInProgress.ifType !== undefined ||
-                  ruleInProgress.thenType !== undefined
+                  ruleInProgress.ifType !== "" && ruleInProgress.thenType !== ""
                     ? "#0066FF"
                     : "lightgrey",
               }}
               onClick={() => {
                 if (
-                  ruleInProgress.ifType !== undefined ||
-                  ruleInProgress.thenType !== undefined
+                  ruleInProgress.ifType !== "" &&
+                  ruleInProgress.thenType !== ""
                 ) {
                   setRuleContent("list");
                   addRule(ruleInProgress);

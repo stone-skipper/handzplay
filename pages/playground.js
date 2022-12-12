@@ -55,6 +55,7 @@ export default function Playground() {
           bottom: 4,
           gap: 4,
           justifyContent: "center",
+          zIndex: 10,
         }}
       >
         <About />

@@ -192,6 +192,10 @@ export default function NewInterface({}) {
                 borderRadius:
                   ruleInProgress.thenDetail[0] === "circle" ? 300 : 0,
                 color: "white",
+                fontSize:
+                  ruleInProgress.thenDetail[0] === "text"
+                    ? ruleInProgress.thenDetail[2]
+                    : 16,
               }}
               animate={{
                 width: ruleInProgress.thenDetail[2],
