@@ -73,7 +73,7 @@ export default function HandIllust01({
             rx="11.9033"
             ry="20.1421"
             transform="rotate(-43.7058 394.499 196.391)"
-            fill="#004DC0"
+            fill="##0066ff"
             variants={draw}
           />
         </g>
