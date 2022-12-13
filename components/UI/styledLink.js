@@ -2,16 +2,22 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-export default function StyledLink({ title, link, copyToClipboard = false }) {
+export default function StyledLink({
+  title,
+  link,
+  copyToClipboard = false,
+  color = "white",
+  underline = true,
+}) {
   const [hover, setHover] = useState(false);
   return (
     <motion.div
       style={{
-        color: "white",
+        color: color,
         display: "inline-flex",
         width: "fit-content",
         height: "fit-content",
-        borderBottom: "1px solid white",
+        borderBottom: underline === true ? "1px solid " + color : "none",
         cursor: "pointer",
         userSelect: "none",
       }}
@@ -29,7 +35,12 @@ export default function StyledLink({ title, link, copyToClipboard = false }) {
       }}
     >
       {copyToClipboard === false && (
-        <a href={link} target="_blank" rel="noopener noreferrer">
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: color }}
+        >
           {title}
         </a>
       )}
@@ -38,12 +49,13 @@ export default function StyledLink({ title, link, copyToClipboard = false }) {
       <motion.div
         style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: "1.2em",
+          //   fontSize: "1em",
           height: 15,
           width: 15,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          color: color,
         }}
         animate={{
           rotate: hover === true ? 0 : -45,
