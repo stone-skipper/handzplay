@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import StyledLink from "./styledLink";
 export default function Footer() {
   return (
     <div
@@ -22,18 +22,13 @@ export default function Footer() {
     >
       <div style={{ textAlign: "left" }}>
         created by{" "}
-        <a
-          href="https://www.seungmee-lee.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          stone.skipper
-        </a>
+        <StyledLink link="https://www.seungmee-lee.com" title="stone.skipper" />
         <br /> get in touch via{" "}
-        <a href="https://www.instagram.com/stone.skipper/" target="_blank">
-          instagram
-        </a>{" "}
-        or <a href="mailto:iam.seungmee.lee@gmail.com">email</a>
+        <StyledLink
+          link="https://www.instagram.com/stone.skipper/"
+          title="instagram"
+        />{" "}
+        or <StyledLink link="mailto:iam.seungmee.lee@gmail.com" title="email" />
       </div>
       <div style={{ textAlign: "right" }}>
         no data will be saved here

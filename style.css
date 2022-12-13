@@ -3,7 +3,7 @@
   src: url("https://www.mediafont.com/storage/contents/10528/font.eot"); /* IE */
   src: local("Gainsborough"), url("/font/GAINSBOR.TTF"); /* non-IE */
 }
-
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
 
 body,
@@ -19,8 +19,8 @@ html {
 a {
   text-decoration: none;
   color: white;
-  padding-bottom: 1.5px;
-  border-bottom: 1px solid white;
+  /* padding-bottom: 1.5px;
+  border-bottom: 1px solid white; */
 }
 
 p {
