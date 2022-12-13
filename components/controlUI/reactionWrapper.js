@@ -21,13 +21,10 @@ export default function ReactionWrapper({
     (state) => state.updateRuleInProgress
   );
   useEffect(() => {
-    //   if (add === true) {
-    //     updateRuleInProgress("thenDetail", [title], 4);
-    //   }
-    if (add === false) {
-      removeProperty(label, null);
-    } else {
+    if (add === true) {
       // updateRuleInProgress(label, [], null);
+    } else {
+      removeProperty(label, null);
     }
   }, [add]);
   return (

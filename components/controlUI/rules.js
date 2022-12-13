@@ -30,6 +30,10 @@ export default function Rules() {
   }, [currentTab]);
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
 
+  useEffect(() => {
+    console.log(ruleInProgress);
+  }, [ruleInProgress]);
+
   return (
     <div className={styles.wrapper} style={{ width: "52.8vw" }} ref={ref}>
       {ruleContent === "list" && (
@@ -152,8 +156,14 @@ export default function Rules() {
               className={styles.btn}
               style={{
                 color:
-                  ruleInProgress.ifType !== undefined ||
-                  ruleInProgress.thenType !== undefined
+                  ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[0] !== "" &&
+                  (Object.hasOwn(ruleInProgress, "left") === true ||
+                    Object.hasOwn(ruleInProgress, "right") === true ||
+                    Object.hasOwn(ruleInProgress, "up") === true ||
+                    Object.hasOwn(ruleInProgress, "down") === true ||
+                    Object.hasOwn(ruleInProgress, "hover") === true ||
+                    Object.hasOwn(ruleInProgress, "click") === true)
                     ? "#0066FF"
                     : "lightgrey",
               }}
