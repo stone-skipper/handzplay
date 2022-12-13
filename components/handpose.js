@@ -49,25 +49,10 @@ export default function Handpose({
   var handL, handR, hand;
 
   useEffect(() => {
-    rules
-      .filter((value) => {
-        return value.ifType === "action" && value.thenType === "interface";
-      })
-      .forEach((x) => {
-        if (x.thenDetail[0] === "text") {
-          interfaceTextArray.push(x);
-        } else if (x.thenDetail[0] === "rect") {
-          interfaceRectArray.push(x);
-        } else if (x.thenDetail[0] === "circle") {
-          interfaceCircleArray.push(x);
-        }
-      });
-  }, [rules]);
-
-  useEffect(() => {
     if (handIndicatorType === "blurred") {
       useControlsStore.setState({ handBlur: 35 });
     } else if (handIndicatorType === "cursor") {
+      useControlsStore.setState({ handBlur: 0 });
     } else {
       useControlsStore.setState({ handBlur: 0 });
     }

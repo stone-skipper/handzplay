@@ -155,9 +155,10 @@ export const drawCursor = (predictions, color, side, cursor, size, ctx) => {
 
   if (predictions.length > 0) {
     // Loop through each prediction
-    const x = (predictions[4].x + predictions[8].x) / 2;
-    const y = (predictions[4].y + predictions[8].y) / 2;
-
+    // const x = (predictions[4].x + predictions[8].x) / 2; for middle of thumb and index
+    // const y = (predictions[4].y + predictions[8].y) / 2;for middle of thumb and index
+    const x = predictions[8].x;
+    const y = predictions[8].y;
     ctx.beginPath();
     ctx.textAlign = "center";
     ctx.font = size + "px Manrope";

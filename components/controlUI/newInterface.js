@@ -191,7 +191,10 @@ export default function NewInterface({}) {
                 alignItems: "center",
                 borderRadius:
                   ruleInProgress.thenDetail[0] === "circle" ? 300 : 0,
-                color: "white",
+                color:
+                  ruleInProgress.thenDetail[0] === "text"
+                    ? ruleInProgress.thenDetail[1]
+                    : "white",
                 fontSize:
                   ruleInProgress.thenDetail[0] === "text"
                     ? ruleInProgress.thenDetail[2]
