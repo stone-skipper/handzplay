@@ -58,6 +58,16 @@ export default function Handpose({
     }
   }, [handIndicatorType]);
 
+  useEffect(() => {
+    if (handIndicatorType === "blurred") {
+      useControlsStore.setState({ handBlur: 35 });
+    } else if (handIndicatorType === "cursor") {
+      useControlsStore.setState({ handBlur: 0 });
+    } else {
+      useControlsStore.setState({ handBlur: 0 });
+    }
+  }, [handIndicatorType]);
+
   const [passHand, setPassHand] = useState(null);
   const [palmPos, setPalmPos] = useState({ lx: 0, ly: 0, rx: 0, ry: 0 });
   const [vWidth, setvWidth] = useState(0);
@@ -458,7 +468,7 @@ export default function Handpose({
           height: "100vh",
           objectFit: "cover",
           transform: "scaleX(-1)",
-          transition: "0.2s",
+          transition: "0.3s",
           filter: "blur(" + handBlur + "px)",
         }}
       />

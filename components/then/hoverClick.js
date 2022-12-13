@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { useControlsStore } from "../../lib/store";
+import { useControlsStore, useMagicWallStore } from "../../lib/store";
 
 export default function HoverClick({
   width,
@@ -9,12 +9,19 @@ export default function HoverClick({
   hoverColor,
   content,
   display,
+  id,
+  gesture = "okay",
 }) {
   const [hovered, setHovered] = useState(false);
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
-  const [boundary, setBoundary] = useState([0, 0]);
+  const selectedApp = useMagicWallStore((state) => state.selectedApp);
 
+  const currentPoseR = useControlsStore((state) => state.currentPoseR);
+  const currentPoseL = useControlsStore((state) => state.currentPoseL);
+
+  const [boundary, setBoundary] = useState([0, 0]);
+  const [selected, setSelected] = useState(false);
   const [wWidth, setwWidth] = useState(0);
   const [wHeight, setwHeight] = useState(0);
   const ref = useRef(null);
@@ -23,6 +30,23 @@ export default function HoverClick({
     setwWidth(window.innerWidth);
     setwHeight(window.innerHeight);
   }, []);
+
+  useEffect(() => {
+    if (
+      hovered === true &&
+      (currentPoseL === gesture || currentPoseR === gesture)
+    ) {
+      setSelected(true);
+    }
+  }, [currentPoseL, currentPoseR]);
+
+  useEffect(() => {
+    if (selected === true) {
+      setTimeout(() => {
+        setSelected(false);
+      }, 1000);
+    }
+  }, [selected]);
 
   const cameraSize = useControlsStore((state) => state.cameraSize);
 
@@ -33,14 +57,6 @@ export default function HoverClick({
       (boundingRect.y * cameraSize[1]) / wHeight,
     ]);
 
-    // console.log(
-    //   fingersL[2],
-    //   fingersL[3],
-    //   boundary[0],
-    //   boundary[0] - width / 2,
-    //   boundary[1],
-    //   boundary[1] + height / 2
-    // );
     if (
       (fingersL[2] > boundary[0] - (width * cameraSize[0]) / wWidth &&
         fingersL[2] < boundary[0] &&
@@ -63,19 +79,25 @@ export default function HoverClick({
         width: width,
         height: height,
         display: display === true ? "flex" : "none",
-        justifyContent: "center",
-        alignItems: "center",
+        // justifyContent: "center",
+        // alignItems: "center",
         borderRadius: 5,
         background: initialColor,
         originX: 0,
         originY: 0,
         fontSize: 20,
+        fontFamily: "TTcommonsDemiBold",
+        boxShadow:
+          "0px 1.56449px 1.56449px rgba(0, 42, 88, 0.08), 0px 3.12899px 3.12899px rgba(0, 42, 88, 0.08), 0px 6.25798px 6.25798px rgba(0, 42, 88, 0.08), 0px 12.516px 12.516px rgba(0, 42, 88, 0.08)",
       }}
+      id={id}
       ref={ref}
       animate={{
         // background: hovered === true ? "blue" : initialColor,
         border:
-          hovered === true ? "3px solid " + hoverColor : "3px solid white",
+          hovered === true
+            ? "3px solid " + hoverColor
+            : "3px solid " + initialColor,
         width: width - 6,
         height: height - 6,
         color: hovered === true ? hoverColor : "black",
@@ -85,7 +107,9 @@ export default function HoverClick({
         ease: "easeInOut",
       }}
     >
-      {content}
+      <span style={{ padding: 15 }}>
+        {content} {selected === true ? "clicked" : ""}
+      </span>
     </motion.div>
   );
 }
