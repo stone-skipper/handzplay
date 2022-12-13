@@ -62,7 +62,7 @@ export default function HandIllust04({ initTop, initLeft, top, left }) {
             rx="24.2626"
             ry="40.5288"
             transform="matrix(-0.690615 0.723222 0.723222 0.690615 72.3672 200.881)"
-            fill="#004DC0"
+            fill="#0066ff"
             fill-opacity="0.8"
             // variants={draw}
           />
