@@ -100,20 +100,19 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
         setText(actionDetail.hover[1]);
       }
     }
-
-    if (actionDetail.click !== undefined) {
-      console.log(actionDetail.click[2]);
-
-      if (
-        (currentPoseL === actionDetail.click[2] ||
-          currentPoseR === actionDetail.click[2]) &&
-        hovered === true
-      ) {
-        setClicked(true);
-        console.log("clicked");
-      }
-    }
   }, [hovered]);
+
+  useEffect(() => {
+    if (
+      actionDetail.click !== undefined &&
+      hovered === true &&
+      (currentPoseL === actionDetail.click[2] ||
+        currentPoseR === actionDetail.click[2])
+    ) {
+      console.log(currentPoseR);
+      setClicked(true);
+    }
+  }, [hovered, currentPoseL, currentPoseR]);
 
   useEffect(() => {
     if (clicked === true) {
@@ -175,7 +174,9 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
           animate={
             checkAction.includes(currentAction) === true
               ? currentAction
-              : checkAction.includes("hover") === true && hovered === true
+              : checkAction.includes("hover") === true &&
+                hovered === true &&
+                clicked === false
               ? "hover"
               : checkAction.includes("click") === true && clicked === true
               ? "click"

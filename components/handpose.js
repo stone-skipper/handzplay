@@ -48,10 +48,6 @@ export default function Handpose({
 
   var handL, handR, hand;
 
-  var interfaceTextArray = [];
-  var interfaceCircleArray = [];
-  var interfaceRectArray = [];
-
   useEffect(() => {
     rules
       .filter((value) => {
@@ -66,7 +62,6 @@ export default function Handpose({
           interfaceCircleArray.push(x);
         }
       });
-    console.log(interfaceTextArray, interfaceCircleArray, interfaceRectArray);
   }, [rules]);
 
   useEffect(() => {
