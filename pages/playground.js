@@ -25,6 +25,7 @@ export default function Playground() {
 
   useEffect(() => {
     useControlsStore.setState({ toggleTemplate: true });
+    useControlsStore.setState({ currentTab: "none" });
   }, []);
 
   useEffect(() => {

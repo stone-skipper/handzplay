@@ -168,6 +168,7 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
               checkAction.includes("click") === true
                 ? 8
                 : 0,
+            fontWeight: 500,
           }}
           ref={ref}
           variants={variant}
@@ -196,6 +197,7 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
             color: "white",
             rotate: rotate,
             borderRadius: 5000,
+            fontWeight: 500,
           }}
           ref={ref}
           variants={variant}
@@ -223,6 +225,7 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
             background: "transparent !important",
             fontSize: size,
             textAlign: "center",
+            fontWeight: 500,
           }}
           ref={ref}
           variants={variant}

@@ -19,9 +19,9 @@ export default function Template() {
   const addRule = useRulesStore((state) => state.addRule);
   const ref = useRef();
 
-  // useOnClickOutside(ref, () =>
-  //   useControlsStore.setState({ toggleTemplate: false })
-  // );
+  useOnClickOutside(ref, () =>
+    useControlsStore.setState({ toggleTemplate: false })
+  );
 
   const Items = ({ title, onClick, description }) => {
     return (
@@ -31,6 +31,7 @@ export default function Template() {
           useRulesStore.setState({ rules: [] });
           onClick();
           useControlsStore.setState({ toggleTemplate: false });
+          useControlsStore.setState({ currentTab: "none" });
         }}
         whileHover={{
           background: "rgba(227, 238, 255, 1)",
@@ -60,12 +61,12 @@ export default function Template() {
     <div
       className={styles.templateBg}
       style={{ display: toggleTemplate === true ? "flex" : "none" }}
-      ref={ref}
     >
       <motion.div
         className={styles.templateModal}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
+        ref={ref}
       >
         <motion.div
           style={{

@@ -33,9 +33,15 @@ export default function RulesList() {
   const InterfaceWrapper = ({ type, property }) => {
     return (
       <div className={styles.trigger}>
-        {property.map((value, index) => {
-          return <div className={styles.if}>{value}</div>;
-        })}
+        <div className={styles.if}>
+          {property.map((value, index) => {
+            if (index !== property.length - 1) {
+              return <>{value}-</>;
+            } else {
+              return <>{value}</>;
+            }
+          })}
+        </div>
         to change
         <div className={styles.if}>{type}</div>
       </div>

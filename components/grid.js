@@ -29,7 +29,9 @@ const Grid = ({ color }) => {
         alignItems: "center",
         position: "absolute",
         opacity: 0.4,
+        // zIndex: 0,
       }}
+      id="grid"
     >
       {backgroundType === "dots" && (
         <svg width={windowWidth - gap * 2} height={windowHeight - gap * 2}>

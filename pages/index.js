@@ -29,7 +29,8 @@ export default function Index() {
     } else {
       setIsMobile(true);
     }
-  });
+    useControlsStore.setState({ drawMode: false });
+  }, []);
   const { width } = useViewport();
 
   useEffect(() => {

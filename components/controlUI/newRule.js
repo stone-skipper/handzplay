@@ -16,20 +16,11 @@ export default function NewRule({ options, onScroll }) {
   const [highlight, setHighlight] = useState(0);
   useEffect(() => {
     console.log(ruleInProgress);
-    if (
-      ruleInProgress.ifType === undefined &&
-      ruleInProgress.thenType === undefined
-    ) {
+    if (ruleInProgress.ifType === "" && ruleInProgress.thenType === "") {
       setHighlight(0);
-    } else if (
-      ruleInProgress.ifType !== undefined &&
-      ruleInProgress.thenType === undefined
-    ) {
+    } else if (ruleInProgress.ifType !== "" && ruleInProgress.thenType === "") {
       setHighlight(1);
-    } else if (
-      ruleInProgress.ifType !== undefined &&
-      ruleInProgress.thenType !== undefined
-    ) {
+    } else if (ruleInProgress.ifType !== "" && ruleInProgress.thenType !== "") {
       setHighlight(2);
     }
   }, [ruleInProgress]);
@@ -316,52 +307,57 @@ export default function NewRule({ options, onScroll }) {
             <div className={styles.placeholder}>Then ...</div>
           )}
           {ruleInProgress.thenType === "shape" && (
-            <div className={styles.optionsHolder}>
+            <>
+              <div className={styles.plainText}>show </div>
               <ScrollPicker
                 label="thenDetail"
                 arrayIndex={0}
-                options={["rect", "line", "circle", "star", "text", "clipping"]}
+                options={["rect", "line", "circle", "star", "text"]}
               />
               {ruleInProgress.thenDetail !== undefined &&
                 ruleInProgress.thenDetail[0] === "rect" && (
-                  <div className={styles.optionsHolder}>
+                  <>
+                    <div className={styles.plainText}>colored </div>
                     <ColorPicker label="thenDetail" arrayIndex={1} />
                     <ScrollPicker
                       label="thenDetail"
                       arrayIndex={2}
                       options={["fill", "stroke"]}
                     />
-                  </div>
+                  </>
                 )}
               {ruleInProgress.thenDetail !== undefined &&
                 ruleInProgress.thenDetail[0] === "line" && (
-                  <div className={styles.optionsHolder}>
+                  <>
+                    <div className={styles.plainText}>colored </div>
                     <ColorPicker label="thenDetail" arrayIndex={1} />
-                  </div>
+                  </>
                 )}
               {ruleInProgress.thenDetail !== undefined &&
                 ruleInProgress.thenDetail[0] === "circle" && (
-                  <div className={styles.optionsHolder}>
+                  <>
+                    <div className={styles.plainText}>colored </div>
                     <ColorPicker label="thenDetail" arrayIndex={1} />
                     <ScrollPicker
                       label="thenDetail"
                       arrayIndex={2}
                       options={["fill", "stroke"]}
                     />
-                  </div>
+                  </>
                 )}
               {ruleInProgress.thenDetail !== undefined &&
                 ruleInProgress.thenDetail[0] === "star" && (
-                  <div className={styles.optionsHolder}>
+                  <>
+                    <div className={styles.plainText}>colored </div>
                     <ColorPicker label="thenDetail" arrayIndex={1} />
                     <ScrollPicker
                       label="thenDetail"
                       arrayIndex={2}
                       options={["fill", "stroke"]}
                     />
-                  </div>
+                  </>
                 )}
-              {ruleInProgress.thenDetail !== undefined &&
+              {/* {ruleInProgress.thenDetail !== undefined &&
                 ruleInProgress.thenDetail[0] === "clipping" && (
                   <div className={styles.optionsHolder}>
                     <ScrollPicker
@@ -371,20 +367,25 @@ export default function NewRule({ options, onScroll }) {
                     />
                     <ColorPicker label="thenDetail" arrayIndex={2} />
                   </div>
-                )}
+                )} */}
               {ruleInProgress.thenDetail !== undefined &&
                 ruleInProgress.thenDetail[0] === "text" && (
-                  <div className={styles.optionsHolder}>
-                    <ColorPicker label="thenDetail" arrayIndex={1} />
+                  <>
+                    <div className={styles.plainText}>saying </div>
                     <TextInput label="thenDetail" arrayIndex={2} />
+
+                    <div className={styles.plainText}>colored </div>
+                    <ColorPicker label="thenDetail" arrayIndex={1} />
+                    <div className={styles.plainText}>in </div>
                     <ScrollPicker
                       label="thenDetail"
                       arrayIndex={3}
                       options={[30, 40, 50, 60, 70, 80, 90, 100]}
                     />
-                  </div>
+                    <div className={styles.plainText}>px</div>
+                  </>
                 )}
-            </div>
+            </>
           )}
           {ruleInProgress.thenType === "draw" && (
             <>
@@ -401,6 +402,7 @@ export default function NewRule({ options, onScroll }) {
           )}
           {ruleInProgress.thenType === "stamp" && (
             <>
+              <div className={styles.plainText}>stamp</div>
               <ScrollPicker
                 label="thenDetail"
                 arrayIndex={0}
@@ -415,11 +417,13 @@ export default function NewRule({ options, onScroll }) {
                       arrayIndex={2}
                       options={["fill", "stroke"]}
                     />
+
                     <ScrollPicker
                       label="thenDetail"
                       arrayIndex={3}
                       options={[10, 20, 30, 40, 50, 60, 70, 80]}
                     />
+                    <div className={styles.plainText}>px</div>
                   </>
                 )}
               {ruleInProgress.thenDetail !== undefined &&
@@ -436,6 +440,7 @@ export default function NewRule({ options, onScroll }) {
                       arrayIndex={3}
                       options={[10, 20, 30, 40, 50, 60, 70, 80]}
                     />
+                    <div className={styles.plainText}>px</div>
                   </>
                 )}
               {ruleInProgress.thenDetail !== undefined &&
@@ -452,6 +457,7 @@ export default function NewRule({ options, onScroll }) {
                       arrayIndex={3}
                       options={[10, 20, 30, 40, 50, 60, 70, 80]}
                     />
+                    <div className={styles.plainText}>px</div>
                   </>
                 )}
               {ruleInProgress.thenDetail !== undefined &&
@@ -464,6 +470,7 @@ export default function NewRule({ options, onScroll }) {
                       arrayIndex={3}
                       options={[10, 20, 30, 40, 50, 60, 70, 80]}
                     />
+                    <div className={styles.plainText}>px</div>
                   </>
                 )}
             </>
@@ -476,29 +483,31 @@ export default function NewRule({ options, onScroll }) {
                 arrayIndex={0}
                 options={["drum", "piano"]}
               />
-              {ruleInProgress.thenDetail[0] === "drum" && (
-                <ScrollPicker
-                  label="thenDetail"
-                  arrayIndex={1}
-                  options={[
-                    "Crash",
-                    "FloorTom",
-                    "Hihat",
-                    "Kick",
-                    "RackTom",
-                    "Ride",
-                    "Sidestick",
-                    "Snare",
-                  ]}
-                />
-              )}
-              {ruleInProgress.thenDetail[0] === "piano" && (
-                <ScrollPicker
-                  label="thenDetail"
-                  arrayIndex={1}
-                  options={["C4", "D", "E", "F", "G", "A", "B", "C5"]}
-                />
-              )}
+              {ruleInProgress.thenDetail !== undefined &&
+                ruleInProgress.thenDetail[0] === "drum" && (
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={1}
+                    options={[
+                      "Crash",
+                      "FloorTom",
+                      "Hihat",
+                      "Kick",
+                      "RackTom",
+                      "Ride",
+                      "Sidestick",
+                      "Snare",
+                    ]}
+                  />
+                )}
+              {ruleInProgress.thenDetail !== undefined &&
+                ruleInProgress.thenDetail[0] === "piano" && (
+                  <ScrollPicker
+                    label="thenDetail"
+                    arrayIndex={1}
+                    options={["C4", "D", "E", "F", "G", "A", "B", "C5"]}
+                  />
+                )}
 
               <div className={styles.plainText}>sound </div>
             </>
@@ -726,7 +735,7 @@ export default function NewRule({ options, onScroll }) {
           {ruleInProgress.thenType === "transcript" && (
             <>
               <div className={styles.plainText}>transcribe on </div>
-              <ColorPicker label="thenDetail" arrayIndex={1} />
+              <ColorPicker label="thenDetail" arrayIndex={0} />
               <div className={styles.plainText}>post-it </div>
             </>
           )}

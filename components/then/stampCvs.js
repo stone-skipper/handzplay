@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useControlsStore, useRulesStore } from "../../lib/store";
+import { drawStar } from "./shape";
 
 export default function StampCvs({
   videoWidth,

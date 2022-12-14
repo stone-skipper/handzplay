@@ -443,7 +443,7 @@ export default function Handpose({
           left: 0,
           right: 0,
           textAlign: "center",
-          zindex: 15,
+          // zindex: 1,
           width: "100vw",
           height: "100vh",
           objectFit: "cover",
@@ -463,7 +463,7 @@ export default function Handpose({
           left: 0,
           right: 0,
           textAlign: "center",
-          zIndex: fingersL[0] !== 0 || fingersR[0] !== 0 ? 9 : 0,
+          zIndex: fingersL[0] !== 0 || fingersR[0] !== 0 ? 2 : 0,
           width: "100vw",
           height: "100vh",
           objectFit: "cover",
@@ -502,82 +502,46 @@ export default function Handpose({
             );
           }
         })}
-      <div
-        style={{
-          width: "100vw",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 15,
-        }}
-      >
-        {rules
-          .filter((value) => {
-            return value.ifType === "action";
-          })
-          .map((value, index) => {
-            let actionDetails = (({
-              action,
-              hand,
-              thenType,
-              thenDetail,
-              ifType,
-              ...remaining
-            }) => remaining)(value);
-            return (
-              <Action
-                key={index}
-                videoWidth={vWidth}
-                videoHeight={vHeight}
-                hand={value.hand}
-                action={value.action}
-                thenType={value.thenType}
-                thenDetail={value.thenDetail}
-                actionDetail={actionDetails}
-              />
-            );
-          })}
-
-        {/* {interfaceTextArray.length !== 0 && (
-          <Action
-            videoWidth={vWidth}
-            videoHeight={vHeight}
-            hand={() => {
-              let hands = [];
-              for (let i = 0; i < interfaceTextArray.length; i++) {
-                hands.push(interfaceTextArray[i].hand);
-              }
-              return hands;
-            }}
-            action={() => {
-              let actions = [];
-              for (let i = 0; i < interfaceTextArray.length; i++) {
-                actions.push(interfaceTextArray[i].action);
-              }
-              return actions;
-            }}
-            thenType="interface"
-            thenDetail={() => {
-              let details = [];
-              for (let i = 0; i < interfaceTextArray.length; i++) {
-                details.push(interfaceTextArray[i].thenDetail);
-              }
-              return details;
-            }}
-          />
-        )} */}
-      </div>
-      {/* {if (
-            value.ifType === "action" &&
-            rules.filter((value) => {
+      {rules !== undefined && (
+        <div
+          id="actionCanvas"
+          style={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 15,
+          }}
+        >
+          {rules
+            .filter((value) => {
               return value.ifType === "action";
-            }).length > 0
-          ) {
-            return (
-             
-            );
-          }} */}
+            })
+            .map((value, index) => {
+              let actionDetails = (({
+                action,
+                hand,
+                thenType,
+                thenDetail,
+                ifType,
+                ...remaining
+              }) => remaining)(value);
+              return (
+                <Action
+                  key={index}
+                  videoWidth={vWidth}
+                  videoHeight={vHeight}
+                  hand={value.hand}
+                  action={value.action}
+                  thenType={value.thenType}
+                  thenDetail={value.thenDetail}
+                  actionDetail={actionDetails}
+                />
+              );
+            })}
+        </div>
+      )}
     </div>
   );
 }

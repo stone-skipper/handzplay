@@ -63,7 +63,7 @@ export default function ShapeCvs({
           ctx
         );
       } else if (thenDetail[0] === "clipping") {
-        star(
+        clipping(
           points[0],
           points[1],
           points[2],
