@@ -20,16 +20,17 @@ It's an 'if-then' structure rule that you can define a type of gesture to trigge
 <br/>
 For trigger, 
 - fingers : Choose two fingers and the distance between them. If they're within the range, the interaction is triggered. 
-- ![image](https://user-images.githubusercontent.com/48980449/207820111-c82cd5c3-2d54-47d4-ac36-fb1bbd5133f3.png)
 
-<br/>
 - pose : Choose which hand (left, right, or both) and the pose. 
 
-
-<br/>
 - action : Choose 
 
 For reaction, 
+- audio
+- draw
+- voice
+- shape
+- stamp
 
 #### Add an interface
 
