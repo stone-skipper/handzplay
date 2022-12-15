@@ -1,8 +1,8 @@
 # Handzplay
 
-This is an experiment by [Seungmee Lee](https://read.cv/seungmee_lee), playing around with gesture interaction.
+Handzplay is a playground for hand gesture interactions. You can create gesture interactions by adding rules and interfaces. 
 <br/>
-Check out the [website](https://handzplay.vercel.app) to experience it.
+Experiment by [Seungmee Lee](https://read.cv/seungmee_lee)
 <br/>
 <br/>
 
@@ -10,13 +10,26 @@ Check out the [website](https://handzplay.vercel.app) to experience it.
 ## How it works
 
 Your hands in a camera feed are recognized and visualized by TensorFlow Handpose.
-You can try pre-built templates with set of rules and interfaces, or you can create your own.
+You can try from pre-built templates with set of rules and interfaces, or you can create your own.
 
 Currently, there're 3 ways of creating conditions.
 
 #### Add a rule
 
-It's an 'if-then' structure rule that you can define a type of gesture to trigger the interaction, and a type of reaction.
+It's an 'if-then' structure rule that you can define a type of gesture to trigger the interaction, and a type of reaction to be triggered.
+<br/>
+For trigger, 
+- fingers : Choose two fingers and the distance between them. If they're within the range, the interaction is triggered. 
+- ![image](https://user-images.githubusercontent.com/48980449/207820111-c82cd5c3-2d54-47d4-ac36-fb1bbd5133f3.png)
+
+<br/>
+- pose : Choose which hand (left, right, or both) and the pose. 
+
+
+<br/>
+- action : Choose 
+
+For reaction, 
 
 #### Add an interface
 
