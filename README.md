@@ -20,10 +20,8 @@ It's an 'if-then' structure rule that you can define a type of gesture to trigge
 <br/>
 For trigger, 
 - fingers : Choose two fingers and the distance between them. If they're within the range, the interaction is triggered. 
-
 - pose : Choose which hand (left, right, or both) and the pose. 
-
-- action : Choose 
+- action : Choose which hand (left, right, or both) and the swiping direction in the air.
 
 For reaction, 
 - audio
