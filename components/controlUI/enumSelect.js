@@ -9,8 +9,11 @@ export default function EnumSelect({
   title,
   label,
   options,
-  relatedProperty,
+  relatedProperty = [],
   inactive = [],
+  arrayIndex = null,
+  display = true,
+  active = true,
 }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const updateRuleInProgress = useRulesStore(
@@ -33,8 +36,21 @@ export default function EnumSelect({
       setSelected("");
     }
   }, [ruleInProgress]);
+
+  useEffect(() => {
+    updateRuleInProgress(label, selected, arrayIndex);
+  }, []);
+
+  useEffect(() => {
+    if (display === false) {
+      setSelected("");
+    }
+  }, [display]);
   return (
-    <div className={styles.enumWrapper}>
+    <div
+      className={styles.enumWrapper}
+      style={{ pointerEvents: active === false ? "none" : "initial" }}
+    >
       {title}
       <div
         style={{
@@ -49,7 +65,7 @@ export default function EnumSelect({
               key={index}
               onClick={() => {
                 if (inactive.includes(data) === false) {
-                  updateRuleInProgress(label, data);
+                  updateRuleInProgress(label, data, arrayIndex);
                   setSelected(data);
                 }
                 // console.log(ruleInProgress);
@@ -61,6 +77,7 @@ export default function EnumSelect({
                 opacity: inactive.includes(data) === true ? 0.4 : 1,
                 fontWeight: selected === data ? 600 : 500,
                 color: selected === data ? "#0066FF" : "grey",
+                userSelect: "none",
               }}
             >
               {selected === data && "● "}

@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import HandIllust03 from "../components/visual/hand03";
 import HandIllust04 from "../components/visual/hand04";
 import { useViewport } from "../lib/hook";
+import StyledLink from "../components/UI/styledLink";
 
 export default function Index() {
   const leftHand = useControlsStore((state) => state.leftHand);
@@ -28,7 +29,8 @@ export default function Index() {
     } else {
       setIsMobile(true);
     }
-  });
+    useControlsStore.setState({ drawMode: false });
+  }, []);
   const { width } = useViewport();
 
   useEffect(() => {
@@ -69,23 +71,12 @@ export default function Index() {
     </div>
   ) : (
     <div className={styles.mobile}>
-      <motion.div
-        animate={{
-          opacity: rightHand === true || leftHand === true ? 0 : 1,
-          filter:
-            rightHand === true || leftHand === true
-              ? "blur(30px)"
-              : "blur(0px)",
-        }}
-        style={{ width: "100%", height: "100%", position: "absolute", top: 0 }}
+      <div
+        className={styles.titleWrapper}
+        style={{ height: "fit-content", marginTop: "20vh" }}
       >
-        <HandIllust01 initTop="20%" initLeft="-50%" top="18%" left="-45%" />
-        <HandIllust02 initTop="35%" initLeft="45%" top="33%" left="40%" />
-        <HandIllust03 initTop="46%" initLeft="-20%" top="45%" left="-15%" />
-        <HandIllust04 initTop="9%" initLeft="45%" top="6%" left="40%" />
-      </motion.div>
-      <div className={styles.titleWrapper}>
         <Logo color="white" displayTag={false} fontSize={45} delay={0} />
+
         <div
           style={{
             color: "white",
@@ -106,23 +97,34 @@ export default function Index() {
       <div
         style={{
           position: "absolute",
-          bottom: "10%",
+          top: "50vh",
           color: "white",
-          fontSize: "0.55em",
+          fontSize: "0.6em",
           display: "flex",
           justifyContent: "center",
           width: "100%",
           textAlign: "center",
-          lineHeight: 1.5,
+          lineHeight: 2,
         }}
       >
         <p>
           it's not supported on mobile.
           <br />
           <br />
-          please visit again
+          In the meantime, check my{" "}
+          <StyledLink
+            link="https://www.instagram.com/stone.skipper"
+            title="instagram"
+          />
           <br />
-          when you're on your laptop.
+          or{" "}
+          <StyledLink
+            link="https://www.handzplay.vercel.app"
+            title="copy the link"
+            copyToClipboard={true}
+          />{" "}
+          <br />
+          to come back on your laptop
         </p>
       </div>
     </div>

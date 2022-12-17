@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRulesStore, useControlsStore } from "../../lib/store";
 import styles from "./panels.module.scss";
 import { motion } from "framer-motion";
@@ -7,14 +7,22 @@ import {
   drumSet,
   moveSet,
   whiteboardSet,
-  browseSet,
+  swipeSet,
+  hoverClickSet,
   spideySet,
 } from "../../lib/rulePreset";
+import { useOnClickOutside } from "../../lib/hook";
 
 export default function Template() {
   const toggleTemplate = useControlsStore((state) => state.toggleTemplate);
   const rules = useRulesStore((state) => state.rules);
   const addRule = useRulesStore((state) => state.addRule);
+  const ref = useRef();
+
+  useOnClickOutside(ref, () =>
+    useControlsStore.setState({ toggleTemplate: false })
+  );
+
   const Items = ({ title, onClick, description }) => {
     return (
       <motion.div
@@ -23,6 +31,7 @@ export default function Template() {
           useRulesStore.setState({ rules: [] });
           onClick();
           useControlsStore.setState({ toggleTemplate: false });
+          useControlsStore.setState({ currentTab: "none" });
         }}
         whileHover={{
           background: "rgba(227, 238, 255, 1)",
@@ -57,7 +66,29 @@ export default function Template() {
         className={styles.templateModal}
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
+        ref={ref}
       >
+        <motion.div
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            cursor: "pointer",
+            margin: 20,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: 20,
+            height: 20,
+            borderRadius: 20,
+          }}
+          whileHover={{ scale: 1.1 }}
+          onClick={() => {
+            useControlsStore.setState({ toggleTemplate: false });
+          }}
+        >
+          ⨉
+        </motion.div>
         <div
           style={{
             textAlign: "center",
@@ -83,6 +114,19 @@ export default function Template() {
             description="start from a scratch"
           />
           <Items
+            title="hover & click"
+            onClick={() => {
+              useControlsStore.setState({ handIndicatorType: "cursor" });
+              useControlsStore.setState({ handColor: "#0066FF" });
+
+              for (let i = 0; i < hoverClickSet.length; i++) {
+                addRule(hoverClickSet[i]);
+              }
+            }}
+            description="use your hand like a mouse"
+          />
+
+          <Items
             title="gestures"
             onClick={() => {
               useControlsStore.setState({ handIndicatorType: "skeleton" });
@@ -93,6 +137,13 @@ export default function Template() {
               }
             }}
             description="see hand gestures detected"
+          />
+          <Items
+            title="draw mode"
+            onClick={() => {
+              useControlsStore.setState({ drawMode: true });
+            }}
+            description="draw interfaces like on a canvas"
           />
           <Items
             title="drumkit"
@@ -124,8 +175,8 @@ export default function Template() {
               useControlsStore.setState({ handIndicatorType: "blurred" });
               useControlsStore.setState({ handColor: "#0066FF" });
 
-              for (let i = 0; i < moveSet.length; i++) {
-                addRule(moveSet[i]);
+              for (let i = 0; i < swipeSet.length; i++) {
+                addRule(swipeSet[i]);
               }
             }}
             description="swipe gestures over the air "

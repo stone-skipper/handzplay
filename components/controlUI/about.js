@@ -1,16 +1,21 @@
 import { useControlsStore, useInviteStore } from "../../lib/store";
 import styles from "./panels.module.scss";
 import { useEffect, useState, useRef } from "react";
-
+import { useOnClickOutside } from "../../lib/hook";
 import { motion } from "framer-motion";
+import StyledLink from "../UI/styledLink";
 
 export default function About() {
   const handColor = useControlsStore((state) => state.handColor);
 
   const currentTab = useControlsStore((state) => state.currentTab);
+  const ref = useRef();
+  // useOnClickOutside(ref, () =>
+  //   useControlsStore.setState({ currentTab: "none" })
+  // );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={ref}>
       <motion.div
         className={styles.content}
         style={{ display: currentTab === "about" ? "flex" : "none" }}
@@ -20,62 +25,57 @@ export default function About() {
           interacting with devices and interfaces. <br />
           <br />
           With any device with camera, you can use your fingers and hands to
-          interact, and create new ‘rules’, defining what triggers which
-          reactions.
+          interact, and create new ‘rules’, defining type of trigger and
+          reaction.
+          <br /> Or you can create new ‘interfaces’ that changes based on your
+          action, like swiping and hovering.
           <br />
           <br />
           If you have any inquiry or ideas, please reach out to me via{" "}
-          <a
-            style={{ color: handColor, textDecoration: "underline" }}
-            href="mailto:iam.seungmee.lee@gmail.com"
-            target="_blank"
-          >
-            {"->"} email
-          </a>{" "}
+          <StyledLink
+            title="email"
+            link="mailto:iam.seungmee.lee@gmail.com"
+            color={handColor}
+          />{" "}
           or{" "}
-          <a
-            style={{ color: handColor, textDecoration: "underline" }}
-            href="https://www.instagram.com/stone.skipper/"
-            target="_blank"
-          >
-            {"->"} instagram
-          </a>{" "}
+          <StyledLink
+            title="instagram"
+            link="https://www.instagram.com/stone.skipper/"
+            color={handColor}
+          />
           <br />
           <br />
         </div>
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>Made by</div>
           <div className={styles.options}>
-            <a
-              style={{ color: "black" }}
-              href="https://seungmee-lee.com"
-              target="_blank"
-            >
-              {"->"} stone.skipper
-            </a>
+            <StyledLink
+              title="stone.skipper"
+              link="https://www.seungmee-lee.com"
+              color="black"
+              underline={false}
+            />
           </div>
         </div>
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>Version</div>
-          <div className={styles.options}>1.0.0 (updated 2022.10.15)</div>
+          <div className={styles.options}>1.2.0 (updated 2022.12.13)</div>
         </div>
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>References</div>
           <div className={styles.options}>
-            <a
-              style={{ color: "black" }}
-              href="https://blog.tensorflow.org/2021/11/3D-handpose.html"
-              target="_blank"
-            >
-              {"->"} tensorflow
-            </a>{" "}
-            <a
-              style={{ color: "black" }}
-              href="https://github.com/andypotato/fingerpose"
-              target="_blank"
-            >
-              {"->"} fingerpose
-            </a>
+            <StyledLink
+              title="tensorflow"
+              link="https://blog.tensorflow.org/2021/11/3D-handpose.html"
+              color="black"
+              underline={false}
+            />
+            <StyledLink
+              title="fingerpose"
+              link="https://github.com/andypotato/fingerpose"
+              color="black"
+              underline={false}
+            />
           </div>
         </div>
       </motion.div>

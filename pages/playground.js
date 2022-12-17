@@ -25,6 +25,7 @@ export default function Playground() {
 
   useEffect(() => {
     useControlsStore.setState({ toggleTemplate: true });
+    useControlsStore.setState({ currentTab: "none" });
   }, []);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function Playground() {
           bottom: 4,
           gap: 4,
           justifyContent: "center",
+          zIndex: 10,
         }}
       >
         <About />

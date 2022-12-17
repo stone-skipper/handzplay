@@ -97,6 +97,7 @@
   text-align: center;
   cursor: pointer;
   text-transform: capitalize;
+  user-select: none;
 }
 
 .rule {
@@ -173,6 +174,7 @@
     align-items: center;
     font-size: 0.7em;
     cursor: pointer;
+    user-select: none;
   }
 }
 
@@ -182,9 +184,11 @@
   justify-content: center;
   align-items: center;
   height: fit-content;
-  padding: 20px;
-  overflow: hidden;
+  // padding: 3px;
+  overflow-x: visible;
+  overflow-y: hidden;
   width: fit-content;
+  padding: 3px;
   button {
     display: none !important;
     // remove the native btn
@@ -194,12 +198,59 @@
 .swiperSlide {
   text-align: center;
   font-size: 10px;
+  margin: 0 3px;
+  // line-height: 1em;
   width: fit-content;
   height: fit-content;
   /* Center slide text vertically */
-
+  user-select: none;
   display: flex;
   align-items: center;
+  justify-content: center;
+  > h3 {
+    margin-block-start: 0.9em;
+    margin-block-end: 0.9em;
+  }
+}
+
+.slideWrapperHor {
+  // justify-content: center;
+  // align-items: center;
+
+  // // padding: 3px;
+  // // width: fit-content;
+  // padding: 3px;
+  // background: green;
+
+  button {
+    display: none !important;
+    // remove the native btn
+  }
+  // .slick-list {
+  // }
+  // .slick-track {
+  //   display: flex;
+  //   flex-direction: row;
+  // }
+}
+.swiperSlideHor {
+  text-align: center;
+  font-size: 10px;
+  margin: 0 3px;
+  // line-height: 1em;
+  // width: fit-content;
+  /* Center slide text vertically */
+  user-select: none;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  > h3 {
+    margin-block-start: 0.9em;
+    margin-block-end: 0.9em;
+    width: fit-content;
+    height: fit-content;
+  }
 }
 
 .enumWrapper {
@@ -222,7 +273,10 @@
   justify-content: center;
   align-items: center;
   flex-grow: 0.5;
+  gap: 12px;
+  // background: blue;
 }
+
 .optionsHolder {
   display: flex;
   justify-content: space-between;
@@ -251,6 +305,7 @@
   background: white;
   padding: 24px;
   border-radius: 10px;
+  position: relative;
 }
 .templateItems {
   text-align: center;
@@ -268,7 +323,7 @@
 
 .templateGrid {
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(4, auto);
   grid-gap: 15px;
   grid-template-rows: repeat(2, auto);
 }
@@ -281,3 +336,5 @@
   color: rgba(0, 0, 0, 0.3);
   width: 80%;
 }
+
+/* new interface */

@@ -2,14 +2,15 @@ import React, { useRef, useState, useEffect } from "react";
 import { useControlsStore, useRulesStore } from "../../lib/store";
 import { motion } from "framer-motion";
 import Interface from "../then/interface";
-
+import ActionInterface from "../then/actionInterface";
+import Element from "../then/Element";
 import AudioCvs from "../then/audioCvs";
 
 export default function Action({
   videoWidth,
   videoHeight,
   hand,
-  action,
+  actionDetail,
   thenType,
   thenDetail,
 }) {
@@ -20,6 +21,7 @@ export default function Action({
 
   const [trigger, setTrigger] = useState(false);
   const [point, setPoint] = useState({ x: 0, y: 0 });
+  const [currentAction, setCurrentAction] = useState("");
 
   const pullTrigger = () => {
     if (hand === "left" && action === currentActionL) {
@@ -36,15 +38,32 @@ export default function Action({
   useEffect(() => {
     pullTrigger();
     console.log(currentActionL, currentActionR);
+    if (currentActionL !== "") {
+      setCurrentAction(currentActionL);
+    } else if (currentActionR !== "") {
+      setCurrentAction(currentActionR);
+    }
   }, [currentActionL, currentActionR]);
+
+  useEffect(() => {
+    if (currentAction !== "") {
+      setTimeout(() => {
+        setCurrentAction("");
+      }, 1000);
+    }
+  }, [currentAction]);
 
   return (
     <>
       {thenType === "interface" && (
-        <Interface
-          type={thenDetail[0]}
-          trigger={trigger}
+        // <ActionInterface
+        //   currentAction={currentAction}
+        //   thenDetail={thenDetail}
+        // />
+        <Element
+          currentAction={currentAction}
           thenDetail={thenDetail}
+          actionDetail={actionDetail}
         />
       )}
 

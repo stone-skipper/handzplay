@@ -30,6 +30,23 @@ export default function RulesList() {
       </div>
     );
   };
+  const InterfaceWrapper = ({ type, property }) => {
+    return (
+      <div className={styles.trigger}>
+        <div className={styles.if}>
+          {property.map((value, index) => {
+            if (index !== property.length - 1) {
+              return <>{value}-</>;
+            } else {
+              return <>{value}</>;
+            }
+          })}
+        </div>
+        to change
+        <div className={styles.if}>{type}</div>
+      </div>
+    );
+  };
 
   const RelationWrapper = ({ fingerA, fingerB, distance }) => {
     return (
@@ -60,14 +77,31 @@ export default function RulesList() {
       <div className={styles.rulesWrapper}>
         <NoRuleStatus />
         {rules.map((rule, index) => {
+          var actionDetails;
+          if (rule.ifType === "action" && rule.thenType === "interface") {
+            actionDetails = (({
+              action,
+              hand,
+              thenType,
+              thenDetail,
+              ifType,
+              ...remaining
+            }) => remaining)(rule);
+          }
           return (
             <div className={styles.rule}>
               <div className={styles.number}>{index + 1}</div>
               {rule.ifType === "pose" && (
                 <PoseWrapper hand={rule.hand} pose={rule.pose} />
               )}
-              {rule.ifType === "action" && (
+              {rule.ifType === "action" && rule.thenType === "audio" && (
                 <ActionWrapper hand={rule.hand} action={rule.action} />
+              )}
+              {rule.ifType === "action" && rule.thenType === "interface" && (
+                <InterfaceWrapper
+                  type={rule.thenDetail[0]}
+                  property={Object.getOwnPropertyNames(actionDetails)}
+                />
               )}
               {rule.ifType === "fingers" && (
                 <RelationWrapper

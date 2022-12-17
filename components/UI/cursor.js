@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useCursorStore } from "../../lib/store";
+import { useCursorStore, useControlsStore } from "../../lib/store";
 
 export default function Cursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const motionCursorSize = useMotionValue(28);
+  const handColor = useControlsStore((state) => state.handColor);
 
   const springConfig = { damping: 30, stiffness: 150, mass: 0.6 };
 
@@ -49,22 +50,31 @@ export default function Cursor() {
     <motion.div
       style={{
         position: "absolute",
-        left: 0,
-        top: 0,
+        left: 15,
+        top: 15,
         zIndex: 20,
-        width: cursorSizeSpring,
-        height: cursorSizeSpring,
-        borderRadius: 100,
+        // width: cursorSizeSpring,
+        // height: cursorSizeSpring,
+        padding: "10px 14px",
+        borderRadius: 30,
+        fontSize: "0.7em",
+        color: "white",
         // mixBlendMode:
         //   hover === "default" || hover === "button" ? "difference" : "normal",
-        background: "white",
+        // background: "white",
+        background: handColor,
         translateX: cursorXSpring,
         translateY: cursorYSpring,
         pointerEvents: "none",
         display: "flex",
+        width: "fit-content",
+        height: "fit-content",
         justifyContent: "center",
         alignItems: "center",
+        whiteSpace: "nowrap",
       }}
-    ></motion.div>
+    >
+      in draw mode
+    </motion.div>
   );
 }

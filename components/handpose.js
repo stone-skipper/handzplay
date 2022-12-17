@@ -26,6 +26,7 @@ import {
 import Pose from "./if/pose";
 import Fingers from "./if/fingers";
 import Action from "./if/action";
+import DrawMode from "./then/drawMode";
 
 export default function Handpose({
   handIndicatorType,
@@ -39,6 +40,7 @@ export default function Handpose({
   // from store
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
+  const drawMode = useControlsStore((state) => state.drawMode);
   const handCursorType = useControlsStore((state) => state.handCursorType);
   const handBlur = useControlsStore((state) => state.handBlur);
   // const rules = useRulesStore((state) => state.rules);
@@ -46,26 +48,15 @@ export default function Handpose({
 
   var handL, handR, hand;
 
-  var interfaceTextArray = [];
-  var interfaceCircleArray = [];
-  var interfaceRectArray = [];
-
   useEffect(() => {
-    rules
-      .filter((value) => {
-        return value.ifType === "action" && value.thenType === "interface";
-      })
-      .forEach((x) => {
-        if (x.thenDetail[0] === "text") {
-          interfaceTextArray.push(x);
-        } else if (x.thenDetail[0] === "rect") {
-          interfaceRectArray.push(x);
-        } else if (x.thenDetail[0] === "circle") {
-          interfaceCircleArray.push(x);
-        }
-      });
-    console.log(interfaceTextArray, interfaceCircleArray, interfaceRectArray);
-  }, [rules]);
+    if (handIndicatorType === "blurred") {
+      useControlsStore.setState({ handBlur: 35 });
+    } else if (handIndicatorType === "cursor") {
+      useControlsStore.setState({ handBlur: 0 });
+    } else {
+      useControlsStore.setState({ handBlur: 0 });
+    }
+  }, [handIndicatorType]);
 
   useEffect(() => {
     if (handIndicatorType === "blurred") {
@@ -112,6 +103,12 @@ export default function Handpose({
       detect(detector);
     }, 10);
   };
+
+  const removeProperty = (propKey, { [propKey]: propValue, ...rest }) => rest;
+  const removeProperties = (object, ...keys) =>
+    keys.length
+      ? removeProperties(removeProperty(keys.pop(), object), ...keys)
+      : object;
 
   var videoWidth, videoHeight;
 
@@ -416,15 +413,6 @@ export default function Handpose({
       for (let i = 0; i < passHand.length; i++) {
         if (handIndicatorType === "skeleton") {
           drawHand(passHand[i].keypoints, handColor, ctx);
-        } else if (handIndicatorType === "blurDot") {
-          drawCursor(
-            passHand[i].keypoints,
-            handColor,
-            passHand[i].handedness,
-            handCursorType[0],
-            handCursorType[1],
-            ctx
-          );
         } else if (handIndicatorType === "points") {
           drawPoints(passHand[i].keypoints, handColor, ctx);
         } else if (handIndicatorType === "blurred") {
@@ -455,7 +443,7 @@ export default function Handpose({
           left: 0,
           right: 0,
           textAlign: "center",
-          zindex: 15,
+          // zindex: 1,
           width: "100vw",
           height: "100vh",
           objectFit: "cover",
@@ -475,7 +463,7 @@ export default function Handpose({
           left: 0,
           right: 0,
           textAlign: "center",
-          zindex: 9,
+          zIndex: fingersL[0] !== 0 || fingersR[0] !== 0 ? 2 : 0,
           width: "100vw",
           height: "100vh",
           objectFit: "cover",
@@ -484,6 +472,7 @@ export default function Handpose({
           filter: "blur(" + handBlur + "px)",
         }}
       />
+      {drawMode === true && <DrawMode />}
       {rules !== undefined &&
         rules.map((value, index) => {
           if (value.ifType === "fingers") {
@@ -513,73 +502,69 @@ export default function Handpose({
             );
           }
         })}
-      <div
-        style={{
-          width: "100vw",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 15,
-        }}
-      >
-        {rules
-          .filter((value) => {
-            return value.ifType === "action";
-          })
-          .map((value, index) => {
-            return (
-              <Action
-                key={index}
-                videoWidth={vWidth}
-                videoHeight={vHeight}
-                hand={value.hand}
-                action={value.action}
-                thenType={value.thenType}
-                thenDetail={value.thenDetail}
-              />
-            );
-          })}
-
-        {/* {interfaceTextArray.length !== 0 && (
-          <Action
-            videoWidth={vWidth}
-            videoHeight={vHeight}
-            hand={() => {
-              let hands = [];
-              for (let i = 0; i < interfaceTextArray.length; i++) {
-                hands.push(interfaceTextArray[i].hand);
-              }
-              return hands;
+      {rules !== undefined && (
+        <div
+          id="actionCanvas"
+          style={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 15,
+          }}
+        >
+          <div
+            style={{
+              display: "grid",
+              width: "fit-content",
+              height: "fit-content",
+              gridTemplateColumns:
+                rules.filter((value) => {
+                  return value.ifType === "action";
+                }).length > 6
+                  ? "repeat(6, 1fr)"
+                  : "repeat(" +
+                    rules.filter((value) => {
+                      return value.ifType === "action";
+                    }).length +
+                    ", 1fr)",
+              justifyContent: "center",
+              alignItems: "center",
+              columnGap: 10,
+              rowGap: 10,
             }}
-            action={() => {
-              let actions = [];
-              for (let i = 0; i < interfaceTextArray.length; i++) {
-                actions.push(interfaceTextArray[i].action);
-              }
-              return actions;
-            }}
-            thenType="interface"
-            thenDetail={() => {
-              let details = [];
-              for (let i = 0; i < interfaceTextArray.length; i++) {
-                details.push(interfaceTextArray[i].thenDetail);
-              }
-              return details;
-            }}
-          />
-        )} */}
-      </div>
-      {/* {if (
-            value.ifType === "action" &&
-            rules.filter((value) => {
-              return value.ifType === "action";
-            }).length > 0
-          ) {
-            return (
-             
-            );
-          }} */}
+          >
+            {rules
+              .filter((value) => {
+                return value.ifType === "action";
+              })
+              .map((value, index) => {
+                let actionDetails = (({
+                  action,
+                  hand,
+                  thenType,
+                  thenDetail,
+                  ifType,
+                  ...remaining
+                }) => remaining)(value);
+                return (
+                  <Action
+                    key={index}
+                    videoWidth={vWidth}
+                    videoHeight={vHeight}
+                    hand={value.hand}
+                    action={value.action}
+                    thenType={value.thenType}
+                    thenDetail={value.thenDetail}
+                    actionDetail={actionDetails}
+                  />
+                );
+              })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

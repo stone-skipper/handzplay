@@ -4,8 +4,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "server": "nodemon server.js"
+    "start": "next start"
   },
   "dependencies": {
     "@mediapipe/hands": "^0.4.1646424915",
@@ -14,15 +13,12 @@
     "@tensorflow/tfjs": "^3.18.0",
     "@tensorflow/tfjs-backend-wasm": "^3.18.0",
     "@tensorflow/tfjs-backend-webgl": "^3.18.0",
-    "express": "^4.18.1",
     "fingerpose": "^0.1.0",
     "framer-motion": "^6.4.3",
     "immer": "^9.0.15",
     "next": "latest",
-    "nodemon": "^2.0.19",
     "react": "^17.0.2",
     "react-color": "^2.19.3",
-    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^17.0.2",
     "react-ga4": "^1.4.1",
     "react-intersection-observer": "^9.4.0",
@@ -31,11 +27,7 @@
     "react-speech-kit": "^3.0.1",
     "react-webcam": "^7.0.1",
     "sass": "^1.53.0",
-    "simple-peer": "^9.11.1",
-    "socket.io": "^4.5.1",
-    "socket.io-client": "^4.5.1",
     "styled-components": "^5.3.5",
-    "wrtc": "^0.4.7",
     "zustand": "^3.7.1"
   }
 }

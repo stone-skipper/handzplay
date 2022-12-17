@@ -57,8 +57,8 @@ export default function Pose({
       {thenType === "interface" && (
         <motion.div
           style={{
-            width: "fit-content",
-            height: "fit-content",
+            width: "100vw",
+            height: "100vh",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

@@ -1,11 +1,12 @@
 import { useControlsStore } from "../../lib/store";
 import styles from "./panels.module.scss";
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import ColorSelect from "../UI/controls/color";
 import Divider from "../UI/controls/divider";
 import HandIllust01 from "../visual/hand01";
 import HandIllust02 from "../visual/hand02";
 import { motion } from "framer-motion";
+import { useOnClickOutside } from "../../lib/hook";
 
 export default function Controls() {
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
@@ -27,9 +28,13 @@ export default function Controls() {
   const fingersL = useControlsStore((state) => state.fingersL);
   const fingersR = useControlsStore((state) => state.fingersR);
   const currentTab = useControlsStore((state) => state.currentTab);
+  const ref = useRef();
+  // useOnClickOutside(ref, () =>
+  //   useControlsStore.setState({ currentTab: "none" })
+  // );
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} ref={ref}>
       <motion.div
         className={styles.content}
         style={{ display: currentTab === "control" ? "flex" : "none" }}

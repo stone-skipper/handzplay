@@ -6,12 +6,10 @@ import styles from "./panels.module.scss";
 import { motion } from "framer-motion";
 import Slider from "react-slick";
 
-export default function ScrollPicker({
-  active = true,
+export default function HorizontalScrollPicker({
   label,
   arrayIndex = null,
   options,
-  arrow = false,
 }) {
   const ruleInProgress = useRulesStore((state) => state.ruleInProgress);
   const updateRuleInProgress = useRulesStore(
@@ -22,13 +20,8 @@ export default function ScrollPicker({
   const [slidesToScroll, setSlidesToScroll] = useState(1);
 
   useEffect(() => {
-    if (active === true) {
-      setCurrent(0);
-      updateRuleInProgress(label, options[0], arrayIndex);
-    } else {
-      setCurrent(null);
-    }
-  }, [active]);
+    updateRuleInProgress(label, options[0], arrayIndex);
+  }, []);
 
   const sliderRef = useRef(null);
   const scroll = useCallback(
@@ -54,10 +47,9 @@ export default function ScrollPicker({
   const settings = {
     dots: false,
     infinite: false,
+    vertical: false,
     slidesToShow: 1,
     slidesToScroll: 1,
-    vertical: true,
-    verticalSwiping: true,
     swipeToSlide: true,
     focusOnSelect: true,
     swipe: true,
@@ -79,8 +71,8 @@ export default function ScrollPicker({
   const [current, setCurrent] = useState(0);
   return (
     <div
-      className={styles.slideWrapper}
-      style={{ pointerEvents: active === false ? "none" : "initial" }}
+      className={styles.slideWrapperHor}
+      style={{ width: "50%" }}
       onMouseEnter={() => {
         setMouseOn(true);
       }}
@@ -88,42 +80,11 @@ export default function ScrollPicker({
         setMouseOn(false);
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          display: arrow === true ? "flex" : "none",
-          flexDirection: "column",
-          width: "fit-content",
-          height: "fit-content",
-          justifyContent: "center",
-          userSelect: "none",
-          textAlign: "center",
-          alignItems: "center",
-          gap: 10,
-          fontSize: "0.8em",
-        }}
-      >
-        <div
-          style={{}}
-          onClick={() => {
-            sliderRef?.current?.slickPrev();
-          }}
-        >
-          ↑
-        </div>
-        <div
-          onClick={() => {
-            sliderRef?.current?.slickNext();
-          }}
-        >
-          ↓
-        </div>
-      </div>
       <Slider {...settings} ref={sliderRef}>
         {options.map((data, index) => {
           return (
             <motion.div
-              className={styles.swiperSlide}
+              className={styles.swiperSlideHor}
               key={index}
               animate={{
                 opacity: index === current ? 1 : 0.4,

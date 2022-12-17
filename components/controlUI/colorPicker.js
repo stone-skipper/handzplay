@@ -1,6 +1,7 @@
 import { ChromePicker } from "react-color";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRulesStore } from "../../lib/store";
+import { useOnClickOutside } from "../../lib/hook";
 
 export default function ColorPicker({ label, arrayIndex = null }) {
   const [displayColorPicker, setDisplayColorPicker] = useState(false);
@@ -8,10 +9,13 @@ export default function ColorPicker({ label, arrayIndex = null }) {
   const updateRuleInProgress = useRulesStore(
     (state) => state.updateRuleInProgress
   );
+  const ref = useRef();
 
   useEffect(() => {
     updateRuleInProgress(label, selectedColor, arrayIndex);
   }, []);
+  useOnClickOutside(ref, () => setDisplayColorPicker(false));
+
   return (
     <div style={{ position: "relative" }}>
       <div
@@ -20,7 +24,7 @@ export default function ColorPicker({ label, arrayIndex = null }) {
         }}
         style={{
           width: "fit-content",
-          padding: 20,
+          // padding: 12,
           borderRadius: 2,
           color: selectedColor,
           display: "flex",
@@ -39,6 +43,7 @@ export default function ColorPicker({ label, arrayIndex = null }) {
           zIndex: 10,
           bottom: 35,
         }}
+        ref={ref}
       >
         <ChromePicker
           disableAlpha={true}

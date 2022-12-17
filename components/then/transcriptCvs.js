@@ -53,16 +53,16 @@ export default function TranscriptCvs({
 
     if (listening === true) {
       tempCtx.beginPath();
-      tempCtx.fillStyle = thenDetail[2];
+      tempCtx.fillStyle = thenDetail[0];
       tempCtx.rect(point.x, point.y - 150, 150, 150);
       tempCtx.fill();
-      tempCtx.font = thenDetail[3] + "px Manrope";
+      tempCtx.font = 20 + "px Manrope";
       tempCtx.textAlign = "center";
       tempCtx.scale(-1, 1);
       if (value === "") {
         tempCtx.fillStyle = "lightgrey";
       } else {
-        tempCtx.fillStyle = thenDetail[1];
+        tempCtx.fillStyle = "black";
       }
       tempCtx.fillText(
         value !== "" ? value : "listening",
@@ -80,7 +80,7 @@ export default function TranscriptCvs({
       for (let i = 0; i < transcriptArray.length; i++) {
         if (transcriptArray[i].text !== "") {
           ctx.beginPath();
-          ctx.fillStyle = thenDetail[2];
+          ctx.fillStyle = thenDetail[0];
           ctx.rect(
             -(transcriptArray[i].x + 75),
             transcriptArray[i].y - 75,
@@ -89,9 +89,9 @@ export default function TranscriptCvs({
           );
           ctx.fill();
 
-          ctx.font = thenDetail[3] + "px Manrope";
+          ctx.font = 20 + "px Manrope";
           ctx.textAlign = "center";
-          ctx.fillStyle = thenDetail[1];
+          ctx.fillStyle = "black";
           ctx.fillText(
             transcriptArray[i].text,
             -transcriptArray[i].x,
