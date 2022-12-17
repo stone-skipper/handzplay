@@ -1,7 +1,8 @@
 # Handzplay
 
-Handzplay is a playground for hand gesture interactions. You can create gesture interactions by adding rules and interfaces. 
-<br/>
+Handzplay is a playground for hand gesture interactions. 
+You can create gesture interactions by adding rules and interfaces. 
+<br/><br/>
 Experiment by [Seungmee Lee](https://read.cv/seungmee_lee)
 <br/>
 <br/>
@@ -44,5 +45,6 @@ Canvas mode offers the easiest way to create an interface, but now it only suppo
 ## References
 
 Tensorflow Handpose [doc](https://google.github.io/mediapipe/solutions/hands.html#javascript-solution-api)
+<br/>
 Fingerpose [doc](https://github.com/andypotato/fingerpose)
 
