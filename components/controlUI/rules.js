@@ -119,6 +119,7 @@ export default function Rules() {
                   addRule(ruleInProgress);
                   removeRuleInProgress();
                 } else {
+                  return;
                 }
               }}
             >
@@ -169,13 +170,20 @@ export default function Rules() {
               }}
               onClick={() => {
                 if (
-                  ruleInProgress.ifType !== undefined ||
-                  ruleInProgress.thenType !== undefined
+                  ruleInProgress.thenDetail !== undefined &&
+                  ruleInProgress.thenDetail[0] !== "" &&
+                  (Object.hasOwn(ruleInProgress, "left") === true ||
+                    Object.hasOwn(ruleInProgress, "right") === true ||
+                    Object.hasOwn(ruleInProgress, "up") === true ||
+                    Object.hasOwn(ruleInProgress, "down") === true ||
+                    Object.hasOwn(ruleInProgress, "hover") === true ||
+                    Object.hasOwn(ruleInProgress, "click") === true)
                 ) {
                   setRuleContent("list");
                   addRule(ruleInProgress);
                   removeRuleInProgress();
                 } else {
+                  return;
                 }
               }}
             >

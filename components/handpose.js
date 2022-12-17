@@ -511,35 +511,58 @@ export default function Handpose({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            flexWrap: "wrap",
             gap: 15,
           }}
         >
-          {rules
-            .filter((value) => {
-              return value.ifType === "action";
-            })
-            .map((value, index) => {
-              let actionDetails = (({
-                action,
-                hand,
-                thenType,
-                thenDetail,
-                ifType,
-                ...remaining
-              }) => remaining)(value);
-              return (
-                <Action
-                  key={index}
-                  videoWidth={vWidth}
-                  videoHeight={vHeight}
-                  hand={value.hand}
-                  action={value.action}
-                  thenType={value.thenType}
-                  thenDetail={value.thenDetail}
-                  actionDetail={actionDetails}
-                />
-              );
-            })}
+          <div
+            style={{
+              display: "grid",
+              width: "fit-content",
+              height: "fit-content",
+              gridTemplateColumns:
+                rules.filter((value) => {
+                  return value.ifType === "action";
+                }).length > 6
+                  ? "repeat(6, 1fr)"
+                  : "repeat(" +
+                    rules.filter((value) => {
+                      return value.ifType === "action";
+                    }).length +
+                    ", 1fr)",
+              justifyContent: "center",
+              alignItems: "center",
+              columnGap: 10,
+              rowGap: 10,
+            }}
+          >
+            {rules
+              .filter((value) => {
+                return value.ifType === "action";
+              })
+              .map((value, index) => {
+                let actionDetails = (({
+                  action,
+                  hand,
+                  thenType,
+                  thenDetail,
+                  ifType,
+                  ...remaining
+                }) => remaining)(value);
+                return (
+                  <Action
+                    key={index}
+                    videoWidth={vWidth}
+                    videoHeight={vHeight}
+                    hand={value.hand}
+                    action={value.action}
+                    thenType={value.thenType}
+                    thenDetail={value.thenDetail}
+                    actionDetail={actionDetails}
+                  />
+                );
+              })}
+          </div>
         </div>
       )}
     </div>

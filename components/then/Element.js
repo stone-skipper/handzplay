@@ -204,7 +204,9 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
           animate={
             checkAction.includes(currentAction) === true
               ? currentAction
-              : checkAction.includes("hover") === true && hovered === true
+              : checkAction.includes("hover") === true &&
+                hovered === true &&
+                clicked === false
               ? "hover"
               : checkAction.includes("click") === true && clicked === true
               ? "click"
@@ -232,7 +234,9 @@ export default function Element({ currentAction, thenDetail, actionDetail }) {
           animate={
             checkAction.includes(currentAction) === true
               ? currentAction
-              : checkAction.includes("hover") === true && hovered === true
+              : checkAction.includes("hover") === true &&
+                hovered === true &&
+                clicked === false
               ? "hover"
               : checkAction.includes("click") === true && clicked === true
               ? "click"
