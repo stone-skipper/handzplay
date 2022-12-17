@@ -1,6 +1,8 @@
 # Handzplay
 
-Handzplay is a playground for hand gesture interactions. You can create gesture interactions by adding rules and interfaces. 
+Handzplay is a playground for hand gesture interactions. 
+You can create gesture interactions by adding rules and interfaces. 
+<br/>
 <br/>
 Experiment by [Seungmee Lee](https://read.cv/seungmee_lee)
 <br/>
