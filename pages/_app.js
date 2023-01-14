@@ -3,7 +3,6 @@ import { useCreateStore, Provider } from "../lib/store";
 import Head from "next/head";
 import ReactGA from "react-ga4";
 import { useEffect } from "react";
-import Meta from "../lib/meta";
 
 import "../style.css";
 
