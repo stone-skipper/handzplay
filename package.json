@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start"
   },
   "dependencies": {
@@ -17,6 +18,7 @@
     "framer-motion": "^6.4.3",
     "immer": "^9.0.15",
     "next": "latest",
+    "next-sitemap": "^3.1.45",
     "react": "^17.0.2",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.2",

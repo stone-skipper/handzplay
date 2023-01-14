@@ -107,8 +107,8 @@ export default function HandIllust04({ initTop, initLeft, top, left }) {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(4.54034 152.954) rotate(5.97085) scale(286.672 208.839)"
           >
-            <stop stop-color="white" />
-            <stop offset="1" stop-color="white" stop-opacity="0" />
+            <stop stopColor="white" />
+            <stop offset="1" stopColor="white" stopOpacity="0" />
           </radialGradient>
           <linearGradient
             id="paint1_linear_959_339"
@@ -118,10 +118,10 @@ export default function HandIllust04({ initTop, initLeft, top, left }) {
             y2="221.474"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="0.427083" stop-color="white" stop-opacity="0.2" />
-            <stop offset="0.640625" stop-color="white" stop-opacity="0.2" />
-            <stop offset="1" stop-color="white" />
+            <stop stopColor="white" />
+            <stop offset="0.427083" stopColor="white" stopOpacity="0.2" />
+            <stop offset="0.640625" stopColor="white" stopOpacity="0.2" />
+            <stop offset="1" stopColor="white" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_959_339"
@@ -131,10 +131,10 @@ export default function HandIllust04({ initTop, initLeft, top, left }) {
             y2="220.073"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="0.385417" stop-color="white" stop-opacity="0.3" />
-            <stop offset="0.697917" stop-color="white" stop-opacity="0.3" />
-            <stop offset="1" stop-color="white" />
+            <stop stopColor="white" />
+            <stop offset="0.385417" stopColor="white" stopOpacity="0.3" />
+            <stop offset="0.697917" stopColor="white" stopOpacity="0.3" />
+            <stop offset="1" stopColor="white" />
           </linearGradient>
         </defs>
       </motion.svg>

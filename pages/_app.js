@@ -3,6 +3,7 @@ import { useCreateStore, Provider } from "../lib/store";
 import Head from "next/head";
 import ReactGA from "react-ga4";
 import { useEffect } from "react";
+import Meta from "../lib/meta";
 
 import "../style.css";
 
@@ -16,8 +17,8 @@ export default function App({ Component, pageProps }) {
   return (
     <Provider createStore={createStore}>
       <Head>
-        <title>HANDZPLAY</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <Meta />
+
         <link
           rel="preload"
           href="/font/GAINSBOR.TTF"
