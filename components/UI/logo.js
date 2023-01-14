@@ -48,8 +48,8 @@ export default function Logo({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: delay + 0.5 }}
         >
-          Playground for your hands, <br />
-          instead of your mouse
+          Playground for <br />
+          hand gesture interaction
         </motion.p>
       </motion.div>
     </Link>

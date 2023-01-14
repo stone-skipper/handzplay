@@ -5,14 +5,11 @@ import { useOnClickOutside } from "../../lib/hook";
 import { motion } from "framer-motion";
 import StyledLink from "../UI/styledLink";
 
-export default function About() {
+export default function About({ buttonType = "long" }) {
   const handColor = useControlsStore((state) => state.handColor);
 
   const currentTab = useControlsStore((state) => state.currentTab);
   const ref = useRef();
-  // useOnClickOutside(ref, () =>
-  //   useControlsStore.setState({ currentTab: "none" })
-  // );
 
   return (
     <div className={styles.wrapper} ref={ref}>
@@ -20,15 +17,22 @@ export default function About() {
         className={styles.content}
         style={{ display: currentTab === "about" ? "flex" : "none" }}
       >
-        <div style={{ color: handColor, fontSize: "1.1em", lineHeight: 1.5 }}>
+        <p
+          style={{
+            color: handColor,
+            fontSize: "1.1em",
+            lineHeight: 1.5,
+            letterSpacing: "normal",
+            textTransform: "unset",
+          }}
+        >
           Handzplay aims to explore the potential of hand gestures as a way of
           interacting with devices and interfaces. <br />
           <br />
           With any device with camera, you can use your fingers and hands to
           interact, and create new ‘rules’, defining type of trigger and
-          reaction.
-          <br /> Or you can create new ‘interfaces’ that changes based on your
-          action, like swiping and hovering.
+          reaction. Or you can create new ‘interfaces’ that changes based on
+          your action, like swiping and hovering.
           <br />
           <br />
           If you have any inquiry or ideas, please reach out to me via{" "}
@@ -45,7 +49,9 @@ export default function About() {
           />
           <br />
           <br />
-        </div>
+          No data will be saved here, cuz I don't know how.
+        </p>
+        <br />
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>Made by</div>
           <div className={styles.options}>
@@ -79,11 +85,14 @@ export default function About() {
           </div>
         </div>
       </motion.div>
-      <div
+      <motion.div
         className={styles.header}
         style={{
           background: "#4B92FD",
           opacity: currentTab === "about" || currentTab === "none" ? 1 : 0.4,
+          width: buttonType === "short" ? 50 : "inherit",
+          height: buttonType === "short" ? 50 : "inherit",
+          borderRadius: buttonType === "short" ? 50 : 6,
         }}
         onClick={() => {
           if (currentTab === "about") {
@@ -92,9 +101,10 @@ export default function About() {
             useControlsStore.setState({ currentTab: "about" });
           }
         }}
+        whileHover={{ scale: 1.1 }}
       >
-        <p> What is this?</p>
-      </div>
+        <p>{buttonType === "long" ? "What is this?" : "?"}</p>
+      </motion.div>
     </div>
   );
 }

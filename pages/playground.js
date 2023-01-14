@@ -37,10 +37,10 @@ export default function Playground() {
       className={styles.playground}
       style={{ background: playgroundBgColor }}
     >
-      <Head>
+      {/* <Head>
         <title>Handzplay Playground</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
+      </Head> */}
       <Grid color={handColor} />
       <Handpose
         handIndicatorType={handIndicatorType}

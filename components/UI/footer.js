@@ -12,12 +12,12 @@ export default function Footer() {
         color: "white",
         zIndex: 30,
         fontFamily: '"Manrope", sans-serif',
-        fontSize: 9,
+        fontSize: 10,
         letterSpacing: "0.2rem",
         textTransform: "uppercase",
         display: "flex",
         justifyContent: "space-between",
-        lineHeight: 2,
+        lineHeight: 2.2,
       }}
     >
       <div style={{ textAlign: "left" }}>

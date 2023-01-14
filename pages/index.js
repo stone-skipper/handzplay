@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 import Handpose from "../components/handpose";
 import { useEffect, useState } from "react";
 import Logo from "../components/UI/logo";
@@ -14,6 +12,7 @@ import HandIllust03 from "../components/visual/hand03";
 import HandIllust04 from "../components/visual/hand04";
 import { useViewport } from "../lib/hook";
 import StyledLink from "../components/UI/styledLink";
+import About from "../components/controlUI/about";
 
 export default function Index() {
   const leftHand = useControlsStore((state) => state.leftHand);
@@ -67,7 +66,10 @@ export default function Index() {
         <LoadingSlider />
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
+      <div style={{ position: "absolute", bottom: 15, left: 15 }}>
+        <About buttonType="short" />
+      </div>
     </div>
   ) : (
     <div className={styles.mobile}>

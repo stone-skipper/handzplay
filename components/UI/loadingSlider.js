@@ -21,6 +21,7 @@ export default function LoadingSlider() {
       style={{
         width: 400,
         marginTop: 55,
+        cursor: "pointer",
       }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
