@@ -17,8 +17,27 @@ export default function App({ Component, pageProps }) {
   return (
     <Provider createStore={createStore}>
       <Head>
-        <Meta />
-
+        <title>Handzplay - playground for gesture interaction</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        ></meta>
+        <meta
+          name="keywords"
+          content="interaction, gesture interaction, gesture, machine learning, human computer interaction, hand gesture"
+        ></meta>
+        <meta
+          name="description"
+          content="Explore hand gesture interaction by creating rules and interfaces. This website reads your hands from webcam by machine learning."
+        ></meta>
+        <meta property="og:title" content="Handzplay" />
+        <meta property="og:type" content="website" />
+        {/* <meta property="og:url" content={ogUrl} /> */}
+        <meta
+          property="og:image"
+          content="https://smlweb-src.s3.ap-northeast-2.amazonaws.com/handz_thumb.jpg"
+        />
+        <meta charSet="utf-8"></meta>
         <link
           rel="preload"
           href="/font/GAINSBOR.TTF"
@@ -46,7 +65,6 @@ export default function App({ Component, pageProps }) {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <Component {...pageProps} />
-      {/* <Cursor /> */}
     </Provider>
   );
 }
