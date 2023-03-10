@@ -56,6 +56,7 @@ export default function HoverClick({
       ((wWidth - boundingRect.x) * cameraSize[0]) / wWidth,
       (boundingRect.y * cameraSize[1]) / wHeight,
     ]);
+    console.log(boundary, fingersR[2], fingersR[3]);
 
     if (
       (fingersL[2] > boundary[0] - (width * cameraSize[0]) / wWidth &&
@@ -93,13 +94,15 @@ export default function HoverClick({
       id={id}
       ref={ref}
       animate={{
-        // background: hovered === true ? "blue" : initialColor,
-        border:
-          hovered === true
-            ? "3px solid " + hoverColor
-            : "3px solid " + initialColor,
-        width: width - 6,
-        height: height - 6,
+        background: hovered === true ? hoverColor : initialColor,
+        // border:
+        //   hovered === true
+        //     ? "3px solid " + hoverColor
+        //     : "3px solid " + initialColor,
+        width: width,
+        height: height,
+        // width: width - 6,
+        // height: height - 6,
         color: hovered === true ? hoverColor : "black",
       }}
       transition={{

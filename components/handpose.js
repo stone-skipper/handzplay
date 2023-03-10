@@ -1,6 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import { useControlsStore, useRulesStore } from "../lib/store";
+import {
+  useControlsStore,
+  useMagicWallStore,
+  useRulesStore,
+} from "../lib/store";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import "@tensorflow/tfjs-backend-wasm";
@@ -22,6 +26,7 @@ import {
   OkayGesture,
   RockGesture,
   ClickedPointer,
+  OpenPalmGesture,
 } from "../gestures";
 import Pose from "./if/pose";
 import Fingers from "./if/fingers";
@@ -43,6 +48,7 @@ export default function Handpose({
   const drawMode = useControlsStore((state) => state.drawMode);
   const handCursorType = useControlsStore((state) => state.handCursorType);
   const handBlur = useControlsStore((state) => state.handBlur);
+
   // const rules = useRulesStore((state) => state.rules);
   // const handColor = useControlsStore((state) => state.handColor);
 
@@ -145,6 +151,40 @@ export default function Handpose({
     }
   };
 
+  const openPalmMarkerTranslate = (hand, side) => {
+    if (side === "left") {
+      useMagicWallStore.setState({
+        openPalmMarkersL: [
+          fingerX(hand, 5),
+          fingerY(hand, 5),
+          fingerX(hand, 9),
+          fingerY(hand, 9),
+          fingerX(hand, 13),
+          fingerY(hand, 13),
+          fingerX(hand, 17),
+          fingerY(hand, 17),
+          fingerX(hand, 0),
+          fingerY(hand, 0),
+        ],
+      });
+    } else {
+      useMagicWallStore.setState({
+        openPalmMarkersR: [
+          fingerX(hand, 5),
+          fingerY(hand, 5),
+          fingerX(hand, 9),
+          fingerY(hand, 9),
+          fingerX(hand, 13),
+          fingerY(hand, 13),
+          fingerX(hand, 17),
+          fingerY(hand, 17),
+          fingerX(hand, 0),
+          fingerY(hand, 0),
+        ],
+      });
+    }
+  };
+
   const handToFinger = (hand, side) => {
     if (side === "left") {
       useControlsStore.setState({
@@ -195,6 +235,7 @@ export default function Handpose({
     OkayGesture,
     RockGesture,
     ClickedPointer,
+    OpenPalmGesture,
   ]);
 
   const gestureRecognition = async (hand, side) => {
@@ -276,6 +317,7 @@ export default function Handpose({
         useControlsStore.setState({ leftHand: true });
         useControlsStore.setState({ rightHand: false });
         handToFinger(handL, "left");
+        openPalmMarkerTranslate(handL, "left");
         gestureRecognition(handL, "left");
         useControlsStore.setState({
           fingersR: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -317,6 +359,7 @@ export default function Handpose({
         useControlsStore.setState({ rightHand: true });
         useControlsStore.setState({ leftHand: false });
         handToFinger(handR, "right");
+        openPalmMarkerTranslate(handR, "right");
         gestureRecognition(handR, "right");
         useControlsStore.setState({
           fingersL: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -363,6 +406,8 @@ export default function Handpose({
         useControlsStore.setState({ rightHand: true });
         handToFinger(handL, "left");
         handToFinger(handR, "right");
+        openPalmMarkerTranslate(handL, "left");
+        openPalmMarkerTranslate(handR, "right");
         gestureRecognition(handL, "left");
         gestureRecognition(handR, "right");
         setPalmPos({
@@ -392,6 +437,10 @@ export default function Handpose({
         });
         useControlsStore.setState({
           fingersR: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        });
+        useMagicWallStore.setState({
+          openPalmMarkersL: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+          openPalmMarkersR: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         });
         setPalmPos({ lx: 0, ly: 0, rx: 0, ry: 0 });
       }
