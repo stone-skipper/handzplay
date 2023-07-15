@@ -159,8 +159,8 @@ export default function Handpose({
           fingerY(hand, 16),
           fingerX(hand, 20),
           fingerY(hand, 20),
-          fingerX(hand, 6),
-          fingerY(hand, 6),
+          fingerX(hand, 6), // testing purpose
+          fingerY(hand, 6), // testing purpose
         ],
       });
     } else if (side === "right") {
@@ -176,8 +176,8 @@ export default function Handpose({
           fingerY(hand, 16),
           fingerX(hand, 20),
           fingerY(hand, 20),
-          fingerX(hand, 6),
-          fingerY(hand, 6),
+          fingerX(hand, 6), // testing purpose
+          fingerY(hand, 6), // testing purpose
         ],
       });
     }
