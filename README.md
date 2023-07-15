@@ -1,9 +1,16 @@
 # Handzplay
 
+
+
+https://github.com/stone-skipper/handzplay/assets/48980449/36c4f810-ff55-4fdd-95c4-cee613608a91
+
+
+
 Handzplay is a playground for hand gesture interactions. 
 You can create gesture interactions by adding rules and interfaces. 
 <br/><br/>
-Experiment by [Seungmee Lee](https://read.cv/seungmee_lee)
+Experiment by [Seungmee Lee](https://seungmee-lee.com)
+Contact me via [Twitter](https://twitter.com/@smee_leee) or [Instagram](https://instagram.com/stone.skipper) for any questions 
 <br/>
 <br/>
 
@@ -11,7 +18,7 @@ Experiment by [Seungmee Lee](https://read.cv/seungmee_lee)
 ## How it works
 
 Your hands in a camera feed are recognized and visualized by TensorFlow Handpose.
-You can try from pre-built templates with set of rules and interfaces, or you can create your own.
+You can try pre-built templates with a set of rules and interfaces, or you can create your own.
 
 Currently, there're 3 ways of creating conditions.
 
