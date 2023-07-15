@@ -71,16 +71,6 @@
   border-bottom: 1px solid grey;
   margin: 12px 0;
   height: 28px;
-  .options {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    align-items: flex-end;
-    text-transform: capitalize;
-    // > div {
-    //   cursor: pointer;
-    // }
-  }
 
   input {
     text-align: right;
@@ -93,6 +83,17 @@
     outline: none;
   }
 }
+.options {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: flex-end;
+  text-transform: capitalize;
+  // > div {
+  //   cursor: pointer;
+  // }
+}
+
 .btn {
   width: 100%;
   height: fit-content;

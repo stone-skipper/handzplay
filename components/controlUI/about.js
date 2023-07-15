@@ -41,6 +41,12 @@ export default function About({ buttonType = "long" }) {
             link="mailto:iam.seungmee.lee@gmail.com"
             color={handColor}
           />{" "}
+          ,{" "}
+          <StyledLink
+            title="twitter"
+            link="https://www.twitter.com/@smee_leee/"
+            color={handColor}
+          />{" "}
           or{" "}
           <StyledLink
             title="instagram"
@@ -51,12 +57,12 @@ export default function About({ buttonType = "long" }) {
           <br />
           No data will be saved here, cuz I don't know how.
         </p>
-        <br />
+
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>Made by</div>
           <div className={styles.options}>
             <StyledLink
-              title="stone.skipper"
+              title="seungmee lee"
               link="https://www.seungmee-lee.com"
               color="black"
               underline={false}
@@ -93,6 +99,11 @@ export default function About({ buttonType = "long" }) {
           width: buttonType === "short" ? 50 : "inherit",
           height: buttonType === "short" ? 50 : "inherit",
           borderRadius: buttonType === "short" ? 50 : 6,
+          fontSize: buttonType === "short" ? 16 : "inherit",
+          textAlign: "center",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
         onClick={() => {
           if (currentTab === "about") {
@@ -101,9 +112,9 @@ export default function About({ buttonType = "long" }) {
             useControlsStore.setState({ currentTab: "about" });
           }
         }}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: buttonType === "long" ? 1 : 1.1 }}
       >
-        <p>{buttonType === "long" ? "What is this?" : "?"}</p>
+        {buttonType === "long" ? "What is this?" : "?"}
       </motion.div>
     </div>
   );
