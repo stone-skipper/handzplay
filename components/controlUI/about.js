@@ -117,7 +117,7 @@ export default function About({ buttonType = "long" }) {
         <p
           style={{
             textAlign: "center",
-            letterSpacing: buttonType !== "long" ? "normal" : "inherit",
+            letterSpacing: buttonType !== "long" ? "normal" : "0.2rem",
           }}
         >
           {buttonType === "long" ? "What is this?" : "?"}
