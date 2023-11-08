@@ -114,7 +114,14 @@ export default function About({ buttonType = "long" }) {
         }}
         whileHover={{ scale: buttonType === "long" ? 1 : 1.1 }}
       >
-        {buttonType === "long" ? "What is this?" : "?"}
+        <p
+          style={{
+            textAlign: "center",
+            letterSpacing: buttonType !== "long" ? "normal" : "0.2rem",
+          }}
+        >
+          {buttonType === "long" ? "What is this?" : "?"}
+        </p>
       </motion.div>
     </div>
   );
