@@ -258,8 +258,6 @@ export default function Handpose({
       webcamRef.current.video.height = videoHeight;
 
       // Set canvas height and width
-      canvasRef.current.width = videoWidth;
-      canvasRef.current.height = videoHeight;
       setvHeight(videoHeight);
       setvWidth(videoWidth);
 

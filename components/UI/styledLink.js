@@ -49,13 +49,12 @@ export default function StyledLink({
       <motion.div
         style={{
           fontFamily: "'Inter', sans-serif",
-          //   fontSize: "1em",
-          height: 15,
-          width: 15,
+
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           color: color,
+          fontWeight: 400,
         }}
         animate={{
           rotate: hover === true ? 0 : -45,
