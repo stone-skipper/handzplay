@@ -17,7 +17,7 @@ export default function About({ buttonType = "long" }) {
         className={styles.content}
         style={{ display: currentTab === "about" ? "flex" : "none" }}
       >
-        <p
+        <div
           style={{
             color: handColor,
             fontSize: "1.1em",
@@ -56,7 +56,7 @@ export default function About({ buttonType = "long" }) {
           <br />
           <br />
           No data will be saved here, cuz I don't know how.
-        </p>
+        </div>
 
         <div className={styles.controlWrapper}>
           <div className={styles.controlTitle}>Made by</div>
