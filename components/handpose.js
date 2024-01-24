@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 
 import { useControlsStore, useRulesStore } from "../lib/store";
 import * as tf from "@tensorflow/tfjs";
@@ -22,6 +22,7 @@ import {
   OkayGesture,
   RockGesture,
   ClickedPointer,
+  LpointerGesture,
 } from "../gestures";
 import Pose from "./if/pose";
 import Fingers from "./if/fingers";
@@ -33,6 +34,7 @@ export default function Handpose({
   cameraFeed,
   rules = [],
   handColor,
+  screenOptionalTrigger = false,
 }) {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -43,6 +45,24 @@ export default function Handpose({
   const drawMode = useControlsStore((state) => state.drawMode);
   const handCursorType = useControlsStore((state) => state.handCursorType);
   const handBlur = useControlsStore((state) => state.handBlur);
+  const snapshots = useControlsStore((state) => state.snapshots);
+  const isScreenOptional = useControlsStore((state) => state.isScreenOptional);
+
+  const [snapshotStore, setSnapshotStore] = useState([]);
+  const capture = useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setSnapshotStore((prev) => [imageSrc, ...prev]);
+  }, [webcamRef]);
+
+  useEffect(() => {
+    useControlsStore.setState({ snapshots: snapshotStore });
+  }, [snapshotStore]);
+
+  useEffect(() => {
+    if (screenOptionalTrigger === true && isScreenOptional === true) {
+      capture();
+    }
+  }, [screenOptionalTrigger]);
   // const rules = useRulesStore((state) => state.rules);
   // const handColor = useControlsStore((state) => state.handColor);
 
@@ -195,6 +215,7 @@ export default function Handpose({
     OkayGesture,
     RockGesture,
     ClickedPointer,
+    LpointerGesture,
   ]);
 
   const gestureRecognition = async (hand, side) => {
