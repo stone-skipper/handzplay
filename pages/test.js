@@ -92,6 +92,38 @@ export default function Test() {
     audioRef.current.volume = vol;
   }, [vol]);
 
+  async function copyImageToClipboard(imgElement) {
+    if (!imgElement) {
+      console.error("Invalid image element");
+      return;
+    }
+
+    // Fetch the image as a Blob
+    try {
+      const response = await fetch(imgElement.src);
+      const blob = await response.blob();
+
+      // Use the Clipboard API to copy the image
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          [blob.type]: blob,
+        }),
+      ]);
+
+      console.log("Image copied to clipboard");
+    } catch (err) {
+      console.error("Failed to copy image to clipboard", err);
+    }
+  }
+
+  useEffect(() => {
+    if (snapshots.length !== 0) {
+      // copyElementToClipboard(snapshots[snapshots.length - 1]);
+      const imgElement = document.getElementById("latestImage");
+      copyImageToClipboard(imgElement);
+    }
+  }, [snapshots]);
+
   return (
     <div
       className={styles.playground}
@@ -196,22 +228,24 @@ export default function Test() {
         }}
       >
         Snapshot history
-        {snapshots.map((info, index) => {
-          return (
-            <div key={"snapshot" + index}>
-              <img
-                src={info}
-                style={{
-                  width: "100%",
-                  aspectRatio: 1 / 1,
-                  objectFit: "contain",
-                  height: "auto",
-                  transform: "rotate(90deg) scaleY(-1)",
-                }}
-              />
-            </div>
-          );
-        })}
+        {snapshots.length !== 0 &&
+          snapshots.map((info, index) => {
+            return (
+              <div key={"snapshot" + index}>
+                <img
+                  id={index === snapshots.length - 1 ? "latestImage" : ""}
+                  src={info}
+                  style={{
+                    width: "100%",
+                    aspectRatio: 1 / 1,
+                    objectFit: "contain",
+                    height: "auto",
+                    transform: "rotate(90deg) scaleY(-1)",
+                  }}
+                />
+              </div>
+            );
+          })}
       </div>
       <div
         style={{
