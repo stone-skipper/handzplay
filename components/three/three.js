@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 
-import { useControlsStore, useRulesStore } from "../lib/store";
+import { useControlsStore, useRulesStore } from "../../lib/store";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import "@tensorflow/tfjs-backend-wasm";
@@ -12,7 +12,7 @@ import { Suspense } from "react";
 import * as handPoseDetection from "@tensorflow-models/hand-pose-detection";
 
 import Webcam from "react-webcam";
-import { drawHand, drawPoints, drawBlurred, drawCursor } from "./utils";
+import { drawHand, drawPoints, drawBlurred, drawCursor } from "../utils";
 
 import * as fp from "fingerpose";
 import {
@@ -26,12 +26,12 @@ import {
   OkayGesture,
   RockGesture,
   ClickedPointer,
-} from "../gestures";
-import Pose from "./if/pose";
-import Fingers from "./if/fingers";
-import Action from "./if/action";
-import DrawMode from "./then/drawMode";
-import Scene from "./three/scene";
+} from "../../gestures";
+import Pose from "../if/pose";
+import Fingers from "../if/fingers";
+import Action from "../if/action";
+import DrawMode from "../then/drawMode";
+import Scene from "./scene";
 
 export default function ThreeScene({
   handIndicatorType,
