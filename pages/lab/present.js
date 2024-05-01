@@ -10,6 +10,7 @@ import { useEffect, useState, useRef } from "react";
 import Template from "../../components/controlUI/template";
 import Slides from "../../components/deck/slides";
 import { motion } from "framer-motion";
+import { hexToRGBA } from "../../components/utils";
 
 export default function Present() {
   const handIndicatorType = useControlsStore(
@@ -18,6 +19,7 @@ export default function Present() {
   const slideRef = useRef(null);
   const [urlInput, setUrlInput] = useState("");
   const [url, setUrl] = useState("");
+  const cameraSize = useControlsStore((state) => state.cameraSize);
 
   const currentPoseL = useControlsStore((state) => state.currentPoseL);
   const currentPoseR = useControlsStore((state) => state.currentPoseR);
@@ -35,14 +37,12 @@ export default function Present() {
   const handColor = useControlsStore((state) => state.handColor);
   const currentActionL = useControlsStore((state) => state.currentActionL);
   const currentActionR = useControlsStore((state) => state.currentActionR);
+  const fingersL = useControlsStore((state) => state.fingersL);
+  const fingersR = useControlsStore((state) => state.fingersR);
 
-  const playgroundBgColor = useControlsStore(
-    (state) => state.playgroundBgColor
-  );
   const [toggleModal, setToggleModal] = useState(true);
   const cameraFeed = useControlsStore((state) => state.cameraFeed);
-
-  const [current, setCurrent] = useState(0);
+  const [setting, setSetting] = useState("click"); // swipe, click
 
   useEffect(() => {
     // useControlsStore.setState({ toggleTemplate: true });
@@ -63,28 +63,6 @@ export default function Present() {
     // });
   }, []);
 
-  const simulateKeyPress = (key) => {
-    // Check if the iframe and its contentWindow are accessible
-    if (slideRef.current && slideRef.current.contentWindow) {
-      // Creating a new event
-      const event = new KeyboardEvent("keydown", {
-        key: key,
-        code: key,
-        keyCode: key === "ArrowUp" ? 38 : 40,
-        altKey: false,
-        shiftKey: false,
-        ctrlKey: false,
-        metaKey: false,
-        bubbles: true, // Ensure the event bubbles
-      });
-
-      // Dispatching the event to the iframe's contentWindow
-      slideRef.current.contentWindow.dispatchEvent(event);
-    } else {
-      console.error("Iframe is not loaded or has cross-origin content.");
-    }
-  };
-
   const postMessageToIframe = (key) => {
     if (slideRef.current && slideRef.current.contentWindow) {
       // Sending a message to the iframe
@@ -97,36 +75,32 @@ export default function Present() {
   const [swipe, setSwipe] = useState("");
 
   useEffect(() => {
-    // slideRef.focus();
     if (
       (currentActionL === "left" || currentActionR === "left") &&
-      swipe === ""
+      swipe === "" &&
+      setting === "swipe"
     ) {
-      // alert("left!");
-      // simulateKeyPress("ArrowDown");
-      postMessageToIframe("ArrowDown");
-      useControlsStore.setState({ handCursorType: ["●", 24] });
-      setSwipe("left");
-
-      // handCursorType: ["➤", 24],
-    } else if (
-      (currentActionL === "right" || currentActionR === "right") &&
-      swipe === ""
-    ) {
-      // alert("right!");
-      // simulateKeyPress("ArrowUp");
       postMessageToIframe("ArrowUp");
       useControlsStore.setState({ handCursorType: ["●", 24] });
       setSwipe("right");
+    } else if (
+      (currentActionL === "right" || currentActionR === "right") &&
+      swipe === "" &&
+      setting === "swipe"
+    ) {
+      postMessageToIframe("ArrowDown");
+      useControlsStore.setState({ handCursorType: ["●", 24] });
+      setSwipe("left");
     } else {
       useControlsStore.setState({ handCursorType: ["●", 10] });
     }
   }, [currentActionL, currentActionR]);
+
   useEffect(() => {
     if (swipe === "left" || swipe === "right") {
       setTimeout(() => {
         setSwipe("");
-      }, 1000);
+      }, 100);
     }
   }, [swipe]);
 
@@ -135,6 +109,28 @@ export default function Present() {
       useControlsStore.setState({ handCursorType: ["➤", 24] });
     } else {
       useControlsStore.setState({ handCursorType: ["●", 10] });
+    }
+
+    if (
+      ((currentPoseR === "okay" &&
+        ((cameraSize[0] - fingersR[2]) / cameraSize[0]) * 100 > 50) ||
+        (currentPoseL === "okay" &&
+          ((cameraSize[0] - fingersL[2]) / cameraSize[0]) * 100 > 50)) &&
+      setting === "click"
+    ) {
+      postMessageToIframe("ArrowDown");
+      useControlsStore.setState({ handCursorType: ["●", 24] });
+      setSwipe("left");
+    } else if (
+      ((currentPoseR === "okay" &&
+        ((cameraSize[0] - fingersR[2]) / cameraSize[0]) * 100 <= 50) ||
+        (currentPoseL === "okay" &&
+          ((cameraSize[0] - fingersL[2]) / cameraSize[0]) * 100 <= 50)) &&
+      setting === "click"
+    ) {
+      postMessageToIframe("ArrowUp");
+      useControlsStore.setState({ handCursorType: ["●", 24] });
+      setSwipe("right");
     }
   }, [currentPoseL, currentPoseR]);
 
@@ -155,6 +151,23 @@ export default function Present() {
         id="targetIframe"
         ref={slideRef}
       ></iframe>
+      <div
+        style={{
+          position: "fixed",
+          background: "yellow",
+          color: "black",
+          display: "none",
+        }}
+      >
+        {fingersL[2]} {fingersL[3]}
+        <br />
+        {fingersR[2]} {fingersR[3]}
+        <br />
+        {cameraSize[0]} {cameraSize[1]}
+        <br />
+        {((cameraSize[0] - fingersR[2]) / cameraSize[0]) * 100}{" "}
+        {(fingersR[3] / cameraSize[1]) * 100}
+      </div>
       <span
         style={{
           pointerEvents: "none",
@@ -176,7 +189,7 @@ export default function Present() {
         style={{
           width: "100vw",
           height: "100vh",
-          justifyContent: "center",
+          justifyContent: "space-between",
           alignItems: "center",
           position: "absolute",
           pointerEvents: "none",
@@ -185,13 +198,59 @@ export default function Present() {
         }}
       >
         <motion.div
-          style={{ width: "50vw", height: "100vh", background: "yellow" }}
-          animate={{ opacity: swipe === "left" ? 1 : 0 }}
-        ></motion.div>
-        <motion.div
-          style={{ width: "50vw", height: "100vh", background: "pink" }}
+          style={{
+            width: "30vw",
+            height: "100vh",
+            // background: "yellow",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
           animate={{ opacity: swipe === "right" ? 1 : 0 }}
-        ></motion.div>
+        >
+          <div
+            style={{
+              background: "rgba(0,0,0,0.2)",
+              color: "white",
+              borderRadius: 300,
+              width: 200,
+              height: 200,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 80,
+            }}
+          >
+            ←
+          </div>
+        </motion.div>
+        <motion.div
+          style={{
+            width: "30vw",
+            height: "100vh",
+            // background: "pink",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          animate={{ opacity: swipe === "left" ? 1 : 0 }}
+        >
+          <div
+            style={{
+              background: "rgba(0,0,0,0.2)",
+              color: "white",
+              borderRadius: 300,
+              width: 200,
+              height: 200,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: 80,
+            }}
+          >
+            →
+          </div>
+        </motion.div>
       </div>
       <div
         style={{
@@ -216,77 +275,155 @@ export default function Present() {
             flexDirection: "column",
             borderRadius: 10,
             gap: 20,
+            fontWeight: 500,
           }}
         >
-          <h2 style={{ color: handColor }}>Swipe your slides</h2>
-          <div style={{ width: 280, textAlign: "center", fontWeight: 500 }}>
-            This is an experimental feature from Handzplay x Interactive Slides,
-            that allows you to present your work with air-gesture.
-            <br /> <br />
-            It only supports the deck made with Framer template{" "}
-            <a
-              href={"https://interactive-slides.framer.website"}
-              style={{ color: handColor }}
-            >
-              Interactive Slides
-            </a>
-            <br /> <br />
-          </div>
-          <input
-            placeholder="url of Interactive Slides deck"
-            style={{
-              background: "rgba(0,0,0,0.1)",
-              outline: "none",
-              border: "none",
-              // color: "white",
-              borderRadius: 4,
-              width: 300,
-              padding: 10,
-            }}
-            onChange={(e) => {
-              setUrlInput(e.target.value);
-            }}
-          />
+          <h2 style={{ color: handColor }}>Present hands-free</h2>
           <div
             style={{
-              width: 300,
-              background: handColor,
-              color: "white",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: 10,
-              cursor: "pointer",
-              borderRadius: 4,
+              width: 440,
               textAlign: "center",
-              fontWeight: 500,
-            }}
-            onClick={() => {
-              setUrl(urlInput);
+
+              fontSize: "0.9em",
             }}
           >
-            Start presenting
+            This is an experimental feature from Handzplay x Interactive Slides,
+            that allows you to control your slides with air-gesture.
+            <br /> <br />
+            It only supports the deck <br />
+            made with the{" "}
+            <motion.a
+              href={"https://interactive-slides.framer.website"}
+              target="_blank"
+              style={{ textDecoration: "underline", color: "black" }}
+              whileHover={{ color: handColor }}
+            >
+              Interactive Slides Framer Template
+            </motion.a>
+            <br /> <br />
           </div>
           <div
             style={{
-              width: 300,
-              background: handColor,
-              color: "white",
+              display: "flex",
+              flexDirection: "row",
+              textAlign: "center",
+              gap: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "0.9em",
+            }}
+          >
+            Gesture Setting
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                padding: 5,
+                background: hexToRGBA(handColor, 0.1),
+                borderRadius: 5,
+
+                width: "fit-content",
+              }}
+            >
+              <div
+                style={{
+                  padding: 10,
+                  cursor: "pointer",
+                  background: setting === "click" ? handColor : "transparent",
+                  color: setting === "click" ? "white" : "black",
+                  borderRadius: 5,
+                  userSelect: "none",
+                  width: 60,
+                }}
+                onClick={() => {
+                  setSetting("click");
+                }}
+              >
+                Click
+              </div>
+              <div
+                style={{
+                  padding: 10,
+                  cursor: "pointer",
+                  background: setting === "swipe" ? handColor : "transparent",
+                  color: setting === "swipe" ? "white" : "black",
+                  borderRadius: 5,
+                  userSelect: "none",
+                  width: 60,
+                }}
+                onClick={() => {
+                  setSetting("swipe");
+                }}
+              >
+                Swipe
+              </div>
+            </div>
+          </div>
+          <div style={{ fontSize: "0.8em", color: handColor }}>
+            {setting === "swipe"
+              ? "Move ✋ toward left/right in front of the screen"
+              : "Do 👌 gesture on the right/left side of the screen"}
+          </div>
+          <div style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+            <input
+              placeholder="URL of your deck"
+              style={{
+                background: "rgba(0,0,0,0.1)",
+                outline: "none",
+                border: "none",
+                textAlign: "center",
+                borderRadius: 4,
+                width: 350,
+                padding: 10,
+                fontSize: 16,
+              }}
+              onChange={(e) => {
+                setUrlInput(e.target.value);
+              }}
+            />
+            <div
+              style={{
+                width: "fit-content",
+                height: "fit-content",
+                background: handColor,
+                color: "white",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 10,
+                cursor: "pointer",
+                borderRadius: 4,
+                textAlign: "center",
+                fontWeight: 500,
+              }}
+              onClick={() => {
+                setUrl(urlInput);
+              }}
+            >
+              →
+            </div>
+          </div>
+
+          <div
+            style={{
+              background: "transparent",
+              color: handColor,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: 10,
               cursor: "pointer",
               borderRadius: 4,
               textAlign: "center",
               fontWeight: 500,
+              fontSize: "0.9em",
             }}
             onClick={() => {
               setUrl("https://pdf-sm.framer.website/dev/tips");
             }}
           >
-            Try the sample deck
+            Or try the sample deck
           </div>
+          <br />
         </div>
       </div>
     </div>

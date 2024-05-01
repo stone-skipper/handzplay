@@ -80,7 +80,7 @@ export default function Playground() {
 
       <div style={{ display: "flex", flexDirection: "row", color: "black" }}>
         <LinkItem title={"walk"} link={"/lab/walk"} />
-        <LinkItem title={"deck"} link={"/lab/deck"} />
+        <LinkItem title={"present"} link={"/lab/present"} />
       </div>
     </div>
   );
