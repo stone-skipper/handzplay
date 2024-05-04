@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
 export default function HandIllust03({
   initTop,
@@ -43,7 +43,10 @@ export default function HandIllust03({
     },
     transition: { duration: 0.2 },
   };
-  useEffect(() => {
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
+  function cycle() {
     if (pinch === true) {
       // setPinchState("releaseInitial");
       // setTimeout;
@@ -57,9 +60,13 @@ export default function HandIllust03({
         }, 300);
       }
     }
+  }
+  useEffect(() => {
+    cycle();
   }, [pinchState, pinch]);
   return (
     <motion.div
+      ref={ref}
       style={{
         width: "fit-contnet",
         height: "fit-content",

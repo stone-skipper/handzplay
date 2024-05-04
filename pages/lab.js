@@ -9,6 +9,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import Template from "../components/controlUI/template";
+import { hexToRGBA } from "../components/utils";
 
 export default function Playground() {
   const handIndicatorType = useControlsStore(
@@ -58,27 +59,47 @@ export default function Playground() {
     >
       <div
         style={{
-          width: "100%",
-          height: "fit-content",
-
-          background: playgroundBgColor,
+          width: "30vw",
+          height: "100%",
+          // background: playgroundBgColor,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
+          gap: 10,
+          position: "fixed",
+          left: 0,
+          top: 0,
         }}
       >
         <Logo
-          color={handColor}
+          color={hexToRGBA(handColor, 0.5)}
           displayTag={false}
-          fontSize={20}
+          fontSize={40}
           text="HANDZPLAY"
         />
         <Logo color={handColor} displayTag={false} fontSize={40} text="LAB" />
-        {/* <div style={{ color: handColor, fontWeight: 800 }}>FROM</div> */}
+        <div style={{ textAlign: "center", width: "70%", fontWeight: 500 }}>
+          <br />
+          If playground is a space to create some interactions infinitely, this
+          space is more 'use-case' driven.
+        </div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "row", color: "black" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          color: "black",
+          width: "70vw",
+          height: "100%",
+          position: "absolute",
+          right: 0,
+          top: 0,
+          background: hexToRGBA(handColor, 0.1),
+          overflow: "scroll",
+        }}
+      >
         <LinkItem title={"walk"} link={"/lab/walk"} />
         <LinkItem title={"present"} link={"/lab/present"} />
       </div>

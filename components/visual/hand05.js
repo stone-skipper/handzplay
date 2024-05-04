@@ -14,8 +14,9 @@ export default function HandIllust05({
     repeat: Infinity,
     repeatType: "reverse",
     duration: 1,
-    type: "spring",
-    bounce: 0.1,
+    // type: "spring",
+    // bounce: 0.1,
+    ease: "easeInOut",
     repeatDelay: 1,
   };
 
@@ -118,60 +119,60 @@ export default function HandIllust05({
         animate="visible"
         variants={draw}
       >
-        <motion.path
-          //thumb
-          id="thumb"
-          fill="url(#paint0_linear_2439_226)"
-          variants={thumbVariant}
-          initial={"left"}
-          animate={pinch === false ? "left" : "right"}
-          transition={repeatTransition}
-        />
-        <motion.path
-          //ring
-          id="ring"
-          //   d="M129.583 136.381C151.006 144.41 158.26 138.182 168.639 133.298C201.889 146 209.456 181.095 201.889 190.501C186.754 209.314 125.17 181.981 113.64 161.236C102.111 140.492 56.4222 134.979 64.0389 121.668C71.6546 108.359 102.803 126.344 129.583 136.381Z"
-          fill="url(#paint1_linear_2439_226)"
-          //   variants={draw}
-          variants={ringVariant}
-          initial={"left"}
-          animate={pinch === false ? "left" : "right"}
-          transition={repeatTransition}
-        />
-        <motion.path
-          //middle
-          id="middle"
-          //   d="M131.131 114.542C151.362 125.227 165.993 143.118 176.909 139.591C211.795 123.67 211.076 186.795 202.376 195.164C184.974 211.904 130.862 168.719 122.06 146.679C113.258 124.638 58.7411 103.861 67.9864 91.6255C77.2305 79.3913 105.842 101.186 131.131 114.542Z"
-          fill="url(#paint2_linear_2439_226)"
-          //   variants={draw}
-          variants={middleVariant}
-          initial={"left"}
-          animate={pinch === false ? "left" : "right"}
-          transition={repeatTransition}
-        />
-        <motion.path
-          //index
-          id="index"
-          //   d="M155.107 103.111C173.177 117.145 184.481 137.303 195.843 135.724C214.941 141.451 202.918 184.74 192.897 191.473C172.855 204.938 145.44 156.419 140.596 133.186C135.753 109.952 85.6689 80.0295 96.8973 69.5838C108.124 59.1394 132.52 85.5689 155.107 103.111Z"
-          fill="url(#paint3_linear_2439_226)"
-          //   variants={draw}
-          variants={indexVariant}
-          initial={"left"}
-          animate={pinch === false ? "left" : "right"}
-          transition={repeatTransition}
-        />
-        <motion.path
-          //pinky
-          id="pinky"
-          //   d="M74.5219 151.106C80.1711 141.234 103.276 154.575 123.141 162.02C129.935 164.566 151.947 162.168 178.489 182.805C214.037 210.443 298.646 300.947 299.5 304C295.595 317.119 282.889 350.96 256.175 332C236.513 318.045 174.71 233.993 170.5 224.5C160.571 202.107 133.066 182.2 113.5 174.5C93.9345 166.8 68.8719 160.98 74.5219 151.106Z"
-          fill="url(#paint4_linear_2439_226)"
-          //   variants={draw}
-          variants={pinkyVariant}
-          initial={"left"}
-          animate={pinch === false ? "left" : "right"}
-          transition={repeatTransition}
-        />
-        <g clip-path="url(#bodyClip)">
+        <motion.g variants={draw}>
+          <motion.path
+            //thumb
+            id="thumb"
+            fill="url(#paint0_linear_2439_226)"
+            variants={thumbVariant}
+            initial={"left"}
+            animate={pinch === false ? "left" : "right"}
+            transition={repeatTransition}
+          />
+          <motion.path
+            //ring
+            id="ring"
+            //   d="M129.583 136.381C151.006 144.41 158.26 138.182 168.639 133.298C201.889 146 209.456 181.095 201.889 190.501C186.754 209.314 125.17 181.981 113.64 161.236C102.111 140.492 56.4222 134.979 64.0389 121.668C71.6546 108.359 102.803 126.344 129.583 136.381Z"
+            fill="url(#paint1_linear_2439_226)"
+            //   variants={draw}
+            variants={ringVariant}
+            initial={"left"}
+            animate={pinch === false ? "left" : "right"}
+            transition={repeatTransition}
+          />
+          <motion.path
+            //middle
+            id="middle"
+            //   d="M131.131 114.542C151.362 125.227 165.993 143.118 176.909 139.591C211.795 123.67 211.076 186.795 202.376 195.164C184.974 211.904 130.862 168.719 122.06 146.679C113.258 124.638 58.7411 103.861 67.9864 91.6255C77.2305 79.3913 105.842 101.186 131.131 114.542Z"
+            fill="url(#paint2_linear_2439_226)"
+            //   variants={draw}
+            variants={middleVariant}
+            initial={"left"}
+            animate={pinch === false ? "left" : "right"}
+            transition={repeatTransition}
+          />
+          <motion.path
+            //index
+            id="index"
+            //   d="M155.107 103.111C173.177 117.145 184.481 137.303 195.843 135.724C214.941 141.451 202.918 184.74 192.897 191.473C172.855 204.938 145.44 156.419 140.596 133.186C135.753 109.952 85.6689 80.0295 96.8973 69.5838C108.124 59.1394 132.52 85.5689 155.107 103.111Z"
+            fill="url(#paint3_linear_2439_226)"
+            //   variants={draw}
+            variants={indexVariant}
+            initial={"left"}
+            animate={pinch === false ? "left" : "right"}
+            transition={repeatTransition}
+          />
+          <motion.path
+            //pinky
+            id="pinky"
+            fill="url(#paint4_linear_2439_226)"
+            variants={pinkyVariant}
+            initial={"left"}
+            animate={pinch === false ? "left" : "right"}
+            transition={repeatTransition}
+          />
+        </motion.g>
+        <motion.g clip-path="url(#bodyClip)" variants={draw}>
           <rect
             x="20"
             y="20"
@@ -179,7 +180,7 @@ export default function HandIllust05({
             height={"100%"}
             fill="url(#paint5_linear_2439_226)"
           />
-        </g>
+        </motion.g>
 
         <defs>
           <clipPath id="bodyClip">

@@ -224,6 +224,7 @@ export default function Present() {
               justifyContent: "center",
               alignItems: "center",
               fontSize: 80,
+              fontFamily: '"Inter", sans-serif',
             }}
           >
             ←
@@ -251,6 +252,7 @@ export default function Present() {
               justifyContent: "center",
               alignItems: "center",
               fontSize: 80,
+              fontFamily: '"Inter", sans-serif',
             }}
           >
             →
@@ -302,12 +304,6 @@ export default function Present() {
               <br />
               gestures
             </h1>
-            {/* <Logo
-              color={handColor}
-              displayTag={true}
-              fontSize={40}
-              text="PRESENT"
-            /> */}
 
             <div
               style={{
@@ -398,7 +394,8 @@ export default function Present() {
                 textDecoration: "underline",
               }}
               onClick={() => {
-                setUrl("https://pdf-sm.framer.website/dev/tips");
+                // setUrl("https://pdf-sm.framer.website/dev/tips");
+                setUrl("https://pdf-sm.framer.website/dev/dev");
               }}
             >
               Or try the sample
@@ -493,16 +490,16 @@ export default function Present() {
                     pointerEvents: "none",
                     originY: 1,
                   }}
-                  initial={{ x: 20, y: 10, rotate: -25 }}
-                  animate={{ x: 200, y: -10, rotate: 20 }}
+                  initial={{ x: 20, y: -60, rotate: -25 }} // swiped to left
+                  animate={{ x: 180, y: -10, rotate: 20 }}
                   transition={{
                     repeat: Infinity,
                     repeatType: "mirror",
                     repeatDelay: 1,
                     duration: 1,
-                    type: "spring",
-                    bounce: 0.1,
-                    // ease: "easeInOut",
+                    // type: "spring",
+                    // bounce: 0.1,
+                    ease: "easeInOut",
                   }}
                 >
                   <HandIllust05
@@ -563,7 +560,7 @@ export default function Present() {
                   display: "flex",
                   flexDirection: "row",
                   padding: 5,
-                  background: hexToRGBA("#ffffff", 0.5),
+                  background: hexToRGBA("#ffffff", 0.2),
                   borderRadius: 10,
 
                   width: "fit-content",
