@@ -401,6 +401,11 @@
   resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-12.2.5.tgz"
   integrity sha512-7h5/ahY7NeaO2xygqVrSG/Y8Vs4cdjxIjowTZ5W6CKoTKn7tmnuxlUc2h74x06FKmbhAd9agOjr/AOKyxYYm9Q==
 
+"@phosphor-icons/react@^2.1.5":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@phosphor-icons/react/-/react-2.1.5.tgz#762c368778a4040d52c5532b8af1692b66e16783"
+  integrity sha512-B7vRm/w+P/+eavWZP5CB5Ul0ffK4Y7fpd/auWKuGvm+8pVgAJzbOK8O0s+DqzR+TwWkh5pHtJTuoAtaSvgCPzg==
+
 "@radix-ui/primitive@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@radix-ui/primitive/-/primitive-1.0.1.tgz#e46f9958b35d10e9f6dc71c497305c22e3e55dbd"

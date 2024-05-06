@@ -5,11 +5,13 @@ import Rules from "../components/controlUI/rules";
 import Grid from "../components/grid";
 import { useControlsStore, useRulesStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import Template from "../components/controlUI/template";
+import { LinkItem } from "../components/UI/linkItem";
 import { hexToRGBA } from "../components/utils";
+import TextMotion from "../components/UI/textmotion";
+import { Presentation, Footprints, Shapes } from "@phosphor-icons/react";
 
 export default function Playground() {
   const handIndicatorType = useControlsStore(
@@ -32,30 +34,12 @@ export default function Playground() {
     console.log(rules);
   }, [rules]);
 
-  const LinkItem = ({ title, link }) => {
-    return (
-      <Link href={link}>
-        <motion.div
-          style={{
-            background: handColor,
-            color: "white",
-            width: 100,
-            height: 100,
-            borderRadius: 10,
-            cursor: "pointer",
-            padding: 20,
-          }}
-          whileHover={{ scale: 1.02 }}
-        >
-          {title}
-        </motion.div>
-      </Link>
-    );
-  };
   return (
     <div
       className={styles.playground}
-      style={{ background: playgroundBgColor }}
+      style={{
+        background: hexToRGBA(handColor, 0.1),
+      }}
     >
       <div
         style={{
@@ -78,7 +62,15 @@ export default function Playground() {
           fontSize={40}
           text="HANDZPLAY"
         />
-        <Logo color={handColor} displayTag={false} fontSize={40} text="LAB" />
+        {/* <Logo color={handColor} displayTag={false} fontSize={40} text="LAB" /> */}
+        <TextMotion
+          font='"Gainsborough", sans-serif'
+          content={"LAB"}
+          fontSize={300}
+          delay={0}
+          color={"white"}
+          letterSpacing="1.2rem"
+        />
         <div style={{ textAlign: "center", width: "70%", fontWeight: 500 }}>
           <br />
           If playground is a space to create some interactions infinitely, this
@@ -96,12 +88,34 @@ export default function Playground() {
           position: "absolute",
           right: 0,
           top: 0,
-          background: hexToRGBA(handColor, 0.1),
+          // background: hexToRGBA(handColor, 0.1),
           overflow: "scroll",
         }}
       >
-        <LinkItem title={"walk"} link={"/lab/walk"} />
-        <LinkItem title={"present"} link={"/lab/present"} />
+        <LinkItem
+          title={"present"}
+          link={"/lab/present"}
+          desc="text"
+          icon={<Presentation color={"#111111"} size={24} weight="regular" />}
+          fill={<Presentation color={handColor} size={24} weight="fill" />}
+          color={handColor}
+        />
+        <LinkItem
+          title={"walk"}
+          link={"/lab/walk"}
+          desc="text"
+          icon={<Footprints color={"#111111"} size={24} weight="regular" />}
+          fill={<Footprints color={handColor} size={24} weight="fill" />}
+          color={handColor}
+        />
+        <LinkItem
+          title={"Back to\nPlayground"}
+          link={"/playground"}
+          desc="text"
+          icon={<Shapes color={"#111111"} size={24} weight="regular" />}
+          fill={<Shapes color={handColor} size={24} weight="fill" />}
+          color={handColor}
+        />
       </div>
     </div>
   );

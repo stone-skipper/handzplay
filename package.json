@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@mediapipe/hands": "^0.4.1646424915",
+    "@phosphor-icons/react": "^2.1.5",
     "@react-three/drei": "^9.80.6",
     "@react-three/fiber": "^8.13.7",
     "@react-three/postprocessing": "^2.15.1",

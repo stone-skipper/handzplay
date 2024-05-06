@@ -16,6 +16,7 @@ import HandIllust02 from "../../components/visual/hand02";
 import HandIllust03 from "../../components/visual/hand03";
 import HandIllust04 from "../../components/visual/hand04";
 import HandIllust05 from "../../components/visual/hand05";
+import TextMotion from "../../components/UI/textmotion";
 
 export default function Present() {
   const handIndicatorType = useControlsStore(
@@ -24,6 +25,8 @@ export default function Present() {
   const slideRef = useRef(null);
   const [urlInput, setUrlInput] = useState("");
   const [url, setUrl] = useState("");
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
   const cameraSize = useControlsStore((state) => state.cameraSize);
 
   const currentPoseL = useControlsStore((state) => state.currentPoseL);
@@ -140,7 +143,28 @@ export default function Present() {
   }, [currentPoseL, currentPoseR]);
 
   return (
-    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        position: "relative",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div style={{ fontSize: "2em", color: "black", opacity: 0.2 }}>
+        {url !== "" && iframeLoaded === false && (
+          <TextMotion
+            font='"Gainsborough", sans-serif'
+            content={"LOADING..."}
+            fontSize={40}
+            delay={0}
+            color={"black"}
+            letterSpacing="1.2rem"
+          />
+        )}
+      </div>
       <iframe
         src={url}
         style={{
@@ -155,6 +179,9 @@ export default function Present() {
         }}
         id="targetIframe"
         ref={slideRef}
+        onLoad={() => {
+          setIframeLoaded(true);
+        }}
       ></iframe>
       <div
         style={{
@@ -495,8 +522,8 @@ export default function Present() {
                   transition={{
                     repeat: Infinity,
                     repeatType: "mirror",
-                    repeatDelay: 1,
-                    duration: 1,
+                    repeatDelay: 1.3,
+                    duration: 0.7,
                     // type: "spring",
                     // bounce: 0.1,
                     ease: "easeInOut",
