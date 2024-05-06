@@ -17,6 +17,7 @@ import HandIllust03 from "../../components/visual/hand03";
 import HandIllust04 from "../../components/visual/hand04";
 import HandIllust05 from "../../components/visual/hand05";
 import TextMotion from "../../components/UI/textmotion";
+import Link from "next/link";
 
 export default function Present() {
   const handIndicatorType = useControlsStore(
@@ -295,9 +296,10 @@ export default function Present() {
           alignItems: "center",
           position: "absolute",
           background: "rgba(0,0,0,0.1)",
+          flexDirection: "column",
         }}
       >
-        <div
+        <motion.div
           style={{
             display: "flex",
             flexDirection: "row",
@@ -307,6 +309,9 @@ export default function Present() {
             justifyContent: "center",
             alignItems: "center",
           }}
+          initial={{ y: 60, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: "spring", bounce: 0.1, duration: 0.6 }}
         >
           <div
             style={{
@@ -355,6 +360,7 @@ export default function Present() {
               </motion.a>
               .
               <br /> <br />
+              <br />
             </div>
 
             <div
@@ -397,7 +403,7 @@ export default function Present() {
                   fontWeight: 500,
                   fontFamily: '"Inter", sans-serif',
                 }}
-                whileHover={{}}
+                whileHover={{ background: "#0045AB" }}
                 onClick={() => {
                   setUrl(urlInput);
                 }}
@@ -652,7 +658,7 @@ export default function Present() {
                 : "Do pinch gesture on \nthe right/left side of the screen"}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

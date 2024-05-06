@@ -1,5 +1,4 @@
 import Head from "next/head";
-
 import Handpose from "../components/handpose";
 import Logo from "../components/UI/logo";
 import About from "../components/controlUI/about";
@@ -10,6 +9,9 @@ import { useControlsStore, useRulesStore } from "../lib/store";
 import styles from "../handsplay.module.scss";
 import { useEffect } from "react";
 import Template from "../components/controlUI/template";
+import { Flask } from "@phosphor-icons/react";
+import { hexToRGBA } from "../components/utils";
+import { IconBtn } from "../components/UI/iconBtn";
 
 export default function Playground() {
   const handIndicatorType = useControlsStore(
@@ -79,6 +81,42 @@ export default function Playground() {
           }}
         >
           <Logo color={handColor} displayTag={false} fontSize={40} />
+          <IconBtn
+            link={"/lab"}
+            color={handColor}
+            bg={playgroundBgColor}
+            title={"lab"}
+            icon={<Flask weight="regular" size={20} color={"#111111"} />}
+            fill={<Flask weight="fill" size={20} color={handColor} />}
+          />
+          {/* <div
+            style={{
+              background: playgroundBgColor,
+              position: "fixed",
+              top: 4,
+              right: 4,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 10,
+            }}
+          >
+            <div
+              style={{
+                background: hexToRGBA(handColor, 0.1),
+                padding: 10,
+                borderRadius: 100,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+            >
+              <Link href={"/lab"}>
+                <Flask weight="regular" size={20} color={"#111111"} />
+              </Link>
+            </div>
+          </div> */}
         </div>
       </div>
       <Template />
