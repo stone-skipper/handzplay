@@ -1,6 +1,16 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 
-export default function HandIllust03({ initTop, initLeft, top, left }) {
+export default function HandIllust03({
+  initTop,
+  initLeft,
+  top,
+  left,
+  color = "white",
+  pinch = false,
+  scale = 1,
+}) {
+  const [pinchState, setPinchState] = useState("releaseInitial");
   const draw = {
     hidden: {
       opacity: 0,
@@ -21,12 +31,47 @@ export default function HandIllust03({ initTop, initLeft, top, left }) {
       };
     },
   };
+  const pinchVariant = {
+    releaseInitial: {
+      d: "M232.222 217.074C197.757 229.439 169.144 276.788 159.146 298.916L71.7598 279.78L228.657 140.688C253.876 119.971 258 121 273 119C288 117 318.5 108.5 324 119C329.5 129.5 307.764 132.5 284 140.688C264.592 147.375 266.5 165.5 270.5 175.5C274.5 185.5 280.5 190.568 290.5 187.5C300.5 184.432 306.966 183.672 312 184C317.034 184.328 319.5 193 300 202.5C280.5 212 275.303 201.618 232.222 217.074Z",
+    },
+    tap: {
+      d: "M232.222 217.073C197.757 229.438 169.144 276.787 159.146 298.915L71.7593 279.779L228.657 140.687C253.876 119.97 262.508 118.823 285.769 124.042C309.031 129.261 312.477 155.695 307.914 159.241C298.602 166.478 298.935 150.401 286.193 143.75C267.995 134.251 266.897 162.261 270.802 178.431C273.314 188.83 284.233 194.343 289.736 182.603C291.936 177.909 292.96 167.9 297.994 168.228C309.071 168.952 305.915 177.268 302.746 188.982C291.986 228.758 275.303 201.617 232.222 217.073Z",
+    },
+    release: {
+      d: "M232.222 217.074C197.757 229.439 169.144 276.788 159.146 298.916L71.7598 279.78L228.657 140.688C253.876 119.971 258 121 273 119C288 117 318.5 108.5 324 119C329.5 129.5 307.764 132.5 284 140.688C264.592 147.375 266.5 165.5 270.5 175.5C274.5 185.5 280.5 190.568 290.5 187.5C300.5 184.432 306.966 183.672 312 184C317.034 184.328 319.5 193 300 202.5C280.5 212 275.303 201.618 232.222 217.074Z",
+    },
+    transition: { duration: 0.2 },
+  };
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
+  function cycle() {
+    if (pinch === true) {
+      // setPinchState("releaseInitial");
+      // setTimeout;
+      if (pinchState === "releaseInitial") {
+        setTimeout(() => {
+          setPinchState("tap");
+        }, 2000);
+      } else if (pinch === "tap") {
+        setTimeout(() => {
+          setPinchState("release");
+        }, 300);
+      }
+    }
+  }
+  useEffect(() => {
+    cycle();
+  }, [pinchState, pinch]);
   return (
     <motion.div
+      ref={ref}
       style={{
         width: "fit-contnet",
         height: "fit-content",
         position: "absolute",
+        scale: scale,
       }}
       initial={{
         top: initTop,
@@ -58,11 +103,18 @@ export default function HandIllust03({ initTop, initLeft, top, left }) {
           variants={draw}
         />
         <g opacity="0.9">
-          <motion.path
-            d="M232.222 217.073C197.757 229.438 169.144 276.787 159.146 298.915L71.7593 279.779L228.657 140.687C253.876 119.97 262.508 118.823 285.769 124.042C309.031 129.261 312.477 155.695 307.914 159.241C298.602 166.478 298.935 150.401 286.193 143.75C267.995 134.251 266.897 162.261 270.802 178.431C273.314 188.83 284.233 194.343 289.736 182.603C291.936 177.909 292.96 167.9 297.994 168.228C309.071 168.952 305.915 177.268 302.746 188.982C291.986 228.758 275.303 201.617 232.222 217.073Z"
-            fill="url(#paint1_linear_959_373)"
-            variants={draw}
-          />
+          <motion.g variants={draw}>
+            <motion.path
+              //pinch
+              variants={pinchVariant}
+              initial={"tap"}
+              animate={pinch === false ? "tap" : pinchState}
+              fill="url(#paint1_linear_959_373)"
+              onAnimationComplete={() => {
+                setPinchState("releaseInitial");
+              }}
+            />
+          </motion.g>
           <motion.path
             d="M274.19 58.5176C258.783 77.2144 246.359 113.817 242.073 129.781L191.649 203.947L217.664 115.93C222.059 90.785 237.521 65.2835 253.033 46.2619C268.546 27.2403 293.448 35.1466 274.19 58.5176Z"
             fill="url(#paint2_linear_959_373)"
@@ -88,8 +140,8 @@ export default function HandIllust03({ initTop, initLeft, top, left }) {
             y2="236.406"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" stopOpacity="0.34" />
-            <stop offset="1" stop-color="white" stopOpacity="0" />
+            <stop stop-color={color} stopOpacity="0.34" />
+            <stop offset="1" stop-color={color} stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint1_linear_959_373"
@@ -99,9 +151,9 @@ export default function HandIllust03({ initTop, initLeft, top, left }) {
             y2="159.5"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="0.713542" stop-color="white" stopOpacity="0.255208" />
-            <stop offset="1" stop-color="white" stopOpacity="0" />
+            <stop stop-color={color} />
+            <stop offset="0.713542" stop-color={color} stopOpacity="0.255208" />
+            <stop offset="1" stop-color={color} stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_959_373"
@@ -111,9 +163,9 @@ export default function HandIllust03({ initTop, initLeft, top, left }) {
             y2="113.044"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="0.515625" stop-color="white" stopOpacity="0.338542" />
-            <stop offset="1" stop-color="white" stopOpacity="0" />
+            <stop stop-color={color} />
+            <stop offset="0.515625" stop-color={color} stopOpacity="0.338542" />
+            <stop offset="1" stop-color={color} stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint3_linear_959_373"
@@ -123,9 +175,9 @@ export default function HandIllust03({ initTop, initLeft, top, left }) {
             y2="104.825"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="0.65625" stop-color="white" stopOpacity="0.34375" />
-            <stop offset="1" stop-color="white" stopOpacity="0" />
+            <stop stop-color={color} />
+            <stop offset="0.65625" stop-color={color} stopOpacity="0.34375" />
+            <stop offset="1" stop-color={color} stopOpacity="0" />
           </linearGradient>
           <linearGradient
             id="paint4_linear_959_373"
@@ -135,9 +187,9 @@ export default function HandIllust03({ initTop, initLeft, top, left }) {
             y2="123.044"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="white" />
-            <stop offset="0.421875" stop-color="white" stopOpacity="0.352001" />
-            <stop offset="0.651043" stop-color="white" stopOpacity="0" />
+            <stop stop-color={color} />
+            <stop offset="0.421875" stop-color={color} stopOpacity="0.352001" />
+            <stop offset="0.651043" stop-color={color} stopOpacity="0" />
           </linearGradient>
         </defs>
       </motion.svg>

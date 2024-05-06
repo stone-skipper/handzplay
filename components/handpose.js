@@ -36,6 +36,7 @@ export default function Handpose({
 }) {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const actionSpeed = 300;
 
   // from store
   const fingersL = useControlsStore((state) => state.fingersL);
@@ -301,12 +302,12 @@ export default function Handpose({
             movementX * movementX + movementY * movementY
           );
         }
-        if (leftMovement > 220) {
+        if (leftMovement > actionSpeed) {
           useControlsStore.setState({
             currentActionL: actionDirection(leftMovementArray),
           });
 
-          // console.log("action!", leftMovementArray, leftMovement);
+          console.log("action!", leftMovementArray, leftMovement);
           // console.log(actionDirection(leftMovementArray));
         } else {
           useControlsStore.setState({ currentActionL: "" });
@@ -342,12 +343,12 @@ export default function Handpose({
             movementX * movementX + movementY * movementY
           );
         }
-        if (rightMovement > 220) {
+        if (rightMovement > actionSpeed) {
           useControlsStore.setState({
             currentActionR: actionDirection(rightMovementArray),
           });
 
-          // console.log("action!", rightMovementArray, rightMovement);
+          console.log("action!", rightMovementArray, rightMovement);
           // console.log(actionDirection(rightMovementArray));
         } else {
           useControlsStore.setState({ currentActionR: "" });
