@@ -25,11 +25,35 @@ export default function BottomText() {
       }}
     >
       <div>
-        For any inquiry - contact Seungmee via <a style={linkStyle}>Twitter</a>{" "}
-        / <a style={linkStyle}>Instagram</a>
+        For any inquiry - contact Seungmee via{" "}
+        <a
+          style={linkStyle}
+          target="_blank"
+          href="https://twitter.com/@smee_leee"
+        >
+          Twitter
+        </a>{" "}
+        /{" "}
+        <a
+          style={linkStyle}
+          target="_blank"
+          href="https://instagram.com/stone.skipper"
+        >
+          Instagram
+        </a>
         <br />
-        Or check out my works from <a style={linkStyle}>my website</a> /{" "}
-        <a style={linkStyle}>read.cv</a>
+        Or check out my works from{" "}
+        <a style={linkStyle} target="_blank" href="https://seungmee-lee.com">
+          my website
+        </a>{" "}
+        /{" "}
+        <a
+          style={linkStyle}
+          target="_blank"
+          href="https://read.cv/seungmee_lee"
+        >
+          read.cv
+        </a>
       </div>
     </div>
   );
